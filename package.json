@@ -1,0 +1,28 @@
+{
+  "name": "react-native-action-button",
+  "version": "1.0.0",
+  "description": "customizable multi-action-button component for react-native",
+  "main": "ActionButton.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mastermoo/react-native-action-button.git"
+  },
+  "keywords": [
+    "react-native",
+    "action-button",
+    "float-button",
+    "multi-action-button"
+  ],
+  "peerDependencies": {
+    "react-native": ">=0.11"
+  },
+  "author": "Yousef Kamawall",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mastermoo/react-native-action-button/issues"
+  },
+  "homepage": "https://github.com/mastermoo/react-native-action-button"
+}

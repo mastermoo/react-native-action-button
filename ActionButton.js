@@ -21,7 +21,6 @@ class ActionButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      anim: new Animated.Value(0),
       active: this.props.active || false,
       type: this.props.type || 'float', // float | tab
       bgColor: this.props.bgColor || 'transparent',
@@ -29,6 +28,8 @@ class ActionButton extends Component {
       buttonTextColor: this.props.buttonTextColor || 'rgba(255,255,255,1)',
       spacing: this.props.spacing || 20
     }
+
+    this.state.anim = this.props.active ? new Animated.Value(1) : new Animated.Value(0);
 
     if (!props.children) throw new Error("ActionButton must have at least 1 Child.");
 

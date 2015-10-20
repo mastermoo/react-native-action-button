@@ -52,6 +52,7 @@ class ActionButtonItem extends Component {
               width: actionBtnWidth, 
               height: actionBtnWidth, 
               borderRadius: actionBtnWidth/2,  
+              backgroundColor: this.props.buttonColor || 'white'
             }
           ]}>
             {this.props.children}
@@ -82,7 +83,6 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   actionButton: {
-    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',

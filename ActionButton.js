@@ -187,8 +187,9 @@ class ActionButton extends Component {
       <Animated.View style={[styles.overlay, { opacity: this.state.anim }]}>
         <TouchableOpacity activeOpacity={1} onPress={this.reset.bind(this)} 
           style={this.getActionsStyle()}>
-          {this.state.actionButtons.map((ActionButton) => {
-            return (<ActionButtonItem 
+          {this.state.actionButtons.map((ActionButton, iter) => {
+            return (<ActionButtonItem
+            		  key = {iter} 
                       position={this.state.position} 
                       spacing={this.state.spacing} 
                       anim={this.state.anim} 

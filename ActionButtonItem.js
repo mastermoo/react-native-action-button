@@ -7,7 +7,6 @@ var {
   Text,
   View,
   Animated,
-  Easing,
   TouchableOpacity,
 } = React;
 

@@ -1,7 +1,7 @@
 # react-native-action-button
 customizable multi-action-button component for react-native
 
-![react-native-action-button demo](http://i.giphy.com/3oEduOzHEUJHPnUWv6.gif)
+![react-native-action-button demo](http://i.giphy.com/26BkMir9IcAhqe4EM.gif)
 
 ### Installation
 ```bash
@@ -39,13 +39,17 @@ class App extends Component {
 
   render() {
     return (
-      <View style={{flex:1}}>
-        <ActionButton bgColor="rgba(23, 9, 107, 0.75)" buttonColor="rgba(63,159,107,1)">
-          <ActionButton.Item title="New Task" onPress={() => console.log("new task tapped!")}>
+      <View style={{flex:1, backgroundColor: '#f3f3f3'}}>
+        // Rest of App come ABOVE the action button component!
+        <ActionButton buttonColor="rgba(231,76,60,1)">
+          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
             <Icon name="android-create" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-          <ActionButton.Item title="My Notifications" onPress={() => {}}>
+          <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
             <Icon name="android-notifications-none" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
+            <Icon name="android-done-all" style={styles.actionButtonIcon} />
           </ActionButton.Item>
         </ActionButton>
       </View>
@@ -57,7 +61,7 @@ var styles = StyleSheet.create({
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
-    color: 'black',
+    color: 'white',
   },
 });
 ```
@@ -79,14 +83,16 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 | buttonColor		| string     	  | "rgba(0,0,0,1)"			| background color of the +Button **(must be rgba value!)**
 | spacing				| number 	   	  | 20									| spacing between the `ActionButton.Item`s
 | offsetX				| number 	   	  | 10 / 30							| offset to the sides of the screen
-| offsetY				| number 	   	  | 4 / 30							| offset to the bottom of the screen
+| offsetY       | number        | 4 / 30              | offset to the bottom of the screen
+| btnOutRange   | string        | props.buttonColor   | button background color to animate to
+| outRangeScale | number 	   	  | 1	                	| changes size of button during animation
 
 ##### ActionButton.Item:
 | Property      | Type        	| Default 		 				| Description |
 | ------------- |:-------------:|:------------:				| ----------- |
-| title    		  | string  	    |	undefined 					| the title shown next to the button
+| title    		  | string  	    |	undefined 					| the title shown next to the button, can be empty
 | onPress 			| func  	   	  | null				 				| **required** function, triggers when a button is tapped
-| buttonColor		| string     	  | "white"							| background color of the Button
+| buttonColor		| string     	  | same as + button  	| background color of the Button
 
 
 

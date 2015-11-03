@@ -21,12 +21,15 @@ class ActionButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: this.props.active || false,
-      type: this.props.type || 'float', // float | tab
-      bgColor: this.props.bgColor || 'transparent',
-      buttonColor: this.props.buttonColor || 'rgba(0,0,0,1)',
-      buttonTextColor: this.props.buttonTextColor || 'rgba(255,255,255,1)',
-      spacing: this.props.spacing || 20
+      active: props.active || false,
+      type: props.type || 'float', // float | tab
+      bgColor: props.bgColor || 'transparent',
+      buttonColor: props.buttonColor || 'rgba(0,0,0,1)',
+      buttonTextColor: props.buttonTextColor || 'rgba(255,255,255,1)',
+      spacing: props.spacing || 20,
+      btnOutRange: props.btnOutRange || props.buttonColor || 'rgba(0,0,0,1)',
+      btnOutRangeTxt: props.btnOutRangeTxt || props.buttonTextColor || 'rgba(255,255,255,1)',
+      outRangeScale: props.outRangeScale || 1,
     }
 
     this.state.anim = this.props.active ? new Animated.Value(1) : new Animated.Value(0);
@@ -138,7 +141,7 @@ class ActionButton extends Component {
   }
 
   _renderButton() {
-    let btnSize = this.state.size / 1.2;
+    let btnSize = this.state.size;
     return (
       <View style={this.getActionButtonStyles()}>
         <TouchableOpacity activeOpacity={0.8} onPress={this.animateButton.bind(this)}>
@@ -149,13 +152,13 @@ class ActionButton extends Component {
               borderRadius: btnSize/2,
               backgroundColor: this.state.anim.interpolate({
                 inputRange: [0, 1],
-                outputRange: [this.state.buttonColor, 'rgba(255,255,255,1)']
+                outputRange: [this.state.buttonColor, this.state.btnOutRange]
               }),
               transform: [
                 {
                   scale: this.state.anim.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [1, 1.2]
+                    outputRange: [1, this.state.outRangeScale]
                   }),
                 },
                 {
@@ -169,7 +172,7 @@ class ActionButton extends Component {
             <Animated.Text style={[styles.btnText, {
               color: this.state.anim.interpolate({
                 inputRange: [0, 1],
-                outputRange: [this.state.buttonTextColor, 'rgba(0,0,0,1)']
+                outputRange: [this.state.buttonTextColor, this.state.btnOutRangeTxt]
               })
             }]}>
               +
@@ -193,9 +196,12 @@ class ActionButton extends Component {
                       spacing={this.state.spacing} 
                       anim={this.state.anim} 
                       size={this.state.size} 
+                      btnColor={this.state.btnOutRange} 
                       {...ActionButton.props}
                       onPress={() => {
-                        this.reset()
+                        setTimeout(() => {
+                          this.reset();
+                        }, 400)
                         ActionButton.props.onPress();
                       }} />)
           })}
@@ -211,12 +217,11 @@ class ActionButton extends Component {
 
   animateButton() {
     if(!this.state.active) {
-      Animated.timing(
+      Animated.spring(
         this.state.anim,
         {
           toValue: 1,
           duration: 350,
-          easing: Easing.elastic(1.5),
         }
       ).start();
 
@@ -227,12 +232,11 @@ class ActionButton extends Component {
   }
 
   reset() {
-    Animated.timing(
+    Animated.spring(
       this.state.anim,
       {
         toValue: 0,
         duration: 450,
-        easing: Easing.elastic(2),
       }
     ).start();
 
@@ -263,6 +267,12 @@ var styles = StyleSheet.create({
   btn: {
     justifyContent: 'center',
     alignItems: 'center',
+    shadowOpacity: 0.3,
+    shadowOffset: {
+      width: 0, height: 1,
+    },
+    shadowColor: '#444',
+    shadowRadius: 1,
   },
   btnText: {
     marginTop: -4,

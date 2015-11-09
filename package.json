@@ -1,6 +1,6 @@
 {
   "name": "react-native-action-button",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "customizable multi-action-button component for react-native",
   "main": "ActionButton.js",
   "scripts": {

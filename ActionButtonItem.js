@@ -8,8 +8,12 @@ var {
   View,
   Animated,
   TouchableOpacity,
+  Dimensions
 } = React;
 
+const {
+    width,
+} = Dimensions.get('window');
 
 let actionBtnWidth = 0;
 
@@ -19,6 +23,7 @@ class ActionButtonItem extends Component {
     this.state = {
       spaceBetween: 15,
       offsetTop: props.size > 42 ? 14 : 10,
+      alignItems: (this.props.position == 'left') ? 'flex-start' : 'flex-end'
     };
 
     if (!props.children || Array.isArray(props.children)) throw new Error("ActionButtonItem must have a Child component.");
@@ -32,6 +37,7 @@ class ActionButtonItem extends Component {
         [
           styles.actionButtonWrap,
           {
+            alignItems: this.state.alignItems,
             marginBottom: this.props.spacing,
             opacity: this.props.anim,
             transform: [
@@ -46,11 +52,11 @@ class ActionButtonItem extends Component {
         ]
       }>
         <TouchableOpacity style={{flex:1}} onPress={this.props.onPress}>
-          <View style={[styles.actionButton, this.props.style, 
-            { 
-              width: actionBtnWidth, 
-              height: actionBtnWidth, 
-              borderRadius: actionBtnWidth/2,  
+          <View style={[styles.actionButton, this.props.style,
+            {
+              width: actionBtnWidth,
+              height: actionBtnWidth,
+              borderRadius: actionBtnWidth/2,
               backgroundColor: this.props.buttonColor || this.props.btnColor
             }
           ]}>
@@ -65,14 +71,14 @@ class ActionButtonItem extends Component {
   }
 
   getTextStyles() {
-    let positionStyles = { 
-      right: actionBtnWidth + this.state.spaceBetween, 
-      top: this.state.offsetTop 
+    let positionStyles = {
+      right: actionBtnWidth + this.state.spaceBetween,
+      top: this.state.offsetTop
     }
-    
-    if (this.props.position == 'left') positionStyles = { 
-      left: actionBtnWidth + this.state.spaceBetween, 
-      top: this.state.offsetTop 
+
+    if (this.props.position == 'left') positionStyles = {
+      left: actionBtnWidth + this.state.spaceBetween,
+      top: this.state.offsetTop
     }
 
     return [styles.actionTextView, positionStyles]
@@ -81,7 +87,7 @@ class ActionButtonItem extends Component {
 
 var styles = StyleSheet.create({
   actionButtonWrap: {
-    alignItems: 'center',
+    width
   },
   actionButton: {
     justifyContent: 'center',
@@ -109,6 +115,7 @@ var styles = StyleSheet.create({
     shadowRadius: 1,
   },
   actionText: {
+    flex: 1,
     color: '#444',
     fontSize: 14,
   }

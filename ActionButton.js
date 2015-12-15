@@ -14,6 +14,7 @@ var {
 } = React;
 
 var sW = Dimensions.get('window').width,
+    sH = Dimensions.get('window').height,
     ActionButtonItem = require('./ActionButtonItem');
 
 
@@ -88,7 +89,7 @@ class ActionButton extends Component {
   //////////////////////
 
   getContainerStyles() {
-    if (this.state.active) return styles.overlay
+    if (this.state.active) return [ styles.overlay, { height : sH, width : sW } ]
     return [ styles.actionBarPos, this.getButtonSize(), this.getOffsetXY() ]
   }
 

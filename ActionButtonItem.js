@@ -15,6 +15,12 @@ const {
     width,
 } = Dimensions.get('window');
 
+const alignItemsMap = {
+  "center" : "center",
+  "left"  : "flex-start",
+  "right" : "flex-end"
+}
+
 let actionBtnWidth = 0;
 
 class ActionButtonItem extends Component {
@@ -23,7 +29,7 @@ class ActionButtonItem extends Component {
     this.state = {
       spaceBetween: 15,
       offsetTop: props.size > 42 ? 14 : 10,
-      alignItems: (this.props.position == 'left') ? 'flex-start' : 'flex-end'
+      alignItems: alignItemsMap[ this.props.position ]
     };
 
     if (!props.children || Array.isArray(props.children)) throw new Error("ActionButtonItem must have a Child component.");
@@ -78,6 +84,11 @@ class ActionButtonItem extends Component {
 
     if (this.props.position == 'left') positionStyles = {
       left: actionBtnWidth + this.state.spaceBetween,
+      top: this.state.offsetTop
+    }
+
+    if (this.props.position == 'center') positionStyles = {
+      left: actionBtnWidth/2 + width/2 + this.state.spaceBetween,
       top: this.state.offsetTop
     }
 

@@ -60,6 +60,7 @@ class ActionButton extends Component {
     offsetY: React.PropTypes.number,
     spacing: React.PropTypes.number,
     size: React.PropTypes.number,
+    autoInactive: React.PropTypes.bool
   }
 
   setPositionAndSizeByType() {
@@ -201,9 +202,11 @@ class ActionButton extends Component {
                       btnColor={this.state.btnOutRange} 
                       {...ActionButton.props}
                       onPress={() => {
-                        setTimeout(() => {
-                          this.reset();
-                        }, 400)
+                        if (this.props.autoInactive){
+                          setTimeout(() => {
+                            this.reset();
+                          }, 400);
+                        }
                         ActionButton.props.onPress();
                       }} />)
           })}
@@ -288,6 +291,10 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
   },
 });
+
+ActionButton.defaultProps = {
+  autoInactive: true
+}
 
 ActionButton.Item = ActionButtonItem;
 

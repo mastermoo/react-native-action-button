@@ -89,7 +89,7 @@ class ActionButton extends Component {
   //////////////////////
 
   getContainerStyles() {
-    if (this.state.active) return [ styles.overlay, { height : sH, width : sW } ]
+    if (this.state.active) return [ styles.overlay ]
     return [ styles.actionBarPos, this.getButtonSize(), this.getOffsetXY() ]
   }
 

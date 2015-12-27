@@ -10,12 +10,9 @@ var {
   Easing,
   TouchableOpacity,
   PixelRatio,
-  Dimensions,
 } = React;
 
-var sW = Dimensions.get('window').width,
-    sH = Dimensions.get('window').height,
-    ActionButtonItem = require('./ActionButtonItem');
+var ActionButtonItem = require('./ActionButtonItem');
 
 
 class ActionButton extends Component {
@@ -51,7 +48,7 @@ class ActionButton extends Component {
 
     type: React.PropTypes.string,
     position: React.PropTypes.string,
-    
+
     bgColor: React.PropTypes.string,
     buttonColor: React.PropTypes.string,
     buttonTextColor: React.PropTypes.string,
@@ -89,13 +86,22 @@ class ActionButton extends Component {
   //////////////////////
 
   getContainerStyles() {
-    if (this.state.active) return [ styles.overlay, { height : sH, width : sW } ]
-    return [ styles.actionBarPos, this.getButtonSize(), this.getOffsetXY() ]
+    return [ styles.overlay, this.getOrientation(), this.getOffsetXY()]
   }
 
   getActionButtonStyles() {
-    if (this.state.active) return [styles.actionBarItem, styles.actionBarPos, this.getButtonSize(), this.getOffsetXY()]
+    if (this.state.active) return [styles.actionBarItem, styles.actionBarPos, this.getButtonSize() ]
     return [styles.actionBarItem, this.getButtonSize()]
+  }
+
+  getOrientation() {
+    const alignItemsMap = {
+      "center" : "center",
+      "left"  : "flex-start",
+      "right" : "flex-end"
+    }
+
+    return { alignItems: alignItemsMap[this.state.position] };
   }
 
   getButtonSize() {
@@ -106,9 +112,9 @@ class ActionButton extends Component {
   }
 
   getOffsetXY() {
-    if (this.state.position == 'center') return { left: sW/2 - this.state.size/2, bottom: this.state.offsetY }
-    if (this.state.position == 'left')   return { left: this.state.offsetX, bottom: this.state.offsetY }
-    return { right: this.state.offsetX, bottom: this.state.offsetY }
+    if (this.state.position == 'center') return { marginBottom: this.state.offsetY }
+    if (this.state.position == 'left')   return { marginLeft: this.state.offsetX, marginBottom: this.state.offsetY }
+    return { marginRight: this.state.offsetX, marginBottom: this.state.offsetY }
   }
 
   getActionsStyle() {
@@ -117,10 +123,9 @@ class ActionButton extends Component {
     if (this.state.position == 'right') alignItems = 'flex-end';
 
     return [
-      styles.actionsVertical, 
+      styles.actionsVertical,
       {
-        paddingHorizontal: this.state.offsetX, 
-        paddingBottom: this.state.size + this.state.offsetY, 
+        paddingBottom: this.state.size,
         backgroundColor: this.state.bgColor,
         alignItems: alignItems,
       }
@@ -146,7 +151,7 @@ class ActionButton extends Component {
     return (
       <View style={this.getActionButtonStyles()}>
         <TouchableOpacity activeOpacity={0.8} onPress={this.animateButton.bind(this)}>
-          <Animated.View 
+          <Animated.View
             style={[styles.btn, {
               width: btnSize,
               height: btnSize,
@@ -189,16 +194,16 @@ class ActionButton extends Component {
 
     return (
       <Animated.View style={[styles.overlay, { opacity: this.state.anim }]}>
-        <TouchableOpacity activeOpacity={1} onPress={this.reset.bind(this)} 
+        <TouchableOpacity activeOpacity={1} onPress={this.reset.bind(this)}
           style={this.getActionsStyle()}>
           {this.state.actionButtons.map((ActionButton, iter) => {
             return (<ActionButtonItem
-            		  key = {iter} 
-                      position={this.state.position} 
-                      spacing={this.state.spacing} 
-                      anim={this.state.anim} 
-                      size={this.state.size} 
-                      btnColor={this.state.btnOutRange} 
+            		  key = {iter}
+                      position={this.state.position}
+                      spacing={this.state.spacing}
+                      anim={this.state.anim}
+                      size={this.state.size}
+                      btnColor={this.state.btnOutRange}
                       {...ActionButton.props}
                       onPress={() => {
                         setTimeout(() => {
@@ -257,10 +262,10 @@ var styles = StyleSheet.create({
     right: 0,
     top: 0,
     backgroundColor: 'transparent',
+    justifyContent: 'flex-end',
   },
   actionBarPos: {
     backgroundColor: 'transparent',
-    position: 'absolute',
   },
   actionBarItem: {
     alignItems: 'center',

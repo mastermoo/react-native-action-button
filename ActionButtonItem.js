@@ -28,7 +28,6 @@ class ActionButtonItem extends Component {
     super(props);
     this.state = {
       spaceBetween: 15,
-      offsetTop: props.size > 42 ? 14 : 10,
       alignItems: alignItemsMap[ this.props.position ]
     };
 
@@ -77,19 +76,23 @@ class ActionButtonItem extends Component {
   }
 
   getTextStyles() {
+    // to align the center of the label with the center of the button,
+    // offset = (half the size of the btn) - (half the size of the label)
+    let offsetTop = actionBtnWidth >= 28 ? (actionBtnWidth / 2) - 14 : 0;
+
     let positionStyles = {
       right: actionBtnWidth + this.state.spaceBetween,
-      top: this.state.offsetTop
+      top: offsetTop
     }
 
     if (this.props.position == 'left') positionStyles = {
       left: actionBtnWidth + this.state.spaceBetween,
-      top: this.state.offsetTop
+      top: offsetTop
     }
 
     if (this.props.position == 'center') positionStyles = {
       left: actionBtnWidth/2 + width/2 + this.state.spaceBetween,
-      top: this.state.offsetTop
+      top: offsetTop
     }
 
     return [styles.actionTextView, positionStyles]
@@ -129,6 +132,7 @@ var styles = StyleSheet.create({
     flex: 1,
     color: '#444',
     fontSize: 14,
+    lineHeight: 20,
   }
 });
 

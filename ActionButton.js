@@ -86,7 +86,7 @@ class ActionButton extends Component {
   //////////////////////
 
   getContainerStyles() {
-    return [ styles.overlay, this.getOrientation(), this.getOffsetXY()]
+    return [ styles.overlay, this.getOrientation(), this.getOffsetXY(), this.getBackground()]
   }
 
   getActionButtonStyles() {
@@ -104,6 +104,11 @@ class ActionButton extends Component {
     return { alignItems: alignItemsMap[this.state.position] };
   }
 
+  getBackground() {
+    if (this.state.active) return { backgroundColor: this.state.bgColor }
+    return { backgroundColor: "transparent" }
+  }
+
   getButtonSize() {
     return {
       width: this.state.size,
@@ -112,9 +117,9 @@ class ActionButton extends Component {
   }
 
   getOffsetXY() {
-    if (this.state.position == 'center') return { marginBottom: this.state.offsetY }
-    if (this.state.position == 'left')   return { marginLeft: this.state.offsetX, marginBottom: this.state.offsetY }
-    return { marginRight: this.state.offsetX, marginBottom: this.state.offsetY }
+    if (this.state.position == 'center') return { paddingBottom: this.state.offsetY }
+    if (this.state.position == 'left')   return { paddingLeft: this.state.offsetX, paddingBottom: this.state.offsetY }
+    return { paddingRight: this.state.offsetX, paddingBottom: this.state.offsetY }
   }
 
   getActionsStyle() {
@@ -126,7 +131,6 @@ class ActionButton extends Component {
       styles.actionsVertical,
       {
         paddingBottom: this.state.size,
-        backgroundColor: this.state.bgColor,
         alignItems: alignItems,
       }
     ]

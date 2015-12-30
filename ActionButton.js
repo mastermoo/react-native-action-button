@@ -143,7 +143,7 @@ class ActionButton extends Component {
 
   render() {
     return (
-      <View style={this.getContainerStyles()}>
+      <View pointerEvents="box-none" style={this.getContainerStyles()}>
         {this._renderActions()}
         {this._renderButton()}
       </View>

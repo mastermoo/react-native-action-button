@@ -86,7 +86,7 @@ class ActionButton extends Component {
   //////////////////////
 
   getContainerStyles() {
-    return [ styles.overlay, this.getOrientation(), this.getOffsetXY(), this.getBackground()]
+    return [ styles.overlay, this.getOrientation(), this.getOffsetXY()]
   }
 
   getActionButtonStyles() {
@@ -102,11 +102,6 @@ class ActionButton extends Component {
     }
 
     return { alignItems: alignItemsMap[this.state.position] };
-  }
-
-  getBackground() {
-    if (this.state.active) return { backgroundColor: this.state.bgColor }
-    return { backgroundColor: "transparent" }
   }
 
   getButtonSize() {
@@ -143,9 +138,15 @@ class ActionButton extends Component {
 
   render() {
     return (
-      <View pointerEvents="box-none" style={this.getContainerStyles()}>
-        {this._renderActions()}
-        {this._renderButton()}
+      <View pointerEvents="box-none" style={styles.overlay}>
+        <Animated.View pointerEvents="none" style={[styles.overlay, {
+          backgroundColor: this.state.bgColor,
+          opacity: this.state.anim
+        }]} />
+        <View pointerEvents="box-none" style={this.getContainerStyles()}>
+          {this._renderActions()}
+          {this._renderButton()}
+        </View>
       </View>
     );
   }

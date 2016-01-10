@@ -34,12 +34,6 @@ class ActionButton extends Component {
 
     if (!props.children) throw new Error("ActionButton must have at least 1 Child.");
 
-    if (Array.isArray(props.children)) {
-      this.state.actionButtons = props.children;
-    } else {
-      this.state.actionButtons = [props.children];
-    }
-
     this.setPositionAndSizeByType();
   }
 
@@ -196,13 +190,19 @@ class ActionButton extends Component {
   }
 
   _renderActions() {
-    if (!this.state.active) return;
+    if (!this.state.active) return
+
+    let actionButtons = this.props.children
+
+    if (!Array.isArray(this.props.children)) {
+      actionButtons = [this.props.children]
+    }
 
     return (
       <Animated.View style={[styles.overlay, { opacity: this.state.anim }]}>
         <TouchableOpacity activeOpacity={1} onPress={this.reset.bind(this)}
           style={this.getActionsStyle()}>
-          {this.state.actionButtons.map((ActionButton, iter) => {
+          {actionButtons.map((ActionButton, iter) => {
             return (<ActionButtonItem
             		  key = {iter}
                       position={this.state.position}
@@ -214,10 +214,10 @@ class ActionButton extends Component {
                       onPress={() => {
                         if (this.props.autoInactive){
                           setTimeout(() => {
-                            this.reset();
-                          }, 400);
+                            this.reset()
+                          }, 400)
                         }
-                        ActionButton.props.onPress();
+                        ActionButton.props.onPress()
                       }} />)
           })}
         </TouchableOpacity>

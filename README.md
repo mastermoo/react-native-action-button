@@ -77,6 +77,7 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 | Property      | Type        	| Default 		 				| Description |
 | ------------- |:-------------:|:------------:				| ----------- |
 | active        | boolean 			| false 			 				| action buttons visible or not
+| autoInactive        | boolean 			| true 			 				| Auto hide ActionButtons when ActionButton.Item is pressed.
 | type    		  | string  	    |	"float" 		 				| either `float` (bigger btns) or `tab` (smaller btns) + position changes
 | position 		  | string  	    |	"right" / "center" 	| one of: `left` `center` and `right`
 | bgColor 			| string     	  | "transparent"	 			| background color when ActionButtons are visible

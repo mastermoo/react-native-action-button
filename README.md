@@ -12,7 +12,7 @@ npm i react-native-action-button --save
 
 First, require it from your app's JavaScript files with:
 ```bash
-var ActionButton = require('react-native-action-button');
+import ActionButton from 'react-native-action-button';
 ```
 
 ##### ActionButton
@@ -25,17 +25,12 @@ var ActionButton = require('react-native-action-button');
 ### Example
 
 ```js
-var React = require('react-native');
-var { Component, Stylesheet, View, } = React;
-
-var ActionButton = require('react-native-action-button'),
-    Icon = require('react-native-vector-icons/Ionicons');
+import React, { Component, StyleSheet, View } from 'react-native';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
@@ -55,9 +50,10 @@ class App extends Component {
       </View>
     );
   }
+
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
@@ -74,26 +70,26 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 ### Configuration
 
 ##### ActionButton:
-| Property      | Type        	| Default 		 				| Description |
-| ------------- |:-------------:|:------------:				| ----------- |
-| active        | boolean 			| false 			 				| action buttons visible or not
-| autoInactive        | boolean 			| true 			 				| Auto hide ActionButtons when ActionButton.Item is pressed.
-| type    		  | string  	    |	"float" 		 				| either `float` (bigger btns) or `tab` (smaller btns) + position changes
-| position 		  | string  	    |	"right" / "center" 	| one of: `left` `center` and `right`
-| bgColor 			| string     	  | "transparent"	 			| background color when ActionButtons are visible
-| buttonColor		| string     	  | "rgba(0,0,0,1)"			| background color of the +Button **(must be rgba value!)**
-| spacing				| number 	   	  | 20									| spacing between the `ActionButton.Item`s
-| offsetX				| number 	   	  | 10 / 30							| offset to the sides of the screen
+| Property      | Type          | Default             | Description |
+| ------------- |:-------------:|:------------:       | ----------- |
+| active        | boolean       | false               | action buttons visible or not
+| autoInactive        | boolean       | true              | Auto hide ActionButtons when ActionButton.Item is pressed.
+| type          | string        | "float"             | either `float` (bigger btns) or `tab` (smaller btns) + position changes
+| position      | string        | "right" / "center"  | one of: `left` `center` and `right`
+| bgColor       | string        | "transparent"       | background color when ActionButtons are visible
+| buttonColor   | string        | "rgba(0,0,0,1)"     | background color of the +Button **(must be rgba value!)**
+| spacing       | number        | 20                  | spacing between the `ActionButton.Item`s
+| offsetX       | number        | 10 / 30             | offset to the sides of the screen
 | offsetY       | number        | 4 / 30              | offset to the bottom of the screen
 | btnOutRange   | string        | props.buttonColor   | button background color to animate to
-| outRangeScale | number 	   	  | 1	                	| changes size of button during animation
+| outRangeScale | number        | 1                   | changes size of button during animation
 
 ##### ActionButton.Item:
-| Property      | Type        	| Default 		 				| Description |
-| ------------- |:-------------:|:------------:				| ----------- |
-| title    		  | string  	    |	undefined 					| the title shown next to the button, can be empty
-| onPress 			| func  	   	  | null				 				| **required** function, triggers when a button is tapped
-| buttonColor		| string     	  | same as + button  	| background color of the Button
+| Property      | Type          | Default             | Description |
+| ------------- |:-------------:|:------------:       | ----------- |
+| title         | string        | undefined           | the title shown next to the button, can be empty
+| onPress       | func          | null                | **required** function, triggers when a button is tapped
+| buttonColor   | string        | same as + button    | background color of the Button
 
 
 

@@ -3,36 +3,6 @@ import ActionButtonItem from './ActionButtonItem';
 
 export default class ActionButton extends Component {
 
-  static Item = ActionButtonItem;
-
-  static propTypes = {
-    active: PropTypes.bool,
-
-    type: PropTypes.oneOf(['float', 'tab']),
-    position: PropTypes.string,
-
-    bgColor: PropTypes.string,
-    buttonColor: PropTypes.string,
-    buttonTextColor: PropTypes.string,
-
-    offsetX : PropTypes.number,
-    offsetY: PropTypes.number,
-    spacing: PropTypes.number,
-    size: PropTypes.number,
-    autoInactive: PropTypes.bool
-  };
-
-  static defaultProps = {
-    active: false,
-    type: 'float',
-    bgColor: 'transparent',
-    buttonColor: 'rgba(0,0,0,1)',
-    buttonTextColor: 'rgba(255,255,255,1)',
-    spacing: 20,
-    outRangeScale: 1,
-    autoInactive: true
-  };
-
   constructor(props) {
     super(props);
 
@@ -284,6 +254,35 @@ export default class ActionButton extends Component {
   }
 }
 
+ActionButton.Item = ActionButtonItem;
+
+ActionButton.propTypes = {
+  active: PropTypes.bool,
+
+  type: PropTypes.oneOf(['float', 'tab']),
+  position: PropTypes.string,
+
+  bgColor: PropTypes.string,
+  buttonColor: PropTypes.string,
+  buttonTextColor: PropTypes.string,
+
+  offsetX : PropTypes.number,
+  offsetY: PropTypes.number,
+  spacing: PropTypes.number,
+  size: PropTypes.number,
+  autoInactive: PropTypes.bool
+};
+
+ActionButton.defaultProps = {
+  active: false,
+  type: 'float',
+  bgColor: 'transparent',
+  buttonColor: 'rgba(0,0,0,1)',
+  buttonTextColor: 'rgba(255,255,255,1)',
+  spacing: 20,
+  outRangeScale: 1,
+  autoInactive: true
+};
 
 const styles = StyleSheet.create({
   overlay: {

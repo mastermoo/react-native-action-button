@@ -86,7 +86,7 @@ export default class ActionButtonItem extends Component {
   }
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   actionButtonWrap: {
     width
   },

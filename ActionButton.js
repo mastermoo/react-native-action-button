@@ -79,27 +79,10 @@ export default class ActionButton extends Component {
   }
 
   getOffsetXY() {
-    if (this.state.position == 'center') {
-      return { paddingBottom: this.state.offsetY };
-    }
-    if (this.state.position == 'left') {
-      return {
-        paddingLeft: this.state.offsetX,
-        paddingBottom: this.state.offsetY
-      };
-    }
     return {
-      paddingRight: this.state.offsetX,
+      paddingHorizontal: this.state.offsetX,
       paddingBottom: this.state.offsetY
     };
-  }
-
-  getActionsStyle() {
-    return [
-      styles.actionsVertical, 
-      this.getOrientation(), 
-      { paddingBottom: this.state.size }
-    ];
   }
 
 
@@ -108,64 +91,38 @@ export default class ActionButton extends Component {
   //////////////////////
 
   render() {
-    if (!this.props.children) {
-      return (
-        <View pointerEvents="box-none" style={this.getContainerStyles()}>
-          {this._renderFAB()}
-        </View>
-      );
-    }
-
     return (
       <View pointerEvents="box-none" style={styles.overlay}>
         <Animated.View pointerEvents="none" style={[styles.overlay, {
           backgroundColor: this.state.bgColor,
           opacity: this.state.anim
         }]} />
-        <View pointerEvents="box-none" style={this.getContainerStyles()}>
-          {this._renderActions()}
+        <TouchableOpacity 
+          pointerEvents={!this.state.active && "box-none"}
+          style={this.getContainerStyles()}
+          activeOpacity={1} 
+          onPress={() => { this.reset() }}>
+          {this.props.children && this._renderActions()}
           {this._renderButton()}
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }
 
-  _renderFAB() {
+  _renderButton() {
     return (
       <View style={this.getActionButtonStyles()}>
         <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={this.props.onPress}>
-          <View
+          activeOpacity={0.85}
+          onPress={() => { 
+            this.props.onPress()
+            if (this.props.children) this.animateButton()
+          }}>
+          <Animated.View
             style={[styles.btn, {
               width: this.state.size,
               height: this.state.size,
               borderRadius: this.state.size / 2,
-              backgroundColor: this.state.buttonColor,
-            }]}>
-            <Text style={[styles.btnText, 
-              { color: this.state.buttonTextColor }
-            ]}>
-              +
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    )
-  }
-
-  _renderButton() {
-    let btnSize = this.state.size;
-    return (
-      <View style={this.getActionButtonStyles()}>
-        <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => { this.animateButton() }}>
-          <Animated.View
-            style={[styles.btn, {
-              width: btnSize,
-              height: btnSize,
-              borderRadius: btnSize / 2,
               backgroundColor: this.state.anim.interpolate({
                 inputRange: [0, 1],
                 outputRange: [this.state.buttonColor, this.state.btnOutRange]
@@ -178,29 +135,33 @@ export default class ActionButton extends Component {
                 }, {
                   rotate: this.state.anim.interpolate({
                     inputRange: [0, 1],
-                    outputRange: ['0deg', '135deg']
+                    outputRange: ['0deg', this.props.icon ? '0deg' : '135deg']
                   })
                 }],
             }]}>
-            <Animated.Text style={[styles.btnText, {
-              color: this.state.anim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [this.state.buttonTextColor, this.state.btnOutRangeTxt]
-              })
-            }]}>
-              +
-            </Animated.Text>
+            {this._renderButtonIcon()}
           </Animated.View>
         </TouchableOpacity>
       </View>
     );
   }
 
-  _renderActions() {
-    if (!this.state.active) {
-      return null;
-    }
+  _renderButtonIcon() {
+    if (this.props.icon) return this.props.icon
 
+    return (
+      <Animated.Text style={[styles.btnText, {
+        color: this.state.anim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [this.state.buttonTextColor, this.state.btnOutRangeTxt]
+        })
+      }]}>
+        +
+      </Animated.Text>
+    )
+  }
+
+  _renderActions() {
     let actionButtons = this.props.children
 
     if (!Array.isArray(this.props.children)) {
@@ -208,35 +169,27 @@ export default class ActionButton extends Component {
     }
 
     return (
-      <Animated.View style={[styles.overlay, { opacity: this.state.anim }]}>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => { this.reset() }}
-          style={this.getActionsStyle()}
-        >
-          {actionButtons.map((ActionButton, index) => {
-            return (
-              <ActionButtonItem
-                key={index}
-                position={this.state.position}
-                spacing={this.state.spacing}
-                anim={this.state.anim}
-                size={this.state.size}
-                btnColor={this.state.btnOutRange}
-                {...ActionButton.props}
-                onPress={() => {
-                  if (this.props.autoInactive){
-                    this.timeout = setTimeout(() => {
-                      this.reset();
-                    }, 400);
-                  }
-                  ActionButton.props.onPress();
-                }}
-              />
-            )
-          })}
-        </TouchableOpacity>
-      </Animated.View>
+      actionButtons.map((ActionButton, index) => {
+        return (
+          <ActionButtonItem
+            key={index}
+            position={this.state.position}
+            spacing={this.state.spacing}
+            anim={this.state.anim}
+            size={this.state.size}
+            btnColor={this.state.btnOutRange}
+            {...ActionButton.props}
+            onPress={() => {
+              if (this.props.autoInactive){
+                this.timeout = setTimeout(() => {
+                  this.reset();
+                }, 200);
+              }
+              ActionButton.props.onPress();
+            }}
+          />
+        )
+      })
     );
   }
 
@@ -246,27 +199,25 @@ export default class ActionButton extends Component {
   //////////////////////
 
   animateButton() {
-    if(!this.state.active) {
-      Animated.spring(this.state.anim, {
-         toValue: 1,
-         duration: 350,
-      }).start();
+    if (this.state.active) return this.reset();
 
-      this.setState({ active: true });
-    } else {
-      this.reset();
-    }
+    Animated.spring(this.state.anim, {
+       toValue: 1,
+       duration: 250,
+    }).start();
+
+    this.setState({ active: true });
   }
 
   reset() {
     Animated.spring(this.state.anim, {
       toValue: 0,
-      duration: 450,
+      duration: 250,
     }).start();
 
     setTimeout(() => {
       this.setState({ active: false });
-    }, 450);
+    }, 250);
   }
 }
 
@@ -286,7 +237,8 @@ ActionButton.propTypes = {
   offsetY: PropTypes.number,
   spacing: PropTypes.number,
   size: PropTypes.number,
-  autoInactive: PropTypes.bool
+  autoInactive: PropTypes.bool,
+  onPress: PropTypes.func
 };
 
 ActionButton.defaultProps = {
@@ -297,7 +249,8 @@ ActionButton.defaultProps = {
   buttonTextColor: 'rgba(255,255,255,1)',
   spacing: 20,
   outRangeScale: 1,
-  autoInactive: true
+  autoInactive: true,
+  onPress: () => {}
 };
 
 const styles = StyleSheet.create({

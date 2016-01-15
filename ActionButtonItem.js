@@ -43,7 +43,7 @@ export default class ActionButtonItem extends Component {
           }
         ]}
       >
-        <TouchableOpacity style={{flex:1}} onPress={this.props.onPress}>
+        <TouchableOpacity style={{flex:1}} activeOpacity={this.props.activeOpacity || 0.85} onPress={this.props.onPress}>
           <View
             style={[styles.actionButton, this.props.style, {
               width: actionBtnWidth,
@@ -78,7 +78,7 @@ export default class ActionButtonItem extends Component {
     }
 
     if (this.props.position == 'center') positionStyles = {
-      left: actionBtnWidth/2 + width/2 + this.state.spaceBetween,
+      right: actionBtnWidth/2 + width/2 + this.state.spaceBetween,
       top: offsetTop
     }
 

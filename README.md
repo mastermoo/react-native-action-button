@@ -92,6 +92,8 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 | offsetY       | number        | 4 / 30              | offset to the bottom of the screen
 | btnOutRange   | string        | props.buttonColor   | button background color to animate to
 | outRangeScale | number        | 1                   | changes size of button during animation
+| onPress       | function      | null                | fires, when ActionButton is tapped
+| icon          | Component     | +                   | Custom component for ActionButton Icon
 
 ##### ActionButton.Item:
 | Property      | Type          | Default             | Description |

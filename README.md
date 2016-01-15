@@ -4,6 +4,7 @@ customizable multi-action-button component for react-native
 ![react-native-action-button demo](http://i.giphy.com/26BkMir9IcAhqe4EM.gif)
 ![react-native-action-button demo](http://i.giphy.com/xTcnTeW9BBXh8wMhLq.gif)
 ![react-native-action-button demo](http://i.giphy.com/l0K7psuhDQGLeT3d6.gif)
+![react-native-action-button demo](http://i.giphy.com/xTcnSOtuet39cM46s0.gif)
 
 ### Installation
 ```bash

@@ -1,14 +1,16 @@
 import React, { PropTypes, Component, StyleSheet, Text, View, Animated, Easing, TouchableOpacity, PixelRatio } from 'react-native';
 import ActionButtonItem from './ActionButtonItem';
 
+const alignItemsMap = {
+  "center" : "center",
+  "left"  : "flex-start",
+  "right" : "flex-end"
+}
+
 export default class ActionButton extends Component {
 
   constructor(props) {
     super(props);
-
-    if (!props.children) {
-      throw new Error("ActionButton must have at least 1 Child.");
-    }
 
     this.state = {
       active: props.active,
@@ -62,19 +64,10 @@ export default class ActionButton extends Component {
   }
 
   getActionButtonStyles() {
-    if (this.state.active) {
-      return [styles.actionBarItem, styles.actionBarPos, this.getButtonSize()];
-    }
     return [styles.actionBarItem, this.getButtonSize()];
   }
 
   getOrientation() {
-    const alignItemsMap = {
-      "center" : "center",
-      "left"  : "flex-start",
-      "right" : "flex-end"
-    }
-
     return { alignItems: alignItemsMap[this.state.position] };
   }
 
@@ -102,19 +95,10 @@ export default class ActionButton extends Component {
   }
 
   getActionsStyle() {
-    let alignItems = 'center';
-
-    if (this.state.position == 'left') {
-      alignItems = 'flex-start';
-    }
-    if (this.state.position == 'right') {
-      alignItems = 'flex-end';
-    }
-
-    return [styles.actionsVertical, {
-        paddingBottom: this.state.size,
-        alignItems: alignItems,
-      }
+    return [
+      styles.actionsVertical, 
+      this.getOrientation(), 
+      { paddingBottom: this.state.size }
     ];
   }
 
@@ -124,6 +108,14 @@ export default class ActionButton extends Component {
   //////////////////////
 
   render() {
+    if (!this.props.children) {
+      return (
+        <View pointerEvents="box-none" style={this.getContainerStyles()}>
+          {this._renderFAB()}
+        </View>
+      );
+    }
+
     return (
       <View pointerEvents="box-none" style={styles.overlay}>
         <Animated.View pointerEvents="none" style={[styles.overlay, {
@@ -136,6 +128,30 @@ export default class ActionButton extends Component {
         </View>
       </View>
     );
+  }
+
+  _renderFAB() {
+    return (
+      <View style={this.getActionButtonStyles()}>
+        <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={this.props.onPress}>
+          <View
+            style={[styles.btn, {
+              width: this.state.size,
+              height: this.state.size,
+              borderRadius: this.state.size / 2,
+              backgroundColor: this.state.buttonColor,
+            }]}>
+            <Text style={[styles.btnText, 
+              { color: this.state.buttonTextColor }
+            ]}>
+              +
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
   }
 
   _renderButton() {
@@ -294,12 +310,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'flex-end',
   },
-  actionBarPos: {
-    backgroundColor: 'transparent',
-  },
   actionBarItem: {
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'transparent',
   },
   btn: {
     justifyContent: 'center',

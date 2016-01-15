@@ -2,6 +2,8 @@
 customizable multi-action-button component for react-native
 
 ![react-native-action-button demo](http://i.giphy.com/26BkMir9IcAhqe4EM.gif)
+![react-native-action-button demo](http://i.giphy.com/xTcnTeW9BBXh8wMhLq.gif)
+![react-native-action-button demo](http://i.giphy.com/l0K7psuhDQGLeT3d6.gif)
 
 ### Installation
 ```bash
@@ -65,6 +67,13 @@ const styles = StyleSheet.create({
 This will create a floating Button in the bottom right corner with 2 action buttons.
 Also this example uses `react-native-vector-icons` for the button Icons.
 
+### FAB Example
+```js
+<ActionButton 
+  buttonColor="rgba(231,76,60,1)"
+  onPress={() => { console.log("hi")}}
+/>
+```
 
 
 ### Configuration

@@ -119,6 +119,5 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#444',
     fontSize: 14,
-    lineHeight: 20,
   }
 });

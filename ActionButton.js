@@ -85,6 +85,10 @@ export default class ActionButton extends Component {
     };
   }
 
+  getActionsStyle() {
+    return [ styles.actionsVertical, this.getOrientation() ];
+  }
+
 
   //////////////////////
   // RENDER METHODS
@@ -97,14 +101,10 @@ export default class ActionButton extends Component {
           backgroundColor: this.state.bgColor,
           opacity: this.state.anim
         }]} />
-        <TouchableOpacity 
-          pointerEvents={!this.state.active && "box-none"}
-          style={this.getContainerStyles()}
-          activeOpacity={1} 
-          onPress={() => { this.reset() }}>
+        <View pointerEvents="box-none" style={this.getContainerStyles()}>
           {this.props.children && this._renderActions()}
           {this._renderButton()}
-        </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -162,6 +162,8 @@ export default class ActionButton extends Component {
   }
 
   _renderActions() {
+    if (!this.state.active) return null;
+
     let actionButtons = this.props.children
 
     if (!Array.isArray(this.props.children)) {
@@ -169,27 +171,32 @@ export default class ActionButton extends Component {
     }
 
     return (
-      actionButtons.map((ActionButton, index) => {
-        return (
-          <ActionButtonItem
-            key={index}
-            position={this.state.position}
-            spacing={this.state.spacing}
-            anim={this.state.anim}
-            size={this.state.size}
-            btnColor={this.state.btnOutRange}
-            {...ActionButton.props}
-            onPress={() => {
-              if (this.props.autoInactive){
-                this.timeout = setTimeout(() => {
-                  this.reset();
-                }, 200);
-              }
-              ActionButton.props.onPress();
-            }}
-          />
-        )
-      })
+        <TouchableOpacity 
+          style={this.getActionsStyle()}
+          activeOpacity={1} 
+          onPress={() => { this.reset() }}>
+          {actionButtons.map((ActionButton, index) => {
+            return (
+              <ActionButtonItem
+                key={index}
+                position={this.state.position}
+                spacing={this.state.spacing}
+                anim={this.state.anim}
+                size={this.state.size}
+                btnColor={this.state.btnOutRange}
+                {...ActionButton.props}
+                onPress={() => {
+                  if (this.props.autoInactive){
+                    this.timeout = setTimeout(() => {
+                      this.reset();
+                    }, 200);
+                  }
+                  ActionButton.props.onPress();
+                }}
+              />
+            )
+          })}
+        </TouchableOpacity>
     );
   }
 

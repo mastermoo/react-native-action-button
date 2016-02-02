@@ -72,6 +72,12 @@ export default class ActionButtonItem extends Component {
       top: offsetTop
     }
 
+    let bgStyle = { backgroundColor : 'white' };
+
+    if (this.props.titleBgColor) bgStyle = {
+      backgroundColor:this.props.titleBgColor
+    }
+
     if (this.props.position == 'left') positionStyles = {
       left: actionBtnWidth + this.state.spaceBetween,
       top: offsetTop
@@ -82,7 +88,7 @@ export default class ActionButtonItem extends Component {
       top: offsetTop
     }
 
-    return [styles.actionTextView, positionStyles];
+    return [styles.actionTextView, positionStyles, bgStyle];
   }
 }
 
@@ -104,7 +110,6 @@ const styles = StyleSheet.create({
   },
   actionTextView: {
     position: 'absolute',
-    backgroundColor: 'white',
     paddingVertical: 4,
     paddingHorizontal: 10,
     borderRadius: 3,

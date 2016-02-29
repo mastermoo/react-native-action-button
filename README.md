@@ -99,7 +99,7 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 ##### ActionButton.Item:
 | Property      | Type          | Default             | Description |
 | ------------- |:-------------:|:------------:       | ----------- |
-| title         | string        | undefined           | the title shown text to the button, can be empty
+| title         | string        | undefined           | the title shown next to the button, can be empty
 | onPress       | func          | null                | **required** function, triggers when a button is tapped
 | buttonColor   | string        | same as + button    | background color of the Button
 | titleBgColor   | string        | "white"  | background color of title

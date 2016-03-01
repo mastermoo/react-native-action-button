@@ -55,9 +55,13 @@ export default class ActionButtonItem extends Component {
             {this.props.children}
           </View>
         </TouchableOpacity>
-        <View style={this.getTextStyles()}>
-          <Text style={styles.actionText}>{this.props.title}</Text>
-        </View>
+        {
+          !!this.props.title && (
+              <TouchableOpacity style={this.getTextStyles()} activeOpacity={this.props.activeOpacity || 0.85} onPress={this.props.onPress}>
+                <Text style={styles.actionText}>{this.props.title}</Text>
+              </TouchableOpacity>
+            )
+        }
       </Animated.View>
     );
   }

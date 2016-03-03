@@ -115,8 +115,8 @@ export default class ActionButton extends Component {
         <TouchableOpacity
           activeOpacity={0.85}
           onPress={() => { 
-            this.props.onPress()
-            if (this.props.children) this.animateButton()
+            let next = this.props.onPress(); // i want disable this.animateButton onPress, i will call this.animateButton onLongPress
+            if (next !== false && this.props.children) this.animateButton()
           }}>
           <Animated.View
             style={[styles.btn, {

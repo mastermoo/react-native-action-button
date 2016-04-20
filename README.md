@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
 });
 ```
 
-This will create a floating Button in the bottom right corner with 2 action buttons.
+This will create a floating Button in the bottom right corner with 3 action buttons.
 Also this example uses `react-native-vector-icons` for the button Icons.
 
 ### FAB Example
 ```js
-<ActionButton 
+<ActionButton
   buttonColor="rgba(231,76,60,1)"
   onPress={() => { console.log("hi")}}
 />
@@ -83,7 +83,7 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 | Property      | Type          | Default             | Description |
 | ------------- |:-------------:|:------------:       | ----------- |
 | active        | boolean       | false               | action buttons visible or not
-| autoInactive        | boolean       | true              | Auto hide ActionButtons when ActionButton.Item is pressed.
+| autoInactive  | boolean       | true                | Auto hide ActionButtons when ActionButton.Item is pressed.
 | type          | string        | "float"             | either `float` (bigger btns) or `tab` (smaller btns) + position changes
 | position      | string        | "right" / "center"  | one of: `left` `center` and `right`
 | bgColor       | string        | "transparent"       | background color when ActionButtons are visible
@@ -102,9 +102,4 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 | title         | string        | undefined           | the title shown next to the button, not shown when empty
 | onPress       | func          | null                | **required** function, triggers when a button is tapped
 | buttonColor   | string        | same as + button    | background color of the Button
-| titleBgColor   | string        | "white"  | background color of title
-
-
-
-
-
+| titleBgColor  | string        | "white"             | background color of title

@@ -26,6 +26,7 @@ import ActionButton from 'react-native-action-button';
 
 
 ### Example
+_The following Basic example can be found in `example/Basic`._
 
 ```js
 import React, { Component, StyleSheet, View } from 'react-native';

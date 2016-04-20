@@ -95,6 +95,7 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 | outRangeScale | number        | 1                   | changes size of button during animation
 | onPress       | function      | null                | fires, when ActionButton is tapped
 | icon          | Component     | +                   | Custom component for ActionButton Icon
+| backdrop      | Component     | false               | Custom component for use as Backdrop (i.e. [BlurView](https://github.com/react-native-fellowship/react-native-blur#blur-view), [VibrancyView](https://github.com/react-native-fellowship/react-native-blur#vibrancy-view))
 
 ##### ActionButton.Item:
 | Property      | Type          | Default             | Description |

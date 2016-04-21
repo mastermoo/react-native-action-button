@@ -1,7 +1,6 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
+ * Basic example of react native action button
+ * https://github.com/mastermoo/react-native-action-button
  */
 
 import React, {

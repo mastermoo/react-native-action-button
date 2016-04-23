@@ -22,7 +22,8 @@ export default class ActionButton extends Component {
       btnOutRange: props.btnOutRange || props.buttonColor || 'rgba(0,0,0,1)',
       btnOutRangeTxt: props.btnOutRangeTxt || props.buttonTextColor || 'rgba(255,255,255,1)',
       outRangeScale: props.outRangeScale,
-      anim: new Animated.Value(this.props.active ? 1 : 0)
+      anim: new Animated.Value(this.props.active ? 1 : 0),
+      backdrop: props.backdrop
     }
 
     this.timeout = null;
@@ -100,7 +101,9 @@ export default class ActionButton extends Component {
         <Animated.View pointerEvents="none" style={[styles.overlay, {
           backgroundColor: this.state.bgColor,
           opacity: this.state.anim
-        }]} />
+        }]}>
+          {this.props.backdrop}
+        </Animated.View>
         <View pointerEvents="box-none" style={this.getContainerStyles()}>
           {this.props.children && this._renderActions()}
           {this._renderButton()}
@@ -114,7 +117,7 @@ export default class ActionButton extends Component {
       <View style={this.getActionButtonStyles()}>
         <TouchableOpacity
           activeOpacity={0.85}
-          onPress={() => { 
+          onPress={() => {
             this.props.onPress()
             if (this.props.children) this.animateButton()
           }}>
@@ -171,9 +174,9 @@ export default class ActionButton extends Component {
     }
 
     return (
-        <TouchableOpacity 
+        <TouchableOpacity
           style={this.getActionsStyle()}
-          activeOpacity={1} 
+          activeOpacity={1}
           onPress={() => { this.reset() }}>
           {actionButtons.map((ActionButton, index) => {
             return (
@@ -245,7 +248,11 @@ ActionButton.propTypes = {
   spacing: PropTypes.number,
   size: PropTypes.number,
   autoInactive: PropTypes.bool,
-  onPress: PropTypes.func
+  onPress: PropTypes.func,
+  backdrop: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.object
+  ])
 };
 
 ActionButton.defaultProps = {
@@ -257,7 +264,8 @@ ActionButton.defaultProps = {
   spacing: 20,
   outRangeScale: 1,
   autoInactive: true,
-  onPress: () => {}
+  onPress: () => {},
+  backdrop: false
 };
 
 const styles = StyleSheet.create({

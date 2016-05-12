@@ -1,4 +1,5 @@
-import React, { Component, StyleSheet, Text, View, Animated, TouchableOpacity, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Animated, TouchableOpacity, Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
 
 const alignItemsMap = {

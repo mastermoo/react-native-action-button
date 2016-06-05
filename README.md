@@ -105,4 +105,5 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 | title         | string        | undefined           | the title shown next to the button, not shown when empty
 | onPress       | func          | null                | **required** function, triggers when a button is tapped
 | buttonColor   | string        | same as + button    | background color of the Button
+| titleColor    | string        | "#444"              | color of title
 | titleBgColor  | string        | "white"             | background color of title

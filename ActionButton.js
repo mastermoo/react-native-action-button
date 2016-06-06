@@ -139,7 +139,7 @@ export default class ActionButton extends Component {
                 }, {
                   rotate: this.state.anim.interpolate({
                     inputRange: [0, 1],
-                    outputRange: ['0deg', this.props.icon ? '0deg' : '135deg']
+                    outputRange: ['0deg', this.props.degrees + 'deg']
                   })
                 }],
             }]}>
@@ -253,7 +253,8 @@ ActionButton.propTypes = {
   backdrop: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.object
-  ])
+]),
+  degrees: PropTypes.number
 };
 
 ActionButton.defaultProps = {
@@ -266,7 +267,8 @@ ActionButton.defaultProps = {
   outRangeScale: 1,
   autoInactive: true,
   onPress: () => {},
-  backdrop: false
+  backdrop: false,
+  degrees: 135
 };
 
 const styles = StyleSheet.create({

@@ -15,16 +15,9 @@ export default class ActionButton extends Component {
 
     this.state = {
       active: props.active,
-      type: props.type,
-      bgColor: props.bgColor,
-      buttonColor: props.buttonColor,
-      buttonTextColor: props.buttonTextColor,
-      spacing: props.spacing,
       btnOutRange: props.btnOutRange || props.buttonColor || 'rgba(0,0,0,1)',
       btnOutRangeTxt: props.btnOutRangeTxt || props.buttonTextColor || 'rgba(255,255,255,1)',
-      outRangeScale: props.outRangeScale,
-      anim: new Animated.Value(this.props.active ? 1 : 0),
-      backdrop: props.backdrop
+      anim: new Animated.Value(props.active ? 1 : 0),
     }
 
     this.timeout = null;
@@ -35,10 +28,16 @@ export default class ActionButton extends Component {
     clearTimeout(this.timeout);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...nextProps
+    });
+  }
+
   setPositionAndSizeByType() {
     let position, offsetX, offsetY, size;
 
-    if (this.state.type == 'tab') {
+    if (this.props.type == 'tab') {
       position = 'center',
       offsetX  = 10,
       offsetY  = 4,
@@ -100,7 +99,7 @@ export default class ActionButton extends Component {
     return (
       <View pointerEvents="box-none" style={styles.overlay}>
         <Animated.View pointerEvents="none" style={[styles.overlay, {
-          backgroundColor: this.state.bgColor,
+          backgroundColor: this.props.bgColor,
           opacity: this.state.anim
         }]}>
           {this.props.backdrop}
@@ -130,12 +129,12 @@ export default class ActionButton extends Component {
               borderRadius: this.state.size / 2,
               backgroundColor: this.state.anim.interpolate({
                 inputRange: [0, 1],
-                outputRange: [this.state.buttonColor, this.state.btnOutRange]
+                outputRange: [this.props.buttonColor, this.state.btnOutRange]
               }),
               transform: [{
                   scale: this.state.anim.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [1, this.state.outRangeScale]
+                    outputRange: [1, this.props.outRangeScale]
                   }),
                 }, {
                   rotate: this.state.anim.interpolate({
@@ -158,7 +157,7 @@ export default class ActionButton extends Component {
       <Animated.Text style={[styles.btnText, {
         color: this.state.anim.interpolate({
           inputRange: [0, 1],
-          outputRange: [this.state.buttonTextColor, this.state.btnOutRangeTxt]
+          outputRange: [this.props.buttonTextColor, this.state.btnOutRangeTxt]
         })
       }]}>
         +
@@ -185,7 +184,7 @@ export default class ActionButton extends Component {
               <ActionButtonItem
                 key={index}
                 position={this.state.position}
-                spacing={this.state.spacing}
+                spacing={this.props.spacing}
                 anim={this.state.anim}
                 size={this.state.size}
                 btnColor={this.state.btnOutRange}

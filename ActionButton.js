@@ -152,16 +152,17 @@ export default class ActionButton extends Component {
 
   _renderButtonIcon() {
     if (this.props.icon) return this.props.icon
+    var text = this.props.text || '+';
 
     return (
-      <Animated.Text style={[styles.btnText, {
+        <Animated.Text style={[styles.btnText, {
         color: this.state.anim.interpolate({
           inputRange: [0, 1],
           outputRange: [this.props.buttonTextColor, this.state.btnOutRangeTxt]
         })
-      }]}>
-        +
-      </Animated.Text>
+      },this.props.buttonStyle]}>
+          {text}
+        </Animated.Text>
     )
   }
 
@@ -263,6 +264,7 @@ ActionButton.defaultProps = {
   bgColor: 'transparent',
   buttonColor: 'rgba(0,0,0,1)',
   buttonTextColor: 'rgba(255,255,255,1)',
+  buttonStyle:[],
   spacing: 20,
   outRangeScale: 1,
   autoInactive: true,

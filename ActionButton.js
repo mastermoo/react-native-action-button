@@ -113,6 +113,32 @@ export default class ActionButton extends Component {
   }
 
   _renderButton() {
+    const animatedViewStyle = [
+      styles.btn,
+      {
+        width: this.state.size,
+        height: this.state.size,
+        borderRadius: this.state.size / 2,
+        backgroundColor: this.state.anim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [this.props.buttonColor, this.state.btnOutRange]
+        }),
+        transform: [{
+            scale: this.state.anim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [1, this.props.outRangeScale]
+            }),
+          }, {
+            rotate: this.state.anim.interpolate({
+              inputRange: [0, 1],
+              outputRange: ['0deg', this.props.degrees + 'deg']
+            })
+          }],
+      },
+    ];
+
+    if(!this.props.hideShadow) animatedViewStyle.push(styles.btnShadow);
+
     return (
       <View style={this.getActionButtonStyles()}>
         <TouchableOpacity
@@ -123,26 +149,7 @@ export default class ActionButton extends Component {
             if (this.props.children) this.animateButton()
           }}>
           <Animated.View
-            style={[styles.btn, {
-              width: this.state.size,
-              height: this.state.size,
-              borderRadius: this.state.size / 2,
-              backgroundColor: this.state.anim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [this.props.buttonColor, this.state.btnOutRange]
-              }),
-              transform: [{
-                  scale: this.state.anim.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1, this.props.outRangeScale]
-                  }),
-                }, {
-                  rotate: this.state.anim.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: ['0deg', this.props.degrees + 'deg']
-                  })
-                }],
-            }]}>
+            style={animatedViewStyle}>
             {this._renderButtonIcon()}
           </Animated.View>
         </TouchableOpacity>
@@ -240,6 +247,8 @@ ActionButton.propTypes = {
   type: PropTypes.oneOf(['float', 'tab']),
   position: PropTypes.string,
 
+  hideShadow: PropTypes.bool,
+
   bgColor: PropTypes.string,
   buttonColor: PropTypes.string,
   buttonTextColor: PropTypes.string,
@@ -289,18 +298,20 @@ const styles = StyleSheet.create({
   btn: {
     justifyContent: 'center',
     alignItems: 'center',
-    shadowOpacity: 0.3,
-    shadowOffset: {
-      width: 0, height: 1,
-    },
-    shadowColor: '#444',
-    shadowRadius: 1,
   },
   btnText: {
     marginTop: -4,
     fontSize: 24,
     backgroundColor: 'transparent',
     position: 'relative',
+  },
+  btnShadow: {
+    shadowOpacity: 0.3,
+    shadowOffset: {
+      width: 0, height: 1,
+    },
+    shadowColor: '#444',
+    shadowRadius: 1,
   },
   actionsVertical: {
     flex: 1,

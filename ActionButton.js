@@ -221,6 +221,10 @@ export default class ActionButton extends Component {
   }
 
   reset() {
+    if(this.props.onReset){
+      this.props.onReset();
+    }
+    
     Animated.spring(this.state.anim, {
       toValue: 0,
       duration: 250,

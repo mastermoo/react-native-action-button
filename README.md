@@ -99,6 +99,9 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 | icon          | Component     | +                   | Custom component for ActionButton Icon
 | backdrop      | Component     | false               | Custom component for use as Backdrop (i.e. [BlurView](https://github.com/react-native-fellowship/react-native-blur#blur-view), [VibrancyView](https://github.com/react-native-fellowship/react-native-blur#vibrancy-view))
 | degrees       | number        | 135                 | degrees to rotate icon
+| text          | string        | null                | use this to set a different text on the button
+| buttonStyle   | style         | null                | use this to set the textstyle of the button's text
+| onReset       | function      | null                | use this to set the callback that will be called after the button reset's it's items
 
 ##### ActionButton.Item:
 | Property      | Type          | Default             | Description |

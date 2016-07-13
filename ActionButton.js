@@ -97,7 +97,11 @@ export default class ActionButton extends Component {
 
   render() {
     return (
-      <View pointerEvents="box-none" style={styles.overlay}>
+      <TouchableOpacity
+        pointerEvents="box-none"
+        style={styles.overlay}
+        activeOpacity={1}
+        onPress={() => { this.reset() }}>
         <Animated.View pointerEvents="none" style={[styles.overlay, {
           backgroundColor: this.props.bgColor,
           opacity: this.state.anim
@@ -108,7 +112,7 @@ export default class ActionButton extends Component {
           {this.props.children && this._renderActions()}
           {this._renderButton()}
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 

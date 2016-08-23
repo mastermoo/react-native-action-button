@@ -310,6 +310,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   btnShadow: {
+    elevation: 6,
+    marginBottom: 12,
     shadowOpacity: 0.3,
     shadowOffset: {
       width: 0, height: 1,

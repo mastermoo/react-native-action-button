@@ -114,6 +114,8 @@ const styles = StyleSheet.create({
     },
     shadowColor: '#444',
     shadowRadius: 1,
+    elevation: 6,
+    marginBottom: 12,
   },
   actionTextView: {
     position: 'absolute',

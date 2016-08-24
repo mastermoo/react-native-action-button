@@ -8,6 +8,8 @@ const alignItemsMap = {
   "right" : "flex-end"
 }
 
+const shadowHeight = 12;
+
 export default class ActionButton extends Component {
 
   constructor(props) {
@@ -45,7 +47,7 @@ export default class ActionButton extends Component {
   getButtonSize() {
     return {
       width: this.props.size,
-      height: this.props.size,
+      height: this.props.size + shadowHeight,
     }
   }
 

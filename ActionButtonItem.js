@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingTop: 2,
     shadowOpacity: 0.3,
     shadowOffset: {
       width: 0, height: 1,

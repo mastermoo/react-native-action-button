@@ -13,7 +13,7 @@ export default class ActionButtonItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      spaceBetween: 15,
+      spaceBetween: 17,
       alignItems: alignItemsMap[this.props.position]
     };
 
@@ -120,12 +120,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingTop: 2,
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.2,
     shadowOffset: {
-      width: 0, height: 1,
+      width: 3, height: 3,
     },
     shadowColor: '#444',
-    shadowRadius: 1,
+    shadowRadius: 2,
     elevation: 6,
     marginBottom: 12,
   },
@@ -133,16 +133,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     paddingVertical: 4,
     paddingHorizontal: 10,
-    borderRadius: 3,
-    shadowOpacity: 0.3,
+    borderRadius: 10,
+    height: 35,
+    shadowOpacity: 0.2,
     shadowOffset: {
-      width: 0, height: 1,
+      width: 3, height: 3,
     },
     shadowColor: '#444',
-    shadowRadius: 1,
+    shadowRadius: 2,
   },
   actionText: {
+    top:4,
     flex: 1,
-    fontSize: 14,
+    fontSize: 15,
+    fontFamily:'Raleway'
   }
 });

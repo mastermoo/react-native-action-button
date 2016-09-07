@@ -59,7 +59,15 @@ export default class ActionButton extends Component {
   }
 
   getActionsStyle() {
-    return [ styles.actionsVertical, this.getOrientation() ];
+    return [
+      styles.actionsVertical,
+      this.getOrientation(),
+      {
+        flexDirection: this.props.verticalOrientation === 'down' ?
+          'column-reverse' :
+          'column',
+      },
+    ];
   }
 
 
@@ -79,8 +87,11 @@ export default class ActionButton extends Component {
         <View pointerEvents="box-none" style={this.getContainerStyles()}>
           {this.state.active && this._renderTappableBackground()}
 
-          {this.props.children && this._renderActions()}
+          {this.props.verticalOrientation === 'up' &&
+            this.props.children && this._renderActions()}
           {this._renderButton()}
+          {this.props.verticalOrientation === 'down' &&
+            this.props.children && this._renderActions()}
         </View>
       </View>
     );
@@ -171,6 +182,7 @@ export default class ActionButton extends Component {
               <ActionButtonItem
                 key={index}
                 position={this.props.position}
+                verticalOrientation={this.props.verticalOrientation}
                 spacing={this.props.spacing}
                 anim={this.anim}
                 parentSize={this.props.size}
@@ -245,8 +257,9 @@ ActionButton.propTypes = {
   backdrop: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.object
-]),
-  degrees: PropTypes.number
+  ]),
+  degrees: PropTypes.number,
+  verticalOrientation: PropTypes.oneOf(['up', 'down']),
 };
 
 ActionButton.defaultProps = {
@@ -264,6 +277,7 @@ ActionButton.defaultProps = {
   offsetX: 30,
   offsetY: 30,
   size: 56,
+  verticalOrientation: 'up',
 };
 
 const styles = StyleSheet.create({
@@ -304,6 +318,5 @@ const styles = StyleSheet.create({
   actionsVertical: {
     flex: 1,
     justifyContent: 'flex-end',
-    flexDirection: 'column',
   },
 });

@@ -30,20 +30,25 @@ export default class ActionButtonItem extends Component {
     }
 
     const translateX = translateXMap[this.props.position];
+    const margin = (this.props.spacing < 12) ? 0 : (this.props.spacing - 12);
 
     return (
       <Animated.View
         pointerEvents="box-none"
         style={[styles.actionButtonWrap, {
           alignItems: this.state.alignItems,
-          marginBottom: (this.props.spacing < 12) ? 0 : (this.props.spacing - 12),
+          marginBottom: this.props.verticalOrientation === 'up' ? margin : 0,
+          marginTop: this.props.verticalOrientation === 'down' ? margin : 0,
           opacity: this.props.anim,
           transform: [
             { translateX },
             {
               translateY: this.props.anim.interpolate({
                 inputRange: [0, 1],
-                outputRange: [40, 0]
+                outputRange: [
+                  this.props.verticalOrientation === 'down' ? -40 : 40,
+                  0
+                ]
               }),
             }
            ],
@@ -60,7 +65,9 @@ export default class ActionButtonItem extends Component {
               width: this.props.size,
               height: this.props.size,
               borderRadius: this.props.size / 2,
-              backgroundColor: this.props.buttonColor || this.props.btnColor
+              backgroundColor: this.props.buttonColor || this.props.btnColor,
+              marginBottom: this.props.verticalOrientation === 'up' ? 12 : 0,
+              marginTop: this.props.verticalOrientation === 'down' ? 12 : 0,
             }]}
           >
             {this.props.children}
@@ -127,7 +134,6 @@ const styles = StyleSheet.create({
     shadowColor: '#444',
     shadowRadius: 2,
     elevation: 6,
-    marginBottom: 12,
   },
   actionTextView: {
     position: 'absolute',

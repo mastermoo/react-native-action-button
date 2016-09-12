@@ -101,6 +101,7 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 | text          | string        | null                | use this to set a different text on the button
 | buttonStyle   | style         | null                | use this to set the textstyle of the button's text
 | onReset       | function      | null                | use this to set the callback that will be called after the button reset's it's items
+| verticalOrientation | string  | "up"                | direction action buttons should expand.  One of: `up` or `down`
 
 ##### ActionButton.Item:
 | Property      | Type          | Default             | Description |

@@ -37,7 +37,9 @@ export default class ActionButton extends Component {
   }
 
   getActionButtonStyles() {
-    return [styles.actionBarItem, this.getButtonSize()];
+    const actionButtonStyles = [styles.actionBarItem, this.getButtonSize()];
+    if(!this.props.hideShadow) actionButtonStyles.push(styles.btnShadow);
+    return actionButtonStyles;
   }
 
   getOrientation() {
@@ -123,8 +125,6 @@ export default class ActionButton extends Component {
           }],
       },
     ];
-
-    if(!this.props.hideShadow) animatedViewStyle.push(styles.btnShadow);
 
     return (
       <View style={this.getActionButtonStyles()}>

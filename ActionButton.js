@@ -108,6 +108,13 @@ export default class ActionButton extends Component {
         width: this.props.size,
         height: this.props.size,
         borderRadius: this.props.size / 2,
+        shadowOpacity: 0.3,
+        shadowOffset: {
+          width: 0, height: 1,
+        },
+        shadowColor: '#444',
+        shadowRadius: 1,
+        elevation: 6,
         backgroundColor: this.anim.interpolate({
           inputRange: [0, 1],
           outputRange: [this.props.buttonColor, buttonColorMax]
@@ -306,13 +313,6 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   btnShadow: {
-    shadowOpacity: 0.3,
-    shadowOffset: {
-      width: 0, height: 1,
-    },
-    shadowColor: '#444',
-    shadowRadius: 1,
-    elevation: 6,
     marginBottom: 12,
   },
   actionsVertical: {

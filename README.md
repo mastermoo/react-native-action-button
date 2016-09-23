@@ -77,6 +77,8 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 />
 ```
 
+### Show/hide the FAB on scroll
+Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94a685b06eb3900f) for showing and hiding the floating action button depending on the scroll direction.  
 
 ### Configuration
 

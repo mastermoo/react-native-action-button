@@ -75,11 +75,11 @@ export default class ActionButtonItem extends Component {
         </TouchableOpacity>
         {this.props.title && (
           <TouchableOpacity
-            style={this.getTextStyles()}
+            style={[this.getTextStyles(), this.props.textContainerStyle]}
             activeOpacity={this.props.activeOpacity || 0.85}
             onPress={this.props.onPress}
           >
-            <Text style={[styles.actionText, { color: this.props.titleColor || '#444' }]}>
+            <Text style={[styles.actionText, this.props.textStyle, { color: this.props.titleColor || '#444' }]}>
               {this.props.title}
             </Text>
           </TouchableOpacity>

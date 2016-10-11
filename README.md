@@ -79,7 +79,7 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 ```
 
 ### Show/hide the FAB on scroll
-Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94a685b06eb3900f) for showing and hiding the floating action button depending on the scroll direction.  
+Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94a685b06eb3900f) for showing and hiding the floating action button depending on the scroll direction.
 
 ### Configuration
 
@@ -114,3 +114,5 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | buttonColor   | string        | same as + button    | background color of the Button
 | titleColor    | string        | "#444"              | color of title
 | titleBgColor  | string        | "white"             | background color of title
+| textContainerStyle  | style        | null             | use this to set the textstyle of the button's item text container
+| textStyle  | style        | null             | use this to set the textstyle of the button's item text

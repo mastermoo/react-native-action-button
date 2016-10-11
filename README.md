@@ -29,7 +29,8 @@ import ActionButton from 'react-native-action-button';
 _The following Basic example can be found in `example/Basic`._
 
 ```js
-import React, { Component, StyleSheet, View } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 

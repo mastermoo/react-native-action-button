@@ -55,7 +55,6 @@ export default class ActionButton extends Component {
 
   getOffsetXY() {
     return {
-      paddingHorizontal: this.props.offsetX,
       paddingBottom: this.props.offsetY
     };
   }
@@ -115,6 +114,7 @@ export default class ActionButton extends Component {
         shadowColor: '#444',
         shadowRadius: 1,
         elevation: 6,
+        marginBottom: shadowHeight,
         backgroundColor: this.anim.interpolate({
           inputRange: [0, 1],
           outputRange: [this.props.buttonColor, buttonColorMax]
@@ -134,18 +134,21 @@ export default class ActionButton extends Component {
     ];
 
     return (
-      <View style={this.getActionButtonStyles()}>
+      <View style={[this.getActionButtonStyles(), { width: this.props.size + 25, paddingLeft: this.props.offsetX }]}>
         <TouchableOpacity
+          style={{ right: this.props.offsetX }}
           activeOpacity={0.85}
           onLongPress={this.props.onLongPress}
           onPress={() => {
             this.props.onPress()
             if (this.props.children) this.animateButton()
           }}>
+          <View style={{ paddingRight: this.props.offsetX  }}>
           <Animated.View
             style={animatedViewStyle}>
             {this._renderButtonIcon()}
           </Animated.View>
+          </View>
         </TouchableOpacity>
       </View>
     );
@@ -281,8 +284,8 @@ ActionButton.defaultProps = {
   backdrop: false,
   degrees: 135,
   position: 'right',
-  offsetX: 30,
-  offsetY: 30,
+  offsetX: 16,
+  offsetY: 6,
   size: 56,
   verticalOrientation: 'up',
 };

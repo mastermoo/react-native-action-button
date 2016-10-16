@@ -133,17 +133,21 @@ export default class ActionButton extends Component {
       },
     ];
 
+    let offsetLeft = 5;
+
+    if (this.props.position === 'left')
+      offsetLeft = 0;
+
     return (
-      <View style={[this.getActionButtonStyles(), { width: this.props.size + 25, paddingLeft: this.props.offsetX }]}>
+      <View style={[this.getActionButtonStyles(), { width: this.props.size + 30, paddingLeft: this.props.offsetX - offsetLeft }]}>
         <TouchableOpacity
-          style={{ right: this.props.offsetX }}
           activeOpacity={0.85}
           onLongPress={this.props.onLongPress}
           onPress={() => {
             this.props.onPress()
             if (this.props.children) this.animateButton()
           }}>
-          <View style={{ paddingRight: this.props.offsetX  }}>
+          <View style={{ paddingRight: this.props.offsetX, paddingLeft: 5 }}>
           <Animated.View
             style={animatedViewStyle}>
             {this._renderButtonIcon()}

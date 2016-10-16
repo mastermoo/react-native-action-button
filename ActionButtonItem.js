@@ -56,7 +56,7 @@ export default class ActionButtonItem extends Component {
         ]}
       >
         <TouchableOpacity
-          style={{ width: this.props.size + 35, paddingLeft: 10, flex:1 }}
+          style={{ width: this.props.size + 35, flex:1, alignItems: 'center' }}
           activeOpacity={this.props.activeOpacity || 0.85}
           onPress={this.props.onPress}
         >
@@ -105,7 +105,7 @@ export default class ActionButtonItem extends Component {
     }
 
     if (this.props.position == 'left') positionStyles = {
-      left: this.props.size + this.state.spaceBetween,
+      left: this.props.size + this.state.spaceBetween + 10,
       top: offsetTop
     }
 

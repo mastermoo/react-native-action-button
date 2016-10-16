@@ -215,18 +215,26 @@ export default class ActionButton extends Component {
   // Animation Methods
   //////////////////////
 
-  animateButton() {
+  animateButton(animate=true) {
     if (this.state.active) return this.reset();
 
-    Animated.spring(this.anim, { toValue: 1 }).start();
+    if (animate) {
+      Animated.spring(this.anim, { toValue: 1 }).start();
+    } else {
+      this.anim.setValue(1);
+    }
 
     this.setState({ active: true });
   }
 
-  reset() {
+  reset(animate=true) {
     if (this.props.onReset) this.props.onReset();
 
-    Animated.spring(this.anim, { toValue: 0 }).start();
+    if (animate) {
+      Animated.spring(this.anim, { toValue: 0 }).start();
+    } else {
+      this.anim.setValue(0);
+    }
 
     setTimeout(() => this.setState({ active: false }), 250);
   }

@@ -61,7 +61,7 @@ export default class ActionButtonItem extends Component {
           onPress={this.props.onPress}
         >
           <View
-            style={[styles.actionButton, this.props.style, {
+            style={[styles.actionButton, !this.props.hideShadow && styles.shadow, this.props.style, {
               width: this.props.size,
               height: this.props.size,
               borderRadius: this.props.size / 2,
@@ -75,7 +75,7 @@ export default class ActionButtonItem extends Component {
         </TouchableOpacity>
         {this.props.title && (
           <TouchableOpacity
-            style={[this.getTextStyles(), this.props.textContainerStyle]}
+            style={[this.getTextStyles(), this.props.textContainerStyle, !this.props.hideShadow && styles.shadow]}
             activeOpacity={this.props.activeOpacity || 0.85}
             onPress={this.props.onPress}
           >
@@ -126,11 +126,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  shadow: {
     shadowOpacity: 0.3,
     shadowOffset: {
-      width: 0, height: 1,
+      width: 0, height: 0,
     },
-    shadowColor: '#444',
+    shadowColor: '#666',
     shadowRadius: 1,
     elevation: 6,
   },
@@ -139,12 +141,8 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 10,
     borderRadius: 3,
-    shadowOpacity: 0.3,
-    shadowOffset: {
-      width: 0, height: 1,
-    },
-    shadowColor: '#444',
-    shadowRadius: 1,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#eee',
   },
   actionText: {
     flex: 1,

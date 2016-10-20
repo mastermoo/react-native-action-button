@@ -13,7 +13,7 @@ export default class ActionButtonItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      spaceBetween: 17,
+      spaceBetween: this.props.spaceBetween || 17,
       alignItems: alignItemsMap[this.props.position]
     };
 
@@ -79,7 +79,7 @@ export default class ActionButtonItem extends Component {
             activeOpacity={this.props.activeOpacity || 0.85}
             onPress={this.props.onPress}
           >
-            <Text style={[styles.actionText, { color: this.props.titleColor || '#444' }]}>
+            <Text style={[styles.actionText, { color: this.props.titleColor || '#444' },this.props.actionTextStyle]}>
               {this.props.title}
             </Text>
           </TouchableOpacity>
@@ -114,7 +114,7 @@ export default class ActionButtonItem extends Component {
       top: offsetTop
     }
 
-    return [styles.actionTextView, positionStyles, bgStyle];
+    return [styles.actionTextView, positionStyles, bgStyle,this.props.actionTextViewStyle];
   }
 }
 

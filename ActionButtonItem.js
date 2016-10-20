@@ -13,7 +13,7 @@ export default class ActionButtonItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      spaceBetween: this.props.spaceBetween || 17,
+      spaceBetween: this.props.spaceBetween || 15,
       alignItems: alignItemsMap[this.props.position]
     };
 

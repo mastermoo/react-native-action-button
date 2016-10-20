@@ -127,31 +127,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingTop: 2,
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.3,
     shadowOffset: {
-      width: 3, height: 3,
+      width: 0, height: 1,
     },
     shadowColor: '#444',
-    shadowRadius: 2,
+    shadowRadius: 1,
     elevation: 6,
   },
   actionTextView: {
     position: 'absolute',
     paddingVertical: 4,
     paddingHorizontal: 10,
-    borderRadius: 10,
-    height: 35,
-    shadowOpacity: 0.2,
+    borderRadius: 3,
+    shadowOpacity: 0.3,
     shadowOffset: {
-      width: 3, height: 3,
+      width: 0, height: 1,
     },
     shadowColor: '#444',
-    shadowRadius: 2,
+    shadowRadius: 1,
   },
   actionText: {
-    top:4,
     flex: 1,
-    fontSize: 15,
-    fontFamily:'Raleway'
+    fontSize: 14,
   }
 });

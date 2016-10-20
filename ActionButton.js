@@ -38,7 +38,6 @@ export default class ActionButton extends Component {
 
   getActionButtonStyles() {
     const actionButtonStyles = [styles.actionBarItem, this.getButtonSize()];
-    if(!this.props.hideShadow) actionButtonStyles.push(styles.btnShadow);
     return actionButtonStyles;
   }
 
@@ -87,7 +86,7 @@ export default class ActionButton extends Component {
           {this.props.backdrop}
         </Animated.View>
         <View pointerEvents="box-none" style={this.getContainerStyles()}>
-          {this.state.active && this._renderTappableBackground()}
+          {(this.state.active && !this.props.backgroundTappable) && this._renderTappableBackground()}
 
           {this.props.verticalOrientation === 'up' &&
             this.props.children && this._renderActions()}
@@ -108,13 +107,6 @@ export default class ActionButton extends Component {
         width: this.props.size,
         height: this.props.size,
         borderRadius: this.props.size / 2,
-        shadowOpacity: 0.3,
-        shadowOffset: {
-          width: 0, height: 1,
-        },
-        shadowColor: '#444',
-        shadowRadius: 1,
-        elevation: 6,
         backgroundColor: this.anim.interpolate({
           inputRange: [0, 1],
           outputRange: [this.props.buttonColor, buttonColorMax]
@@ -132,6 +124,8 @@ export default class ActionButton extends Component {
           }],
       },
     ];
+
+    if(!this.props.hideShadow) animatedViewStyle.push(styles.btnShadow);
 
     return (
       <View style={this.getActionButtonStyles()}>
@@ -188,12 +182,9 @@ export default class ActionButton extends Component {
             return (
               <ActionButtonItem
                 key={index}
-                position={this.props.position}
-                verticalOrientation={this.props.verticalOrientation}
-                spacing={this.props.spacing}
                 anim={this.anim}
+                {...this.props}
                 parentSize={this.props.size}
-                size={this.props.size}
                 btnColor={this.props.btnOutRange}
                 {...ActionButton.props}
                 onPress={() => {
@@ -214,7 +205,6 @@ export default class ActionButton extends Component {
       <TouchableOpacity
         activeOpacity={1}
         style={styles.overlay}
-        pointerEvents={this.state.active ? 'auto' : 'box-none'}
         onPress={this.reset.bind(this)}
       />
     );
@@ -225,18 +215,26 @@ export default class ActionButton extends Component {
   // Animation Methods
   //////////////////////
 
-  animateButton() {
+  animateButton(animate=true) {
     if (this.state.active) return this.reset();
 
-    Animated.spring(this.anim, { toValue: 1 }).start();
+    if (animate) {
+      Animated.spring(this.anim, { toValue: 1 }).start();
+    } else {
+      this.anim.setValue(1);
+    }
 
     this.setState({ active: true });
   }
 
-  reset() {
+  reset(animate=true) {
     if (this.props.onReset) this.props.onReset();
 
-    Animated.spring(this.anim, { toValue: 0 }).start();
+    if (animate) {
+      Animated.spring(this.anim, { toValue: 0 }).start();
+    } else {
+      this.anim.setValue(0);
+    }
 
     setTimeout(() => this.setState({ active: false }), 250);
   }
@@ -267,6 +265,7 @@ ActionButton.propTypes = {
   ]),
   degrees: PropTypes.number,
   verticalOrientation: PropTypes.oneOf(['up', 'down']),
+  backgroundTappable: PropTypes.bool,
 };
 
 ActionButton.defaultProps = {
@@ -285,6 +284,7 @@ ActionButton.defaultProps = {
   offsetY: 30,
   size: 56,
   verticalOrientation: 'up',
+  backgroundTappable: false,
 };
 
 const styles = StyleSheet.create({
@@ -301,6 +301,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent',
+    marginBottom: 12,
   },
   btn: {
     justifyContent: 'center',
@@ -313,7 +314,13 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   btnShadow: {
-    marginBottom: 12,
+    shadowOpacity: 0.5,
+    shadowOffset: {
+      width: 0, height: 0,
+    },
+    shadowColor: '#666',
+    shadowRadius: 1,
+    elevation: 6,
   },
   actionsVertical: {
     flex: 1,

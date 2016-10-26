@@ -314,12 +314,12 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   btnShadow: {
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowOffset: {
-      width: 0, height: 0,
+      width: 0, height: 10,
     },
-    shadowColor: '#666',
-    shadowRadius: 1,
+    shadowColor: ‘#000’,
+    shadowRadius: 4,
     elevation: 6,
   },
   actionsVertical: {

@@ -88,6 +88,7 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | ------------- |:-------------:|:------------:       | ----------- |
 | active        | boolean       | false               | action buttons visible or not
 | autoInactive  | boolean       | true                | Auto hide ActionButtons when ActionButton.Item is pressed.
+| hideShadow    | boolean       | false               | use this to hide the default elevation and boxShadow
 | position      | string        | "right" / "center"  | one of: `left` `center` and `right`
 | bgColor       | string        | "transparent"       | background color when ActionButtons are visible
 | buttonColor   | string        | "rgba(0,0,0,1)"     | background color of the +Button **(must be rgba value!)**

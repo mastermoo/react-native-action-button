@@ -316,11 +316,11 @@ const styles = StyleSheet.create({
   btnShadow: {
     shadowOpacity: 0.3,
     shadowOffset: {
-      width: 0, height: 10,
+      width: 0, height: 8,
     },
     shadowColor: ‘#000’,
     shadowRadius: 4,
-    elevation: 6,
+    elevation: 8,
   },
   actionsVertical: {
     flex: 1,

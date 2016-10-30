@@ -36,6 +36,7 @@ export default class ActionButtonItem extends Component {
       <Animated.View
         pointerEvents="box-none"
         style={[styles.actionButtonWrap, {
+          height: this.props.size + margin + 12,
           alignItems: this.state.alignItems,
           marginBottom: this.props.verticalOrientation === 'up' ? margin : 0,
           marginTop: this.props.verticalOrientation === 'down' ? margin : 0,

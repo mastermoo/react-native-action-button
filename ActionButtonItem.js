@@ -40,7 +40,7 @@ export default class ActionButtonItem extends Component {
           alignItems: this.state.alignItems,
           marginBottom: this.props.verticalOrientation === 'up' ? margin : 0,
           marginTop: this.props.verticalOrientation === 'down' ? margin : 0,
-          marginHoriztonal: 8,
+          marginHorizontal: 8,
           opacity: this.props.anim,
           transform: [
             { translateX },

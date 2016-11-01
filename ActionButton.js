@@ -107,6 +107,7 @@ export default class ActionButton extends Component {
         width: this.props.size,
         height: this.props.size,
         borderRadius: this.props.size / 2,
+        marginBottom: shadowHeight,
         backgroundColor: this.anim.interpolate({
           inputRange: [0, 1],
           outputRange: [this.props.buttonColor, buttonColorMax]

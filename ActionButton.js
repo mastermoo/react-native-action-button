@@ -47,14 +47,14 @@ export default class ActionButton extends Component {
 
   getButtonSize() {
     return {
-      width: this.props.size,
+      width: this.props.size + 16,
       height: this.props.size + shadowHeight,
     }
   }
 
   getOffsetXY() {
     return {
-      paddingHorizontal: this.props.offsetX,
+      paddingHorizontal: this.props.offsetX - 8,
       paddingBottom: this.props.offsetY
     };
   }
@@ -107,6 +107,7 @@ export default class ActionButton extends Component {
         width: this.props.size,
         height: this.props.size,
         borderRadius: this.props.size / 2,
+        marginHorizontal: 8,
         marginBottom: shadowHeight,
         backgroundColor: this.anim.interpolate({
           inputRange: [0, 1],

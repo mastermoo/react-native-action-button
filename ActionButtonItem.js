@@ -40,6 +40,7 @@ export default class ActionButtonItem extends Component {
           alignItems: this.state.alignItems,
           marginBottom: this.props.verticalOrientation === 'up' ? margin : 0,
           marginTop: this.props.verticalOrientation === 'down' ? margin : 0,
+          marginHorizontal: 8,
           opacity: this.props.anim,
           transform: [
             { translateX },
@@ -131,10 +132,10 @@ const styles = StyleSheet.create({
   shadow: {
     shadowOpacity: 0.3,
     shadowOffset: {
-      width: 0, height: 0,
+      width: 0, height: 8,
     },
-    shadowColor: '#666',
-    shadowRadius: 1,
+    shadowColor: '#000',
+    shadowRadius: 4,
     elevation: 6,
   },
   actionTextView: {

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Animated, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Animated, TouchableOpacity, Platform } from 'react-native';
 import ActionButtonItem from './ActionButtonItem';
 
 const alignItemsMap = {
@@ -38,6 +38,7 @@ export default class ActionButton extends Component {
 
   getActionButtonStyles() {
     const actionButtonStyles = [styles.actionBarItem, this.getButtonSize()];
+    if(!this.props.hideShadow) actionButtonStyles.push(styles.btnShadow);
     return actionButtonStyles;
   }
 
@@ -127,7 +128,7 @@ export default class ActionButton extends Component {
       },
     ];
 
-    if(!this.props.hideShadow) animatedViewStyle.push(styles.btnShadow);
+    if(!this.props.hideShadow && Platform.OS === 'android') animatedViewStyle.push(styles.btnShadow);
 
     return (
       <View style={this.getActionButtonStyles()}>

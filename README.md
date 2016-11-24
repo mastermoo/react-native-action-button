@@ -93,8 +93,8 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | bgColor       | string        | "transparent"       | background color when ActionButtons are visible
 | buttonColor   | string        | "rgba(0,0,0,1)"     | background color of the +Button **(must be rgba value!)**
 | spacing       | number        | 20                  | spacing between the `ActionButton.Item`s
-| offsetX       | number        | 10 / 30             | offset to the sides of the screen
-| offsetY       | number        | 4 / 30              | offset to the bottom of the screen
+| offsetX       | number        | 10 / 30             | offset from the left/right side of the screen for `left`/`right` position respectively
+| offsetY       | number        | 4 / 30              | offset from the bottom/top of the screen for `up`/`down` verticalOrientation respectively
 | btnOutRange   | string        | props.buttonColor   | button background color to animate to
 | outRangeScale | number        | 1                   | changes size of button during animation
 | onPress       | function      | null                | fires, when ActionButton is tapped

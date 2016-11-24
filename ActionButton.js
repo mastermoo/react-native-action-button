@@ -33,7 +33,7 @@ export default class ActionButton extends Component {
   //////////////////////
 
   getContainerStyles() {
-    return [styles.overlay, this.getOrientation(), this.getOffsetXY()];
+    return [this.getOverlayStyles(), this.getOrientation(), this.getOffsetXY()];
   }
 
   getActionButtonStyles() {
@@ -56,7 +56,8 @@ export default class ActionButton extends Component {
   getOffsetXY() {
     return {
       paddingHorizontal: this.props.offsetX - 8,
-      paddingBottom: this.props.offsetY
+      paddingBottom: this.props.verticalOrientation === 'up' ? this.props.offsetY : 0,
+      paddingTop: this.props.verticalOrientation === 'down' ? this.props.offsetY : 0
     };
   }
 
@@ -65,11 +66,19 @@ export default class ActionButton extends Component {
       styles.actionsVertical,
       this.getOrientation(),
       {
-        flexDirection: this.props.verticalOrientation === 'down' ?
-          'column-reverse' :
-          'column',
+        flexDirection: 'column',
+        justifyContent: this.props.verticalOrientation === 'up' ? 'flex-end' : 'flex-start'
       },
     ];
+  }
+
+  getOverlayStyles() {
+    return [
+      styles.overlay,
+      {
+        justifyContent: this.props.verticalOrientation === 'up' ? 'flex-end' : 'flex-start'
+      }
+    ]
   }
 
 
@@ -79,8 +88,8 @@ export default class ActionButton extends Component {
 
   render() {
     return (
-      <View pointerEvents="box-none" style={styles.overlay}>
-        <Animated.View pointerEvents="none" style={[styles.overlay, {
+      <View pointerEvents="box-none" style={this.getOverlayStyles()}>
+        <Animated.View pointerEvents="none" style={[this.getOverlayStyles(), {
           backgroundColor: this.props.bgColor,
           opacity: this.anim
         }]}>
@@ -207,7 +216,7 @@ export default class ActionButton extends Component {
     return (
       <TouchableOpacity
         activeOpacity={1}
-        style={styles.overlay}
+        style={this.getOverlayStyles()}
         onPress={this.reset.bind(this)}
       />
     );
@@ -298,7 +307,6 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     backgroundColor: 'transparent',
-    justifyContent: 'flex-end',
   },
   actionBarItem: {
     alignItems: 'center',
@@ -327,6 +335,5 @@ const styles = StyleSheet.create({
   },
   actionsVertical: {
     flex: 1,
-    justifyContent: 'flex-end',
-  },
+  }
 });

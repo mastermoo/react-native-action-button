@@ -38,7 +38,6 @@ export default class ActionButton extends Component {
 
   getActionButtonStyles() {
     const actionButtonStyles = [styles.actionBarItem, this.getButtonSize()];
-    if(!this.props.hideShadow) actionButtonStyles.push(styles.btnShadow);
     return actionButtonStyles;
   }
 
@@ -128,22 +127,21 @@ export default class ActionButton extends Component {
       },
     ];
 
-    if(!this.props.hideShadow && Platform.OS === 'android') animatedViewStyle.push(styles.btnShadow);
+    const actionButtonStyles = [ this.getActionButtonStyles(), animatedViewStyle ]
 
     return (
-      <View style={this.getActionButtonStyles()}>
-        <TouchableOpacity
-          activeOpacity={0.85}
-          onLongPress={this.props.onLongPress}
-          onPress={() => {
-            this.props.onPress()
-            if (this.props.children) this.animateButton()
-          }}>
-          <Animated.View
-            style={animatedViewStyle}>
+      <View style={ styles.btnShadow }>
+        <View style={ actionButtonStyles }>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            onLongPress={this.props.onLongPress}
+            onPress={() => {
+              this.props.onPress()
+              if (this.props.children) this.animateButton()
+            }}>
             {this._renderButtonIcon()}
-          </Animated.View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

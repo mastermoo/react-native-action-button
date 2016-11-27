@@ -141,7 +141,7 @@ export default class ActionButton extends Component {
             }}>
             {this._renderButtonIcon()}
           </TouchableOpacity>
-        </AnimView>
+        </Animated.View>
       </View>
     );
   }

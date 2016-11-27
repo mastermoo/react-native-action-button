@@ -130,8 +130,8 @@ export default class ActionButton extends Component {
     const actionButtonStyles = [ this.getActionButtonStyles(), animatedViewStyle ]
 
     return (
-      <Animated.View style={ styles.btnShadow }>
-        <View style={ actionButtonStyles }>
+      <View style={ styles.btnShadow }>
+        <Animated.View style={ actionButtonStyles }>
           <TouchableOpacity
             activeOpacity={0.85}
             onLongPress={this.props.onLongPress}
@@ -141,8 +141,8 @@ export default class ActionButton extends Component {
             }}>
             {this._renderButtonIcon()}
           </TouchableOpacity>
-        </View>
-      </Animated.View>
+        </AnimView>
+      </View>
     );
   }
 

@@ -104,15 +104,6 @@ export default class ActionButton extends Component {
     const animatedViewStyle = [
       styles.btn,
       {
-        width: this.props.size,
-        height: this.props.size,
-        borderRadius: this.props.size / 2,
-        marginHorizontal: 8,
-        marginBottom: shadowHeight,
-        backgroundColor: this.anim.interpolate({
-          inputRange: [0, 1],
-          outputRange: [this.props.buttonColor, buttonColorMax]
-        }),
         transform: [{
             scale: this.anim.interpolate({
               inputRange: [0, 1],
@@ -127,10 +118,21 @@ export default class ActionButton extends Component {
       },
     ];
 
-    const actionButtonStyles = [ this.getActionButtonStyles(), animatedViewStyle ]
+    const combinedStyle = {
+      width: this.props.size,
+      height: this.props.size,
+      borderRadius: this.props.size / 2,
+      marginBottom: shadowHeight,
+      backgroundColor: this.anim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [this.props.buttonColor, buttonColorMax]
+      })
+    }
+
+    const actionButtonStyles = [ this.getActionButtonStyles(), animatedViewStyle, combinedStyle ]
 
     return (
-      <View style={ styles.btnShadow }>
+      <View style={ !this.props.hideShadow && [ styles.btnShadow, combinedStyle, { marginHorizontal: 8 }]}>
         <Animated.View style={ actionButtonStyles }>
           <TouchableOpacity
             activeOpacity={0.85}

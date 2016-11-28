@@ -113,6 +113,10 @@ export default class ActionButton extends Component {
     const animatedViewStyle = [
       styles.btn,
       {
+        backgroundColor: this.anim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [this.props.buttonColor, buttonColorMax]
+        }),
         transform: [{
             scale: this.anim.interpolate({
               inputRange: [0, 1],
@@ -132,13 +136,10 @@ export default class ActionButton extends Component {
       height: this.props.size,
       borderRadius: this.props.size / 2,
       marginBottom: shadowHeight,
-      backgroundColor: this.anim.interpolate({
-        inputRange: [0, 1],
-        outputRange: [this.props.buttonColor, buttonColorMax]
-      })
+      backgroundColor: this.props.buttonColor
     }
 
-    const actionButtonStyles = [ this.getActionButtonStyles(), animatedViewStyle, combinedStyle ]
+    const actionButtonStyles = [ this.getActionButtonStyles(), combinedStyle, animatedViewStyle ]
 
     return (
       <View style={ !this.props.hideShadow && [ styles.btnShadow, combinedStyle, { marginHorizontal: 8 }]}>

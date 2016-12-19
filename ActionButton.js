@@ -38,7 +38,6 @@ export default class ActionButton extends Component {
 
   getActionButtonStyles() {
     const actionButtonStyles = [styles.actionBarItem, this.getButtonSize()];
-    if(!this.props.hideShadow) actionButtonStyles.push(styles.btnShadow);
     return actionButtonStyles;
   }
 
@@ -114,11 +113,6 @@ export default class ActionButton extends Component {
     const animatedViewStyle = [
       styles.btn,
       {
-        width: this.props.size,
-        height: this.props.size,
-        borderRadius: this.props.size / 2,
-        marginHorizontal: 8,
-        marginBottom: shadowHeight,
         backgroundColor: this.anim.interpolate({
           inputRange: [0, 1],
           outputRange: [this.props.buttonColor, buttonColorMax]
@@ -137,22 +131,29 @@ export default class ActionButton extends Component {
       },
     ];
 
-    if(!this.props.hideShadow && Platform.OS === 'android') animatedViewStyle.push(styles.btnShadow);
+    const combinedStyle = {
+      width: this.props.size,
+      height: this.props.size,
+      borderRadius: this.props.size / 2,
+      marginBottom: shadowHeight,
+      backgroundColor: this.props.buttonColor
+    }
+
+    const actionButtonStyles = [ this.getActionButtonStyles(), combinedStyle, animatedViewStyle ]
 
     return (
-      <View style={this.getActionButtonStyles()}>
-        <TouchableOpacity
-          activeOpacity={0.85}
-          onLongPress={this.props.onLongPress}
-          onPress={() => {
-            this.props.onPress()
-            if (this.props.children) this.animateButton()
-          }}>
-          <Animated.View
-            style={animatedViewStyle}>
+      <View style={ !this.props.hideShadow && [ styles.btnShadow, combinedStyle, { marginHorizontal: 8 }]}>
+        <Animated.View style={ actionButtonStyles }>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            onLongPress={this.props.onLongPress}
+            onPress={() => {
+              this.props.onPress()
+              if (this.props.children) this.animateButton()
+            }}>
             {this._renderButtonIcon()}
-          </Animated.View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
     );
   }

@@ -25,8 +25,8 @@ export default class ActionButtonItem extends Component {
   render() {
     const translateXMap = {
       center: 0,
-      left: (this.props.parentSize - this.props.size) / 2,
-      right: -(this.props.parentSize - this.props.size) / 2,
+      left: (this.props.parentSize - this.props.size) / 2 - 8,
+      right: -(this.props.parentSize - this.props.size) / 2 + 8,
     }
 
     const translateX = translateXMap[this.props.position];
@@ -36,9 +36,11 @@ export default class ActionButtonItem extends Component {
       <Animated.View
         pointerEvents="box-none"
         style={[styles.actionButtonWrap, {
+          height: this.props.size + margin + 12,
           alignItems: this.state.alignItems,
-          marginBottom: this.props.verticalOrientation === 'up' ? margin : 0,
-          marginTop: this.props.verticalOrientation === 'down' ? margin : 0,
+          marginBottom: this.props.verticalOrientation === 'up' ? margin : 0, // does not seem necessary
+          marginTop: this.props.verticalOrientation === 'down' ? margin : 0, // does not seem necessary
+          marginHorizontal: 8,
           opacity: this.props.anim,
           transform: [
             { translateX },
@@ -66,8 +68,9 @@ export default class ActionButtonItem extends Component {
               height: this.props.size,
               borderRadius: this.props.size / 2,
               backgroundColor: this.props.buttonColor || this.props.btnColor,
-              marginBottom: this.props.verticalOrientation === 'up' ? 12 : 0,
-              marginTop: this.props.verticalOrientation === 'down' ? 12 : 0,
+              marginHorizontal: 8,
+              marginBottom: this.props.verticalOrientation === 'up' ? 12 : 0, // does not seem necessary
+              marginTop: this.props.verticalOrientation === 'down' ? -12 : 0,
             }]}
           >
             {this.props.children}
@@ -91,10 +94,11 @@ export default class ActionButtonItem extends Component {
   getTextStyles() {
     // to align the center of the label with the center of the button,
     // offset = (half the size of the btn) - (half the size of the label)
-    let offsetTop = this.props.size >= 28 ? (this.props.size / 2) - 14 : 0;
+    let directionOffset = this.props.verticalOrientation === 'down' ? -12 : 0
+    let offsetTop = this.props.size >= 28 ? (this.props.size / 2) - 14 + directionOffset : 0;
 
     let positionStyles = {
-      right: this.props.size + this.state.spaceBetween,
+      right: this.props.size + this.state.spaceBetween + 8,
       top: offsetTop
     }
 
@@ -105,7 +109,7 @@ export default class ActionButtonItem extends Component {
     }
 
     if (this.props.position == 'left') positionStyles = {
-      left: this.props.size + this.state.spaceBetween,
+      left: this.props.size + this.state.spaceBetween + 8,
       top: offsetTop
     }
 
@@ -130,10 +134,10 @@ const styles = StyleSheet.create({
   shadow: {
     shadowOpacity: 0.3,
     shadowOffset: {
-      width: 0, height: 0,
+      width: 0, height: 8,
     },
-    shadowColor: '#666',
-    shadowRadius: 1,
+    shadowColor: '#000',
+    shadowRadius: 4,
     elevation: 6,
   },
   actionTextView: {

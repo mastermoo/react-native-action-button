@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Animated, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Animated, TouchableOpacity, Platform } from 'react-native';
 import ActionButtonItem from './ActionButtonItem';
 
 const alignItemsMap = {
@@ -33,7 +33,7 @@ export default class ActionButton extends Component {
   //////////////////////
 
   getContainerStyles() {
-    return [styles.overlay, this.getOrientation(), this.getOffsetXY()];
+    return [this.getOverlayStyles(), this.getOrientation(), this.getOffsetXY()];
   }
 
   getActionButtonStyles() {
@@ -47,15 +47,16 @@ export default class ActionButton extends Component {
 
   getButtonSize() {
     return {
-      width: this.props.size,
+      width: this.props.size + 16,
       height: this.props.size + shadowHeight,
     }
   }
 
   getOffsetXY() {
     return {
-      paddingHorizontal: this.props.offsetX,
-      paddingBottom: this.props.offsetY
+      paddingHorizontal: this.props.offsetX - 8,
+      paddingBottom: this.props.verticalOrientation === 'up' ? this.props.offsetY : 0,
+      paddingTop: this.props.verticalOrientation === 'down' ? this.props.offsetY : 0
     };
   }
 
@@ -64,11 +65,19 @@ export default class ActionButton extends Component {
       styles.actionsVertical,
       this.getOrientation(),
       {
-        flexDirection: this.props.verticalOrientation === 'down' ?
-          'column-reverse' :
-          'column',
+        flexDirection: 'column',
+        justifyContent: this.props.verticalOrientation === 'up' ? 'flex-end' : 'flex-start'
       },
     ];
+  }
+
+  getOverlayStyles() {
+    return [
+      styles.overlay,
+      {
+        justifyContent: this.props.verticalOrientation === 'up' ? 'flex-end' : 'flex-start'
+      }
+    ]
   }
 
 
@@ -78,8 +87,8 @@ export default class ActionButton extends Component {
 
   render() {
     return (
-      <View pointerEvents="box-none" style={styles.overlay}>
-        <Animated.View pointerEvents="none" style={[styles.overlay, {
+      <View pointerEvents="box-none" style={this.getOverlayStyles()}>
+        <Animated.View pointerEvents="none" style={[this.getOverlayStyles(), {
           backgroundColor: this.props.bgColor,
           opacity: this.anim
         }]}>
@@ -104,9 +113,6 @@ export default class ActionButton extends Component {
     const animatedViewStyle = [
       styles.btn,
       {
-        width: this.props.size,
-        height: this.props.size,
-        borderRadius: this.props.size / 2,
         backgroundColor: this.anim.interpolate({
           inputRange: [0, 1],
           outputRange: [this.props.buttonColor, buttonColorMax]
@@ -125,22 +131,29 @@ export default class ActionButton extends Component {
       },
     ];
 
-    if(!this.props.hideShadow) animatedViewStyle.push(styles.btnShadow);
+    const combinedStyle = {
+      width: this.props.size,
+      height: this.props.size,
+      borderRadius: this.props.size / 2,
+      marginBottom: shadowHeight,
+      backgroundColor: this.props.buttonColor
+    }
+
+    const actionButtonStyles = [ this.getActionButtonStyles(), combinedStyle, animatedViewStyle ]
 
     return (
-      <View style={this.getActionButtonStyles()}>
-        <TouchableOpacity
-          activeOpacity={0.85}
-          onLongPress={this.props.onLongPress}
-          onPress={() => {
-            this.props.onPress()
-            if (this.props.children) this.animateButton()
-          }}>
-          <Animated.View
-            style={animatedViewStyle}>
+      <View style={ !this.props.hideShadow && [ styles.btnShadow, combinedStyle, { marginHorizontal: 8 }]}>
+        <Animated.View style={ actionButtonStyles }>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            onLongPress={this.props.onLongPress}
+            onPress={() => {
+              this.props.onPress()
+              if (this.props.children) this.animateButton()
+            }}>
             {this._renderButtonIcon()}
-          </Animated.View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
     );
   }
@@ -204,7 +217,7 @@ export default class ActionButton extends Component {
     return (
       <TouchableOpacity
         activeOpacity={1}
-        style={styles.overlay}
+        style={this.getOverlayStyles()}
         onPress={this.reset.bind(this)}
       />
     );
@@ -295,7 +308,6 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     backgroundColor: 'transparent',
-    justifyContent: 'flex-end',
   },
   actionBarItem: {
     alignItems: 'center',
@@ -314,16 +326,15 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   btnShadow: {
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowOffset: {
-      width: 0, height: 0,
+      width: 0, height: 8,
     },
-    shadowColor: '#666',
-    shadowRadius: 1,
-    elevation: 6,
+    shadowColor: '#000',
+    shadowRadius: 4,
+    elevation: 8,
   },
   actionsVertical: {
     flex: 1,
-    justifyContent: 'flex-end',
-  },
+  }
 });

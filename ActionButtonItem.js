@@ -23,6 +23,10 @@ export default class ActionButtonItem extends Component {
   }
 
   render() {
+    if (!this.props.active) {
+      return null;
+    }
+    
     const translateXMap = {
       center: 0,
       left: (this.props.parentSize - this.props.size) / 2 - 8,

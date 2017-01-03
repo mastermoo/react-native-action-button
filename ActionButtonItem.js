@@ -9,7 +9,18 @@ const alignItemsMap = {
 }
 
 export default class ActionButtonItem extends Component {
+  static get defaultProps() {
+    return {
+      active: true,
+    };
+  }
 
+  static get propTypes() {
+    return {
+      active: PropTypes.bool,
+    }
+  }
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +37,7 @@ export default class ActionButtonItem extends Component {
     if (!this.props.active) {
       return null;
     }
-    
+
     const translateXMap = {
       center: 0,
       left: (this.props.parentSize - this.props.size) / 2 - 8,

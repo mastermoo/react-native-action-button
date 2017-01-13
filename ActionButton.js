@@ -142,7 +142,7 @@ export default class ActionButton extends Component {
     const actionButtonStyles = [ this.getActionButtonStyles(), combinedStyle, animatedViewStyle ]
 
     return (
-      <View style={ !this.props.hideShadow && [ styles.btnShadow, combinedStyle, { marginHorizontal: 8 }]}>
+      <View style={ !this.props.hideShadow && [ styles.btnShadow, combinedStyle, { marginHorizontal: 8 }, this.props.shadowStyle]}>
         <TouchableOpacity
             activeOpacity={0.85}
             onLongPress={this.props.onLongPress}
@@ -261,6 +261,11 @@ ActionButton.propTypes = {
   position: PropTypes.string,
 
   hideShadow: PropTypes.bool,
+  shadowStyle: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.array,
+    React.PropTypes.number,
+  ]),
 
   bgColor: PropTypes.string,
   buttonColor: PropTypes.string,

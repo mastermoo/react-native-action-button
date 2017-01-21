@@ -140,9 +140,9 @@ export default class ActionButton extends Component {
     }
 
     const actionButtonStyles = [ this.getActionButtonStyles(), combinedStyle, animatedViewStyle ]
-
+    const shadowStyles = [styles.btnShadow, combinedStyle]
     return (
-      <View style={ !this.props.hideShadow && [ styles.btnShadow, combinedStyle, { marginHorizontal: 8 }]}>
+      <View style={[{ marginHorizontal: 8 }, !this.props.hideShadow && shadowStyles]}>
         <TouchableOpacity
             activeOpacity={0.85}
             onLongPress={this.props.onLongPress}

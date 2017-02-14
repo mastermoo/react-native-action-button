@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Animated, 
+import { StyleSheet, Text, View, Animated,
   TouchableNativeFeedback, TouchableWithoutFeedback, Dimensions, Platform } from 'react-native';
 import { shadowStyle, alignItemsMap, getTouchableComponent, isAndroid, touchableBackground, DEFAULT_ACTIVE_OPACITY } from './shared';
 
@@ -83,9 +83,10 @@ export default class ActionButtonItem extends Component {
   _renderTitle() {
     if (!this.props.title) return null;
 
-    const { textContainerStyle, hideShadow, offsetX, parentSize, size, position, spaceBetween } = this.props;
+    const { textContainerStyle, hideLabelShadow, offsetX, parentSize, size, position, spaceBetween } = this.props;
     const offsetTop = Math.max((size / 2) - (TEXT_HEIGHT/2), 0);
     const positionStyles = { top: offsetTop };
+    const hideShadow = hideLabelShadow === undefined ? this.props.hideShadow : hideLabelShadow;
 
     if (position !== 'center') {
       positionStyles[position] = offsetX + (parentSize-size)/2 + size + spaceBetween;

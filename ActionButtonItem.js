@@ -1,17 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Animated, TouchableOpacity, Dimensions } from 'react-native';
-const { width } = Dimensions.get('window');
-
-const alignItemsMap = {
-  center: "center",
-  left: "flex-start",
-  right: "flex-end"
-}
+import { StyleSheet, Text, View, Animated, TouchableOpacity } from 'react-native';
+import { SHADOW_SIZE, shadowStyle, alignItemsMap, positionMap } from './shared';
 
 export default class ActionButtonItem extends Component {
   static get defaultProps() {
     return {
       active: true,
+      spaceBetween: 15
     };
   }
 
@@ -20,150 +15,102 @@ export default class ActionButtonItem extends Component {
       active: PropTypes.bool,
     }
   }
-  
-  constructor(props) {
-    super(props);
-    this.state = {
-      spaceBetween: this.props.spaceBetween || 15,
-      alignItems: alignItemsMap[this.props.position]
-    };
-
-    if (!props.children || Array.isArray(props.children)) {
-      throw new Error("ActionButtonItem must have a Child component.");
-    }
-  }
 
   render() {
-    if (!this.props.active) {
-      return null;
-    }
+    const {
+      active, parentSize, size, anim, position, verticalOrientation,
+      activeOpacity, onPress, hideShadow, style, buttonColor, btnColor,
+      actionButtons, idx, spacing, children
+    } = this.props;
 
-    const translateXMap = {
-      center: this.props.parentSize/2,
-      left: (this.props.parentSize - this.props.size) / 2 - 8,
-      right: this.props.parentSize + 12 - ((this.props.parentSize - this.props.size) / 2),
-    }
+    if (!active) return null;
 
-    const translateX = translateXMap[this.props.position];
-    const margin = (this.props.spacing < 12) ? 0 : (this.props.spacing - 12);
+    const animatedViewStyle = {
+      height: size,
+      margin: SHADOW_SIZE,
+      opacity: anim,
+      transform: [
+        {
+          translateY: anim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [verticalOrientation === 'down' ? -40 : 40, 0]
+          }),
+        }
+      ],
+      ...positionMap(position, verticalOrientation),
+    };
+
+    if (verticalOrientation === 'up')
+      animatedViewStyle.top = SHADOW_SIZE + (SHADOW_SIZE*2 - spacing) * (actionButtons-idx);
+    
+    if (verticalOrientation === 'down')
+      animatedViewStyle.top = -SHADOW_SIZE - (SHADOW_SIZE*2 - spacing) * (idx+1);
 
     return (
-      <Animated.View
-        pointerEvents="box-none"
-        style={[styles.actionButtonWrap, {
-          height: this.props.size + margin + 12,
-          alignItems: this.state.alignItems,
-          marginBottom: this.props.verticalOrientation === 'up' ? margin : 0, // does not seem necessary
-          marginTop: this.props.verticalOrientation === 'down' ? margin : 0, // does not seem necessary
-          marginHorizontal: 8,
-          opacity: this.props.anim,
-          transform: [
-            { translateX },
-            {
-              translateY: this.props.anim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [
-                  this.props.verticalOrientation === 'down' ? -40 : 40,
-                  0
-                ]
-              }),
-            }
-           ],
-          }
-        ]}
-      >
-        <TouchableOpacity
-          activeOpacity={this.props.activeOpacity || 0.85}
-          onPress={this.props.onPress}
-        >
+      <Animated.View pointerEvents="box-none" style={animatedViewStyle}>
+        <TouchableOpacity activeOpacity={activeOpacity || 0.85} onPress={onPress}>
           <View
-            style={[styles.actionButton, !this.props.hideShadow && styles.shadow, this.props.style, {
-              width: this.props.size,
-              height: this.props.size,
-              borderRadius: this.props.size / 2,
-              backgroundColor: this.props.buttonColor || this.props.btnColor,
-              marginHorizontal: 8,
-              marginBottom: this.props.verticalOrientation === 'up' ? 12 : 0, // does not seem necessary
-              marginTop: this.props.verticalOrientation === 'down' ? -12 : 0,
+            style={[!hideShadow && shadowStyle, style, {
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: size,
+              height: size,
+              borderRadius: size / 2,
+              backgroundColor: buttonColor || btnColor,
             }]}
           >
-            {this.props.children}
+            {children}
           </View>
         </TouchableOpacity>
-        {this.props.title && (
-          <TouchableOpacity
-            style={[this.getTextStyles(), this.props.textContainerStyle, !this.props.hideShadow && styles.shadow]}
-            activeOpacity={this.props.activeOpacity || 0.85}
-            onPress={this.props.onPress}
-          >
-            <Text style={[styles.actionText, this.props.textStyle, { color: this.props.titleColor || '#444' }]}>
-              {this.props.title}
-            </Text>
-          </TouchableOpacity>
-        )}
+        {this._renderTitle()}
       </Animated.View>
     );
   }
 
+  _renderTitle() {
+    const { title, textContainerStyle, hideShadow, activeOpacity, onPress, textStyle } = this.props;
+
+    if (!title) return null;
+
+    return (
+      <TouchableOpacity style={this.getTextStyles()} activeOpacity={activeOpacity || 0.85} onPress={onPress}>
+        <Text style={[styles.text, textStyle]}>{title}</Text>
+      </TouchableOpacity>
+    );
+  }
+
   getTextStyles() {
-    // to align the center of the label with the center of the button,
-    // offset = (half the size of the btn) - (half the size of the label)
-    let directionOffset = this.props.verticalOrientation === 'down' ? -12 : 0
-    let offsetTop = this.props.size >= 28 ? (this.props.size / 2) - 14 + directionOffset : 0;
+    const { size, position, spaceBetween, textContainerStyle, hideShadow } = this.props;
+    const offsetTop = Math.max((size / 2) - (TEXT_HEIGHT/2), 0);
+    const textMap = {
+      left: 'left',
+      center: 'right',
+      right: 'right'
+    };
 
-    let positionStyles = {
-      right: this.props.size + this.state.spaceBetween + 8,
-      top: offsetTop
-    }
+    const positionStyles = { top: offsetTop };
+    positionStyles[textMap[position]] = size + spaceBetween;
 
-    let bgStyle = { backgroundColor : 'white' };
-
-    if (this.props.titleBgColor) bgStyle = {
-      backgroundColor:this.props.titleBgColor
-    }
-
-    if (this.props.position == 'left') positionStyles = {
-      left: this.props.size + this.state.spaceBetween + 8,
-      top: offsetTop
-    }
-
-    if (this.props.position == 'center') positionStyles = {
-      right: this.props.size/2 + width/2 + this.state.spaceBetween,
-      top: offsetTop
-    }
-
-    return [styles.actionTextView, positionStyles, bgStyle];
+    return [styles.textContainer, positionStyles, textContainerStyle, !hideShadow && shadowStyle];
   }
 }
 
+const TEXT_HEIGHT = 26;
+
 const styles = StyleSheet.create({
-  actionButtonWrap: {
-    width
-  },
-  actionButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  shadow: {
-    shadowOpacity: 0.3,
-    shadowOffset: {
-      width: 0, height: 8,
-    },
-    shadowColor: '#000',
-    shadowRadius: 4,
-    elevation: 6,
-  },
-  actionTextView: {
+  textContainer: {
     position: 'absolute',
     paddingVertical: 4,
     paddingHorizontal: 10,
     borderRadius: 3,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#eee',
+    backgroundColor: 'white',
+    height: TEXT_HEIGHT
   },
-  actionText: {
+  text: {
     flex: 1,
     fontSize: 14,
+    color: '#444',
   }
 });

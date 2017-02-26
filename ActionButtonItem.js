@@ -26,6 +26,7 @@ export default class ActionButtonItem extends Component {
     if (!active) return null;
 
     const animatedViewStyle = {
+      backgroundColor: 'transparent',
       height: size,
       margin: SHADOW_SIZE,
       opacity: anim,
@@ -37,7 +38,6 @@ export default class ActionButtonItem extends Component {
           }),
         }
       ],
-      ...positionMap(position, verticalOrientation),
     };
 
     if (verticalOrientation === 'up')
@@ -45,10 +45,16 @@ export default class ActionButtonItem extends Component {
     
     if (verticalOrientation === 'down')
       animatedViewStyle.top = -SHADOW_SIZE - (SHADOW_SIZE*2 - spacing) * (idx+1);
+    
+    if (position !== 'center')
+      animatedViewStyle[position] = -SHADOW_SIZE + (parentSize-size)/2;
 
     return (
       <Animated.View pointerEvents="box-none" style={animatedViewStyle}>
-        <TouchableOpacity activeOpacity={activeOpacity || 0.85} onPress={onPress}>
+        <TouchableOpacity
+          style={{ width: size, height: size, borderRadius: size/2 }}
+          activeOpacity={activeOpacity || 0.85}
+          onPress={onPress}>
           <View
             style={[!hideShadow && shadowStyle, style, {
               justifyContent: 'center',

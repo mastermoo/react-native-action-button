@@ -1,13 +1,13 @@
-export const SHADOW_SIZE = 20;
+export const SHADOW_SIZE = 10;
 
 export const shadowStyle = {
-	shadowOpacity: 0.3,
+	shadowOpacity: 0.35,
 	shadowOffset: {
-		width: 0, height: (SHADOW_SIZE/3),
+		width: 0, height: 5,
 	},
 	shadowColor: '#000',
-	shadowRadius: 4,
-	elevation: (SHADOW_SIZE/3),
+	shadowRadius: 3,
+	elevation: 5,
 };
 
 export const alignItemsMap = {

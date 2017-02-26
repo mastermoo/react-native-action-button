@@ -74,10 +74,6 @@ export default class ActionButton extends Component {
 
   _renderMainButton() {
     const animatedViewStyle = {
-      backgroundColor: this.anim.interpolate({
-        inputRange: [0, 1],
-        outputRange: [this.props.buttonColor, (this.props.btnOutRange || this.props.buttonColor)]
-      }),
       transform: [{
         scale: this.anim.interpolate({
           inputRange: [0, 1],
@@ -99,6 +95,16 @@ export default class ActionButton extends Component {
       ...positionMap(this.props.position, this.props.verticalOrientation)
     }
 
+    const wrapperStyle = {
+      backgroundColor: this.anim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [this.props.buttonColor, (this.props.btnOutRange || this.props.buttonColor)]
+      }),
+      width: this.props.size,
+      height: this.props.size,
+      borderRadius: this.props.size / 2,
+    }
+
     const buttonStyle = {
       width: this.props.size,
       height: this.props.size,
@@ -109,15 +115,17 @@ export default class ActionButton extends Component {
 
     return (
       <TouchableOpacity
-        style={[touchableStyle, !this.props.hideShadow && shadowStyle]}
+        style={touchableStyle}
         activeOpacity={0.85}
         onLongPress={this.props.onLongPress}
         onPress={() => {
           this.props.onPress()
           if (this.props.children) this.animateButton()
         }}>
-        <Animated.View style={[buttonStyle, animatedViewStyle]}>
-          {this._renderButtonIcon()}
+        <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle]}>
+          <Animated.View style={[buttonStyle, animatedViewStyle]}>
+            {this._renderButtonIcon()}
+          </Animated.View>
         </Animated.View>
       </TouchableOpacity>
     );

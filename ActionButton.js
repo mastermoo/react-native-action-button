@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Animated, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Animated, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 import ActionButtonItem from './ActionButtonItem';
-import { SHADOW_SIZE, shadowStyle, alignItemsMap, positionMap } from './shared';
-
+import { shadowStyle, alignItemsMap, Touchable, isAndroid } from './shared';
 
 export default class ActionButton extends Component {
   constructor(props) {
@@ -31,7 +30,7 @@ export default class ActionButton extends Component {
 
   getOffsetXY() {
     return {
-      paddingHorizontal: this.props.offsetX,
+      // paddingHorizontal: this.props.offsetX,
       paddingVertical: this.props.offsetY
     };
   }
@@ -87,14 +86,6 @@ export default class ActionButton extends Component {
       }],
     };
 
-    const touchableStyle = {
-      width: this.props.size,
-      height: this.props.size,
-      margin: SHADOW_SIZE,
-      borderRadius: this.props.size / 2,
-      ...positionMap(this.props.position, this.props.verticalOrientation)
-    }
-
     const wrapperStyle = {
       backgroundColor: this.anim.interpolate({
         inputRange: [0, 1],
@@ -114,20 +105,22 @@ export default class ActionButton extends Component {
     }
 
     return (
-      <TouchableOpacity
-        style={touchableStyle}
-        activeOpacity={0.85}
-        onLongPress={this.props.onLongPress}
-        onPress={() => {
-          this.props.onPress()
-          if (this.props.children) this.animateButton()
-        }}>
-        <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle]}>
-          <Animated.View style={[buttonStyle, animatedViewStyle]}>
-            {this._renderButtonIcon()}
+      <View style={{ paddingHorizontal: this.props.offsetX }}>
+        <Touchable
+          background={isAndroid && TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)')}
+          activeOpacity={0.85}
+          onLongPress={this.props.onLongPress}
+          onPress={() => {
+            this.props.onPress()
+            if (this.props.children) this.animateButton()
+          }}>
+          <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle]}>
+            <Animated.View style={[buttonStyle, animatedViewStyle]}>
+              {this._renderButtonIcon()}
+            </Animated.View>
           </Animated.View>
-        </Animated.View>
-      </TouchableOpacity>
+        </Touchable>
+      </View>
     );
   }
 
@@ -156,19 +149,20 @@ export default class ActionButton extends Component {
 
     const actionStyle = {
       flex: 1,
+      alignSelf: 'stretch',
+      // backgroundColor: 'purple',
       justifyContent: verticalOrientation === 'up' ? 'flex-end' : 'flex-start',
+      paddingTop: this.props.verticalOrientation === 'down' ? this.props.spacing : 0
     };
 
     return (
-      <View style={[this.getOrientation(), actionStyle]} pointerEvents={'box-none'}>
+      <View style={actionStyle} pointerEvents={'box-none'}>
         {actionButtons.map((ActionButton, idx) => (
           <ActionButtonItem
             key={idx}
-            idx={idx}
             anim={this.anim}
             {...this.props}
             {...ActionButton.props}
-            actionButtons={actionButtons.length}
             parentSize={this.props.size}
             btnColor={this.props.btnOutRange}
             onPress={() => {
@@ -261,7 +255,7 @@ ActionButton.defaultProps = {
   autoInactive: true,
   onPress: () => {},
   backdrop: false,
-  degrees: 135,
+  degrees: 45,
   position: 'right',
   offsetX: 30,
   offsetY: 30,
@@ -283,6 +277,5 @@ const styles = StyleSheet.create({
     marginTop: -4,
     fontSize: 24,
     backgroundColor: 'transparent',
-    position: 'relative',
   },
 });

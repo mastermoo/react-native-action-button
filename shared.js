@@ -1,4 +1,4 @@
-export const SHADOW_SIZE = 10;
+import { Platform, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 
 export const shadowStyle = {
 	shadowOpacity: 0.35,
@@ -11,19 +11,12 @@ export const shadowStyle = {
 };
 
 export const alignItemsMap = {
-	center: "center",
-	left: "flex-start",
-	right: "flex-end"
+	center: 'center',
+	left: 'flex-start',
+	right: 'flex-end'
 };
 
-export const positionMap = (position, orientation) => {
-	const topOrBottom = orientation === 'up' ? 'bottom' : 'top';
 
-	const style = {
-		[topOrBottom]: -SHADOW_SIZE
-	};
+export const Touchable = Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
 
-	if (position !== 'center') style[position] = -SHADOW_SIZE;
-
-	return style;
-};
+export const isAndroid = Platform.OS === 'android';

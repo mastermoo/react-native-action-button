@@ -7,9 +7,7 @@ customizable multi-action-button component for react-native
 ![react-native-action-button demo](http://i.giphy.com/xTcnSOtuet39cM46s0.gif)
 
 ### Known Issues
-- Some people get a "shadow calculation warning".
 - Doesn't Work While Android Debugging. See issue [#79](https://github.com/mastermoo/react-native-action-button/issues/79).
-- ActionButtons can get cropped on Android, when `spacing` is not set high enough.
 
 ### Installation
 ```bash

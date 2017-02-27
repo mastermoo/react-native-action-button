@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { StyleSheet, Text, View, Animated, 
-  TouchableNativeFeedback, TouchableWithoutFeedback, Dimensions } from 'react-native';
+  TouchableNativeFeedback, TouchableWithoutFeedback, Dimensions, Platform } from 'react-native';
 import { shadowStyle, alignItemsMap, Touchable, isAndroid } from './shared';
 
 const { width: WIDTH } = Dimensions.get('window');
@@ -58,7 +58,7 @@ export default class ActionButtonItem extends Component {
     return (
       <Animated.View pointerEvents="box-none" style={animatedViewStyle}>
         <Touchable
-          background={isAndroid && TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)')}
+          background={isAndroid && (Platform['Version'] >= 21) ? TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)') : TouchableNativeFeedback.SelectableBackground()}
           activeOpacity={this.props.activeOpacity || 0.85}
           onPress={this.props.onPress}>
           <View
@@ -89,7 +89,7 @@ export default class ActionButtonItem extends Component {
 
     return (
       <TextTouchable
-        background={isAndroid && TouchableNativeFeedback.Ripple(this.props.buttonColor)}
+        background={isAndroid && (Platform['Version'] >= 21) ? TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)') : TouchableNativeFeedback.SelectableBackground()}
         activeOpacity={this.props.activeOpacity || 0.85}
         onPress={this.props.onPress}>
         <View style={textStyles}>

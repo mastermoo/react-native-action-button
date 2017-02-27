@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Animated, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
+import { StyleSheet, Text, View, Animated, TouchableOpacity, TouchableNativeFeedback, Platform } from 'react-native';
 import ActionButtonItem from './ActionButtonItem';
 import { shadowStyle, alignItemsMap, Touchable, isAndroid } from './shared';
 
@@ -107,7 +107,7 @@ export default class ActionButton extends Component {
     return (
       <View style={{ paddingHorizontal: this.props.offsetX }}>
         <Touchable
-          background={isAndroid && TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)')}
+          background={isAndroid && (Platform['Version'] >= 21) ? TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)') : TouchableNativeFeedback.SelectableBackground()}
           activeOpacity={0.85}
           onLongPress={this.props.onLongPress}
           onPress={() => {

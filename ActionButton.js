@@ -104,10 +104,19 @@ export default class ActionButton extends Component {
       justifyContent: 'center',
     }
 
+    var touchableBackground;
+    if (isAndroid) {
+      if (Platform['Version'] >= 21) {
+        touchableBackground = TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)');
+      } else {
+        touchableBackground = TouchableNativeFeedback.SelectableBackground();
+      }
+    }
+
     return (
       <View style={{ paddingHorizontal: this.props.offsetX }}>
         <Touchable
-          background={isAndroid && (Platform['Version'] >= 21) ? TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)') : TouchableNativeFeedback.SelectableBackground()}
+          background={touchableBackground}
           activeOpacity={0.85}
           onLongPress={this.props.onLongPress}
           onPress={() => {

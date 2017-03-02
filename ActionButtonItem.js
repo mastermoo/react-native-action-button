@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { StyleSheet, Text, View, Animated, 
   TouchableNativeFeedback, TouchableWithoutFeedback, Dimensions, Platform } from 'react-native';
-import { shadowStyle, alignItemsMap, Touchable, isAndroid } from './shared';
+import { shadowStyle, alignItemsMap, Touchable, isAndroid, touchableBackground } from './shared';
 
 const { width: WIDTH } = Dimensions.get('window');
 const SHADOW_SPACE = 10;
@@ -55,15 +55,6 @@ export default class ActionButtonItem extends Component {
 
     if (position !== 'center') buttonStyle[position] = (this.props.parentSize-size)/2;
 
-    var touchableBackground;
-    if (isAndroid) {
-      if (Platform['Version'] >= 21) {
-        touchableBackground = TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)');
-      } else {
-        touchableBackground = TouchableNativeFeedback.SelectableBackground();
-      }
-    }
-
     return (
       <Animated.View pointerEvents="box-none" style={animatedViewStyle}>
         <Touchable
@@ -95,15 +86,6 @@ export default class ActionButtonItem extends Component {
     }
 
     const textStyles = [styles.textContainer, positionStyles, textContainerStyle, !hideShadow && shadowStyle];
-
-    var touchableBackground;
-    if (isAndroid) {
-      if (Platform['Version'] >= 21) {
-        touchableBackground = TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)');
-      } else {
-        touchableBackground = TouchableNativeFeedback.SelectableBackground();
-      }
-    }
 
     return (
       <TextTouchable

@@ -20,3 +20,5 @@ export const alignItemsMap = {
 export const Touchable = Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
 
 export const isAndroid = Platform.OS === 'android';
+
+export const touchableBackground = isAndroid ? Platform['Version'] >= 21 ? TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)') : TouchableNativeFeedback.SelectableBackground() : undefined;

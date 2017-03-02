@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { StyleSheet, Text, View, Animated, TouchableOpacity, TouchableNativeFeedback, Platform } from 'react-native';
 import ActionButtonItem from './ActionButtonItem';
-import { shadowStyle, alignItemsMap, Touchable, isAndroid } from './shared';
+import { shadowStyle, alignItemsMap, Touchable, isAndroid, touchableBackground } from './shared';
 
 export default class ActionButton extends Component {
   constructor(props) {
@@ -102,15 +102,6 @@ export default class ActionButton extends Component {
       borderRadius: this.props.size / 2,
       alignItems: 'center',
       justifyContent: 'center',
-    }
-
-    var touchableBackground;
-    if (isAndroid) {
-      if (Platform['Version'] >= 21) {
-        touchableBackground = TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)');
-      } else {
-        touchableBackground = TouchableNativeFeedback.SelectableBackground();
-      }
     }
 
     return (

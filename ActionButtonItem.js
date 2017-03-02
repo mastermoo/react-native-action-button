@@ -55,10 +55,19 @@ export default class ActionButtonItem extends Component {
 
     if (position !== 'center') buttonStyle[position] = (this.props.parentSize-size)/2;
 
+    var touchableBackground;
+    if (isAndroid) {
+      if (Platform['Version'] >= 21) {
+        touchableBackground = TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)');
+      } else {
+        touchableBackground = TouchableNativeFeedback.SelectableBackground();
+      }
+    }
+
     return (
       <Animated.View pointerEvents="box-none" style={animatedViewStyle}>
         <Touchable
-          background={isAndroid && (Platform['Version'] >= 21) ? TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)') : TouchableNativeFeedback.SelectableBackground()}
+          background={touchableBackground}
           activeOpacity={this.props.activeOpacity || 0.85}
           onPress={this.props.onPress}>
           <View
@@ -87,9 +96,18 @@ export default class ActionButtonItem extends Component {
 
     const textStyles = [styles.textContainer, positionStyles, textContainerStyle, !hideShadow && shadowStyle];
 
+    var touchableBackground;
+    if (isAndroid) {
+      if (Platform['Version'] >= 21) {
+        touchableBackground = TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)');
+      } else {
+        touchableBackground = TouchableNativeFeedback.SelectableBackground();
+      }
+    }
+
     return (
       <TextTouchable
-        background={isAndroid && (Platform['Version'] >= 21) ? TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)') : TouchableNativeFeedback.SelectableBackground()}
+        background={touchableBackground}
         activeOpacity={this.props.activeOpacity || 0.85}
         onPress={this.props.onPress}>
         <View style={textStyles}>

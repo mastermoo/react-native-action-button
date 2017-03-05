@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Animated, TouchableOpacity, TouchableNativeFeedback, Platform } from 'react-native';
+import { StyleSheet, Text, View, Animated, TouchableOpacity, Platform } from 'react-native';
 import ActionButtonItem from './ActionButtonItem';
-import { shadowStyle, alignItemsMap, Touchable, isAndroid, touchableBackground } from './shared';
+import { shadowStyle, alignItemsMap, getTouchableComponent, isAndroid, touchableBackground, DEFAULT_ACTIVE_OPACITY } from './shared';
 
 export default class ActionButton extends Component {
   constructor(props) {
@@ -94,7 +94,7 @@ export default class ActionButton extends Component {
       width: this.props.size,
       height: this.props.size,
       borderRadius: this.props.size / 2,
-    }
+    };
 
     const buttonStyle = {
       width: this.props.size,
@@ -102,13 +102,15 @@ export default class ActionButton extends Component {
       borderRadius: this.props.size / 2,
       alignItems: 'center',
       justifyContent: 'center',
-    }
+    };
+
+    const Touchable = getTouchableComponent(this.props.useNativeFeedback);
 
     return (
       <View style={{ paddingHorizontal: this.props.offsetX }}>
         <Touchable
           background={touchableBackground}
-          activeOpacity={0.85}
+          activeOpacity={this.props.activeOpacity}
           onLongPress={this.props.onLongPress}
           onPress={() => {
             this.props.onPress()
@@ -243,6 +245,8 @@ ActionButton.propTypes = {
   degrees: PropTypes.number,
   verticalOrientation: PropTypes.oneOf(['up', 'down']),
   backgroundTappable: PropTypes.bool,
+  useNativeFeedback: PropTypes.bool,
+  activeOpacity: PropTypes.number,
 };
 
 ActionButton.defaultProps = {
@@ -262,6 +266,8 @@ ActionButton.defaultProps = {
   size: 56,
   verticalOrientation: 'up',
   backgroundTappable: false,
+  useNativeFeedback: true,
+  activeOpacity: DEFAULT_ACTIVE_OPACITY,
 };
 
 const styles = StyleSheet.create({

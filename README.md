@@ -110,6 +110,8 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | onReset       | function      | null                | use this to set the callback that will be called after the button reset's it's items
 | verticalOrientation | string  | "up"                | direction action buttons should expand.  One of: `up` or `down`
 | backgroundTappable | boolean  | false               | make background tappable in active state of ActionButton
+| useNativeFeedback | boolean   | true                | whether to use TouchableNativeFeedback on Android
+| activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity
 
 ##### ActionButton.Item:
 | Property      | Type          | Default             | Description |
@@ -122,3 +124,5 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | textContainerStyle  | style   | null                | use this to set the textstyle of the button's item text container
 | textStyle     | style         | null                | use this to set the textstyle of the button's item text
 | spaceBetween  | number        | 15                  | use this to set the space between the Button and the text container
+| useNativeFeedback | boolean   | true                | whether to use TouchableNativeFeedback on Android
+| activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity

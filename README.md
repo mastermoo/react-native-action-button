@@ -105,7 +105,7 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | icon          | Component     | +                   | Custom component for ActionButton Icon
 | backdrop      | Component     | false               | Custom component for use as Backdrop (i.e. [BlurView](https://github.com/react-native-fellowship/react-native-blur#blur-view), [VibrancyView](https://github.com/react-native-fellowship/react-native-blur#vibrancy-view))
 | degrees       | number        | 135                 | degrees to rotate icon
-| buttonText    | string        | null                | use this to set a different text on the button
+| buttonText    | string        | +                   | use this to set a different text on the button
 | buttonTextStyle | style         | null                | use this to set the textstyle of the button's text
 | onReset       | function      | null                | use this to set the callback that will be called after the button reset's it's items
 | verticalOrientation | string  | "up"                | direction action buttons should expand.  One of: `up` or `down`

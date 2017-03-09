@@ -127,17 +127,19 @@ export default class ActionButton extends Component {
   }
 
   _renderButtonIcon() {
-    const { icon, btnOutRangeTxt, buttonTextColor } = this.props;
+    const { icon, btnOutRangeTxt, buttonTextStyle, buttonText } = this.props;
     if (icon) return icon;
 
+    const textColor = buttonTextStyle.color || 'rgba(255,255,255,1)'
+
     return (
-      <Animated.Text style={[styles.btnText, {
+      <Animated.Text style={[styles.btnText, buttonTextStyle, {
         color: this.anim.interpolate({
           inputRange: [0, 1],
-          outputRange: [buttonTextColor, (btnOutRangeTxt || buttonTextColor)]
+          outputRange: [textColor, (btnOutRangeTxt || textColor)]
         })
       }]}>
-        +
+        {buttonText}
       </Animated.Text>
     )
   }
@@ -230,7 +232,8 @@ ActionButton.propTypes = {
 
   bgColor: PropTypes.string,
   buttonColor: PropTypes.string,
-  buttonTextColor: PropTypes.string,
+  buttonTextStyle: Text.propTypes.style,
+  buttonText: PropTypes.string,
 
   offsetX: PropTypes.number,
   offsetY: PropTypes.number,
@@ -253,7 +256,8 @@ ActionButton.defaultProps = {
   active: false,
   bgColor: 'transparent',
   buttonColor: 'rgba(0,0,0,1)',
-  buttonTextColor: 'rgba(255,255,255,1)',
+  buttonTextStyle: {},
+  buttonText: '+',
   spacing: 20,
   outRangeScale: 1,
   autoInactive: true,

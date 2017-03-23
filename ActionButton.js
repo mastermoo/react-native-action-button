@@ -54,7 +54,10 @@ export default class ActionButton extends Component {
       <View pointerEvents="box-none" style={this.getOverlayStyles()}>
         <Animated.View pointerEvents="none" style={[this.getOverlayStyles(), {
           backgroundColor: this.props.bgColor,
-          opacity: this.anim
+          opacity: this.anim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, this.props.bgOpacity]
+          }),
         }]}>
           {this.props.backdrop}
         </Animated.View>
@@ -231,6 +234,7 @@ ActionButton.propTypes = {
   hideShadow: PropTypes.bool,
 
   bgColor: PropTypes.string,
+  bgOpacity: PropTypes.number,
   buttonColor: PropTypes.string,
   buttonTextStyle: Text.propTypes.style,
   buttonText: PropTypes.string,
@@ -255,6 +259,7 @@ ActionButton.propTypes = {
 ActionButton.defaultProps = {
   active: false,
   bgColor: 'transparent',
+  bgOpacity: 1,
   buttonColor: 'rgba(0,0,0,1)',
   buttonTextStyle: {},
   buttonText: '+',

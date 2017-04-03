@@ -52,7 +52,7 @@ export default class ActionButton extends Component {
 
   render() {
     return (
-      <View pointerEvents="box-none" style={this.getOverlayStyles()}>
+      <View pointerEvents="box-none" style={[this.getOverlayStyles(), this.props.style]}>
         <Animated.View pointerEvents="none" style={[this.getOverlayStyles(), {
           backgroundColor: this.props.bgColor,
           opacity: this.anim.interpolate({

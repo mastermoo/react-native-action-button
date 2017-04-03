@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Animated, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
+import { StyleSheet, Text, View, Animated, TouchableOpacity, Platform } from 'react-native';
 import ActionButtonItem from './ActionButtonItem';
-import { shadowStyle, alignItemsMap, Touchable, isAndroid } from './shared';
+import { shadowStyle, alignItemsMap, getTouchableComponent, isAndroid, touchableBackground, DEFAULT_ACTIVE_OPACITY } from './shared';
 
 export default class ActionButton extends Component {
   constructor(props) {
@@ -39,6 +39,7 @@ export default class ActionButton extends Component {
     return [
       styles.overlay,
       {
+        elevation: this.props.elevation,
         justifyContent: this.props.verticalOrientation === 'up' ? 'flex-end' : 'flex-start'
       }
     ]
@@ -54,7 +55,10 @@ export default class ActionButton extends Component {
       <View pointerEvents="box-none" style={this.getOverlayStyles()}>
         <Animated.View pointerEvents="none" style={[this.getOverlayStyles(), {
           backgroundColor: this.props.bgColor,
-          opacity: this.anim
+          opacity: this.anim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, this.props.bgOpacity]
+          }),
         }]}>
           {this.props.backdrop}
         </Animated.View>
@@ -94,7 +98,7 @@ export default class ActionButton extends Component {
       width: this.props.size,
       height: this.props.size,
       borderRadius: this.props.size / 2,
-    }
+    };
 
     const buttonStyle = {
       width: this.props.size,
@@ -102,13 +106,15 @@ export default class ActionButton extends Component {
       borderRadius: this.props.size / 2,
       alignItems: 'center',
       justifyContent: 'center',
-    }
+    };
+
+    const Touchable = getTouchableComponent(this.props.useNativeFeedback);
 
     return (
       <View style={{ paddingHorizontal: this.props.offsetX }}>
         <Touchable
-          background={isAndroid && TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)')}
-          activeOpacity={0.85}
+          background={touchableBackground}
+          activeOpacity={this.props.activeOpacity}
           onLongPress={this.props.onLongPress}
           onPress={() => {
             this.props.onPress()
@@ -125,17 +131,19 @@ export default class ActionButton extends Component {
   }
 
   _renderButtonIcon() {
-    const { icon, btnOutRangeTxt, buttonTextColor } = this.props;
+    const { icon, btnOutRangeTxt, buttonTextStyle, buttonText } = this.props;
     if (icon) return icon;
 
+    const textColor = buttonTextStyle.color || 'rgba(255,255,255,1)'
+
     return (
-      <Animated.Text style={[styles.btnText, {
+      <Animated.Text style={[styles.btnText, buttonTextStyle, {
         color: this.anim.interpolate({
           inputRange: [0, 1],
-          outputRange: [buttonTextColor, (btnOutRangeTxt || buttonTextColor)]
+          outputRange: [textColor, (btnOutRangeTxt || textColor)]
         })
       }]}>
-        +
+        {buttonText}
       </Animated.Text>
     )
   }
@@ -223,6 +231,7 @@ ActionButton.propTypes = {
   active: PropTypes.bool,
 
   position: PropTypes.string,
+  elevation: PropTypes.number,
 
   hideShadow: PropTypes.bool,
   shadowStyle: React.PropTypes.oneOfType([
@@ -232,8 +241,10 @@ ActionButton.propTypes = {
   ]),
 
   bgColor: PropTypes.string,
+  bgOpacity: PropTypes.number,
   buttonColor: PropTypes.string,
-  buttonTextColor: PropTypes.string,
+  buttonTextStyle: Text.propTypes.style,
+  buttonText: PropTypes.string,
 
   offsetX: PropTypes.number,
   offsetY: PropTypes.number,
@@ -248,13 +259,17 @@ ActionButton.propTypes = {
   degrees: PropTypes.number,
   verticalOrientation: PropTypes.oneOf(['up', 'down']),
   backgroundTappable: PropTypes.bool,
+  useNativeFeedback: PropTypes.bool,
+  activeOpacity: PropTypes.number,
 };
 
 ActionButton.defaultProps = {
   active: false,
   bgColor: 'transparent',
+  bgOpacity: 1,
   buttonColor: 'rgba(0,0,0,1)',
-  buttonTextColor: 'rgba(255,255,255,1)',
+  buttonTextStyle: {},
+  buttonText: '+',
   spacing: 20,
   outRangeScale: 1,
   autoInactive: true,
@@ -267,6 +282,8 @@ ActionButton.defaultProps = {
   size: 56,
   verticalOrientation: 'up',
   backgroundTappable: false,
+  useNativeFeedback: true,
+  activeOpacity: DEFAULT_ACTIVE_OPACITY,
 };
 
 const styles = StyleSheet.create({

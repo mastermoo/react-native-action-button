@@ -1,23 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import { StyleSheet, Text, View, Animated, 
-  TouchableNativeFeedback, TouchableWithoutFeedback, Dimensions } from 'react-native';
-import { shadowStyle, alignItemsMap, Touchable, isAndroid } from './shared';
+  TouchableNativeFeedback, TouchableWithoutFeedback, Dimensions, Platform } from 'react-native';
+import { shadowStyle, alignItemsMap, getTouchableComponent, isAndroid, touchableBackground, DEFAULT_ACTIVE_OPACITY } from './shared';
 
 const { width: WIDTH } = Dimensions.get('window');
 const SHADOW_SPACE = 10;
+const TEXT_HEIGHT = 22;
+
 const TextTouchable = isAndroid ? TouchableNativeFeedback : TouchableWithoutFeedback;
 
 export default class ActionButtonItem extends Component {
   static get defaultProps() {
     return {
       active: true,
-      spaceBetween: 15
+      spaceBetween: 15,
+      useNativeFeedback: true,
+      activeOpacity: DEFAULT_ACTIVE_OPACITY,
     };
   }
 
   static get propTypes() {
     return {
       active: PropTypes.bool,
+      useNativeFeedback: PropTypes.bool,
+      activeOpacity: PropTypes.number,
     }
   }
 
@@ -51,15 +57,17 @@ export default class ActionButtonItem extends Component {
       height: size,
       borderRadius: size / 2,
       backgroundColor: this.props.buttonColor || this.props.btnColor,
-    }
+    };
 
     if (position !== 'center') buttonStyle[position] = (this.props.parentSize-size)/2;
+
+    const Touchable = getTouchableComponent(this.props.useNativeFeedback);
 
     return (
       <Animated.View pointerEvents="box-none" style={animatedViewStyle}>
         <Touchable
-          background={isAndroid && TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)')}
-          activeOpacity={this.props.activeOpacity || 0.85}
+          background={touchableBackground}
+          activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
           onPress={this.props.onPress}>
           <View
             style={[buttonStyle, !hideShadow && shadowStyle, this.props.style]}
@@ -89,8 +97,8 @@ export default class ActionButtonItem extends Component {
 
     return (
       <TextTouchable
-        background={isAndroid && TouchableNativeFeedback.Ripple(this.props.buttonColor)}
-        activeOpacity={this.props.activeOpacity || 0.85}
+        background={touchableBackground}
+        activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
         onPress={this.props.onPress}>
         <View style={textStyles}>
           <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text>
@@ -100,7 +108,6 @@ export default class ActionButtonItem extends Component {
   }
 }
 
-const TEXT_HEIGHT = 22;
 
 const styles = StyleSheet.create({
   textContainer: {

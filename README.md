@@ -6,6 +6,9 @@ customizable multi-action-button component for react-native
 ![react-native-action-button demo](http://i.giphy.com/l0K7psuhDQGLeT3d6.gif)
 ![react-native-action-button demo](http://i.giphy.com/xTcnSOtuet39cM46s0.gif)
 
+### Known Issues
+- Doesn't Work While Android Debugging. See issue [#79](https://github.com/mastermoo/react-native-action-button/issues/79).
+
 ### Installation
 ```bash
 npm i react-native-action-button --save
@@ -40,7 +43,7 @@ class App extends Component {
   render() {
     return (
       <View style={{flex:1, backgroundColor: '#f3f3f3'}}>
-        {/*Rest of App come ABOVE the action button component!*/}
+        {/* Rest of the app comes ABOVE the action button component !*/}
         <ActionButton buttonColor="rgba(231,76,60,1)">
           <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
             <Icon name="md-create" style={styles.actionButtonIcon} />
@@ -88,12 +91,13 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | ------------- |:-------------:|:------------:       | ----------- |
 | active        | boolean       | false               | action buttons visible or not
 | autoInactive  | boolean       | true                | Auto hide ActionButtons when ActionButton.Item is pressed.
+| hideShadow    | boolean       | false               | use this to hide the default elevation and boxShadow
 | position      | string        | "right" / "center"  | one of: `left` `center` and `right`
 | bgColor       | string        | "transparent"       | background color when ActionButtons are visible
 | buttonColor   | string        | "rgba(0,0,0,1)"     | background color of the +Button **(must be rgba value!)**
 | spacing       | number        | 20                  | spacing between the `ActionButton.Item`s
-| offsetX       | number        | 10 / 30             | offset to the sides of the screen
-| offsetY       | number        | 4 / 30              | offset to the bottom of the screen
+| offsetX       | number        | 30                  | offset from the left/right side of the screen
+| offsetY       | number        | 30                  | offset from the bottom/top of the screen
 | btnOutRange   | string        | props.buttonColor   | button background color to animate to
 | outRangeScale | number        | 1                   | changes size of button during animation
 | onPress       | function      | null                | fires, when ActionButton is tapped
@@ -101,18 +105,24 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | icon          | Component     | +                   | Custom component for ActionButton Icon
 | backdrop      | Component     | false               | Custom component for use as Backdrop (i.e. [BlurView](https://github.com/react-native-fellowship/react-native-blur#blur-view), [VibrancyView](https://github.com/react-native-fellowship/react-native-blur#vibrancy-view))
 | degrees       | number        | 135                 | degrees to rotate icon
-| text          | string        | null                | use this to set a different text on the button
-| buttonStyle   | style         | null                | use this to set the textstyle of the button's text
+| buttonText    | string        | +                   | use this to set a different text on the button
+| buttonTextStyle | style         | null                | use this to set the textstyle of the button's text
 | onReset       | function      | null                | use this to set the callback that will be called after the button reset's it's items
 | verticalOrientation | string  | "up"                | direction action buttons should expand.  One of: `up` or `down`
+| backgroundTappable | boolean  | false               | make background tappable in active state of ActionButton
+| useNativeFeedback | boolean   | true                | whether to use TouchableNativeFeedback on Android
+| activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity
 
 ##### ActionButton.Item:
 | Property      | Type          | Default             | Description |
 | ------------- |:-------------:|:------------:       | ----------- |
-| title         | string        | undefined           | the title shown next to the button, not shown when empty
+| title         | string        | undefined           | the title shown next to the button. When `undefined` the title is not hidden
 | onPress       | func          | null                | **required** function, triggers when a button is tapped
 | buttonColor   | string        | same as + button    | background color of the Button
-| titleColor    | string        | "#444"              | color of title
-| titleBgColor  | string        | "white"             | background color of title
-| textContainerStyle  | style        | null             | use this to set the textstyle of the button's item text container
-| textStyle  | style        | null             | use this to set the textstyle of the button's item text
+| titleColor    | string        | "#444"              | color of title, *removed* in v2.5. use `textStyle` instead
+| titleBgColor  | string        | "white"             | background color of title, *removed* in v2.5. use `textStyle` instead
+| textContainerStyle  | style   | null                | use this to set the textstyle of the button's item text container
+| textStyle     | style         | null                | use this to set the textstyle of the button's item text
+| spaceBetween  | number        | 15                  | use this to set the space between the Button and the text container
+| useNativeFeedback | boolean   | true                | whether to use TouchableNativeFeedback on Android
+| activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity

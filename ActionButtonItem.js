@@ -101,7 +101,7 @@ export default class ActionButtonItem extends Component {
         activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
         onPress={this.props.onPress}>
         <View style={textStyles}>
-          <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text>
+          <Text allowFontScaling={false} style={[styles.text, this.props.textStyle]}>{this.props.title}</Text>
         </View>
       </TextTouchable>
     );

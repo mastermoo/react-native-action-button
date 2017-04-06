@@ -8,6 +8,7 @@ export default class ActionButton extends Component {
     super(props);
 
     this.state = {
+      resetToken: props.resetToken,
       active: props.active,
     }
 
@@ -19,6 +20,11 @@ export default class ActionButton extends Component {
     clearTimeout(this.timeout);
   }
 
+  componentWillReceiveProps(nextProps)
+  {
+     if (nextProps.resetToken !== this.state.resetToken)
+        this.setState({ resetToken: nextProps.resetToken, active: nextProps.active });
+  }
 
   //////////////////////
   // STYLESHEET GETTERS
@@ -228,6 +234,7 @@ export default class ActionButton extends Component {
 ActionButton.Item = ActionButtonItem;
 
 ActionButton.propTypes = {
+  resetToken: PropTypes.any,
   active: PropTypes.bool,
 
   position: PropTypes.string,
@@ -259,6 +266,7 @@ ActionButton.propTypes = {
 };
 
 ActionButton.defaultProps = {
+  resetToken: null,
   active: false,
   bgColor: 'transparent',
   bgOpacity: 1,

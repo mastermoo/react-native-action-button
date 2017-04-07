@@ -89,6 +89,7 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 ##### ActionButton:
 | Property      | Type          | Default             | Description |
 | ------------- |:-------------:|:------------:       | ----------- |
+| resetToken    | any           | null                | use this to reset the internal component state (expand/collapse) in a re-render cycle. Synchronize the component state.
 | active        | boolean       | false               | action buttons visible or not
 | autoInactive  | boolean       | true                | Auto hide ActionButtons when ActionButton.Item is pressed.
 | hideShadow    | boolean       | false               | use this to hide the default elevation and boxShadow

@@ -173,6 +173,7 @@ export default class ActionButton extends Component {
 
   _renderActions() {
     const { children, verticalOrientation } = this.props;
+    
     if (!this.state.active) return null;
 
     const actionButtons = !Array.isArray(children) ? [children] : children;

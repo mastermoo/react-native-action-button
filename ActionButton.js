@@ -23,7 +23,24 @@ export default class ActionButton extends Component {
   componentWillReceiveProps(nextProps)
   {
      if (nextProps.resetToken !== this.state.resetToken)
+     {
+        if (nextProps.active === false && this.state.active === true)
+        {
+            if (this.props.onReset) this.props.onReset();
+            Animated.spring(this.anim, { toValue: 0 }).start();
+            setTimeout(() => this.setState({ active: false, resetToken: nextProps.resetToken }), 250);
+            return;
+        }
+
+        if (nextProps.active === true && this.state.active === false)
+        {
+            Animated.spring(this.anim, { toValue: 1 }).start();
+            this.setState({ active: true, resetToken: nextProps.resetToken });
+            return;
+        }
+
         this.setState({ resetToken: nextProps.resetToken, active: nextProps.active });
+     }
   }
 
   //////////////////////
@@ -156,7 +173,7 @@ export default class ActionButton extends Component {
 
   _renderActions() {
     const { children, verticalOrientation } = this.props;
-
+    
     if (!this.state.active) return null;
 
     const actionButtons = !Array.isArray(children) ? [children] : children;
@@ -215,7 +232,7 @@ export default class ActionButton extends Component {
       this.anim.setValue(1);
     }
 
-    this.setState({ active: true });
+    this.setState({ active: true, resetToken: this.state.resetToken });
   }
 
   reset(animate=true) {
@@ -227,7 +244,7 @@ export default class ActionButton extends Component {
       this.anim.setValue(0);
     }
 
-    setTimeout(() => this.setState({ active: false }), 250);
+    setTimeout(() => this.setState({ active: false, resetToken: this.state.resetToken }), 250);
   }
 }
 

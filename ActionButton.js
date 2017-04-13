@@ -63,6 +63,7 @@ export default class ActionButton extends Component {
       styles.overlay,
       {
         elevation: this.props.elevation,
+        zIndex: this.props.zIndex,
         justifyContent: this.props.verticalOrientation === 'up' ? 'flex-end' : 'flex-start'
       }
     ]
@@ -256,6 +257,7 @@ ActionButton.propTypes = {
 
   position: PropTypes.string,
   elevation: PropTypes.number,
+  zIndex: PropTypes.number,
 
   hideShadow: PropTypes.bool,
 

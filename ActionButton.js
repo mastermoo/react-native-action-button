@@ -135,7 +135,7 @@ export default class ActionButton extends Component {
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
 
     return (
-      <View style={{ paddingHorizontal: this.props.offsetX }}>
+      <View style={{ paddingHorizontal: this.props.offsetX, zIndex: this.props.zIndex }}>
         <Touchable
           background={touchableBackground}
           activeOpacity={this.props.activeOpacity}
@@ -184,7 +184,8 @@ export default class ActionButton extends Component {
       alignSelf: 'stretch',
       // backgroundColor: 'purple',
       justifyContent: verticalOrientation === 'up' ? 'flex-end' : 'flex-start',
-      paddingTop: this.props.verticalOrientation === 'down' ? this.props.spacing : 0
+      paddingTop: this.props.verticalOrientation === 'down' ? this.props.spacing : 0,
+      zIndex: this.props.zIndex,
     };
 
     return (

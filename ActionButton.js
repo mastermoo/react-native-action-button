@@ -136,20 +136,22 @@ export default class ActionButton extends Component {
 
     return (
       <View style={{ paddingHorizontal: this.props.offsetX, zIndex: this.props.zIndex }}>
-        <Touchable
-          background={touchableBackground}
-          activeOpacity={this.props.activeOpacity}
-          onLongPress={this.props.onLongPress}
-          onPress={() => {
-            this.props.onPress()
-            if (this.props.children) this.animateButton()
-          }}>
-          <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle]}>
-            <Animated.View style={[buttonStyle, animatedViewStyle]}>
-              {this._renderButtonIcon()}
+        <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle]}>
+          <Touchable
+            background={touchableBackground}
+            activeOpacity={this.props.activeOpacity}
+            onLongPress={this.props.onLongPress}
+            onPress={() => {
+              this.props.onPress()
+              if (this.props.children) this.animateButton()
+            }}>
+            <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle]}>
+              <Animated.View style={[buttonStyle, animatedViewStyle]}>
+                {this._renderButtonIcon()}
+              </Animated.View>
             </Animated.View>
-          </Animated.View>
-        </Touchable>
+          </Touchable>
+        </Animated.View>
       </View>
     );
   }
@@ -174,7 +176,7 @@ export default class ActionButton extends Component {
 
   _renderActions() {
     const { children, verticalOrientation } = this.props;
-    
+
     if (!this.state.active) return null;
 
     const actionButtons = !Array.isArray(children) ? [children] : children;
@@ -184,7 +186,7 @@ export default class ActionButton extends Component {
       alignSelf: 'stretch',
       // backgroundColor: 'purple',
       justifyContent: verticalOrientation === 'up' ? 'flex-end' : 'flex-start',
-      paddingTop: this.props.verticalOrientation === 'down' ? this.props.spacing : 0,
+      paddingTop: verticalOrientation === 'down' ? this.props.spacing : 0,
       zIndex: this.props.zIndex,
     };
 

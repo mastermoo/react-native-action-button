@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Animated, 
+import { StyleSheet, Text, View, Animated,
   TouchableNativeFeedback, TouchableWithoutFeedback, Dimensions, Platform } from 'react-native';
 import { shadowStyle, alignItemsMap, getTouchableComponent, isAndroid, touchableBackground, DEFAULT_ACTIVE_OPACITY } from './shared';
 
@@ -65,16 +65,16 @@ export default class ActionButtonItem extends Component {
 
     return (
       <Animated.View pointerEvents="box-none" style={animatedViewStyle}>
-        <Touchable
-          background={touchableBackground}
-          activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
-          onPress={this.props.onPress}>
-          <View
-            style={[buttonStyle, !hideShadow && shadowStyle, this.props.style]}
-          >
-            {this.props.children}
-          </View>
-        </Touchable>
+        <View style={[buttonStyle, !hideShadow && shadowStyle, this.props.style]}>
+          <Touchable
+            background={touchableBackground}
+            activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
+            onPress={this.props.onPress}>
+            <View style={buttonStyle}>
+              {this.props.children}
+            </View>
+          </Touchable>
+        </View>
         {this._renderTitle()}
       </Animated.View>
     );
@@ -96,14 +96,14 @@ export default class ActionButtonItem extends Component {
     const textStyles = [styles.textContainer, positionStyles, textContainerStyle, !hideShadow && shadowStyle];
 
     return (
-      <TextTouchable
-        background={touchableBackground}
-        activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
-        onPress={this.props.onPress}>
-        <View style={textStyles}>
-          <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text>
-        </View>
-      </TextTouchable>
+      <View style={textStyles}>
+        <TextTouchable
+          background={touchableBackground}
+          activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
+          onPress={this.props.onPress}>
+            <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text>
+        </TextTouchable>
+      </View>
     );
   }
 }

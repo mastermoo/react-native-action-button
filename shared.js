@@ -29,6 +29,6 @@ export function getTouchableComponent(useNativeFeedback) {
 
 export const touchableBackground = isAndroid
   ? Platform['Version'] >= 21
-    ? TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)', false)
+    ? TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)', true)
     : TouchableNativeFeedback.SelectableBackground()
   : undefined;

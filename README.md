@@ -76,7 +76,7 @@ Also this example uses `react-native-vector-icons` for the button Icons.
 
 
 ### Primary Button Example
-_The following Basic example can be found in `example/Basic`._
+_Plus button will change to primary button(not the close button), when plus button is pressed._
 
 ```js
 import React, { Component } from 'react';
@@ -120,10 +120,6 @@ const styles = StyleSheet.create({
   },
 });
 ```
-
-This will create a floating Button in the bottom right corner with 3 action buttons.
-Also this example uses `react-native-vector-icons` for the button Icons.
-
 
 
 ### FAB Example

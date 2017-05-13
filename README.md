@@ -73,6 +73,55 @@ const styles = StyleSheet.create({
 This will create a floating Button in the bottom right corner with 3 action buttons.
 Also this example uses `react-native-vector-icons` for the button Icons.
 
+
+
+### Primary Button Example
+_Plus button will change to primary button(not the close button), when plus button is pressed._
+
+```js
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+
+class App extends Component {
+
+  render() {
+    return (
+      <View style={{flex:1, backgroundColor: '#f3f3f3'}}>        
+        <ActionButton buttonColor="rgba(231,76,60,1)"
+          enablePrimaryButton={true}
+          primaryIcon={
+            <Icon name="md-create" style={styles.actionButtonIcon} />
+          }
+          onPressForPrimary={()=>{
+            //ex: go to next page
+          }}
+          >          
+          <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
+            <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
+            <Icon name="md-done-all" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
+      </View>
+    );
+  }
+
+}
+
+const styles = StyleSheet.create({
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
+});
+```
+
+
 ### FAB Example
 ```js
 <ActionButton
@@ -113,6 +162,10 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | backgroundTappable | boolean  | false               | make background tappable in active state of ActionButton
 | useNativeFeedback | boolean   | true                | whether to use TouchableNativeFeedback on Android
 | activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity
+| enablePrimaryButton | boolean | false | plus button will change to primary button(not the close button), when plus button is pressed.
+| primaryIcon | Component | null | Custom component for Primary Button Icon
+| onPressForPrimary | function | null | click event for primary button
+
 
 ##### ActionButton.Item:
 | Property      | Type          | Default             | Description |

@@ -141,7 +141,14 @@ export default class ActionButton extends Component {
           activeOpacity={this.props.activeOpacity}
           onLongPress={this.props.onLongPress}
           onPress={() => {
-            this.props.onPress()
+
+            if (this.props.enablePrimaryButton
+              && this.state.active) {
+                this.props.onPressForPrimary()
+            }else{
+                this.props.onPress()
+            }
+
             if (this.props.children) this.animateButton()
           }}>
           <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle]}>
@@ -155,7 +162,9 @@ export default class ActionButton extends Component {
   }
 
   _renderButtonIcon() {
-    const { icon, btnOutRangeTxt, buttonTextStyle, buttonText } = this.props;
+    const { icon, primaryIcon, btnOutRangeTxt, buttonTextStyle, buttonText, enablePrimaryButton } = this.props;
+
+    if(enablePrimaryButton && this.state.active) return primaryIcon;
     if (icon) return icon;
 
     const textColor = buttonTextStyle.color || 'rgba(255,255,255,1)'
@@ -174,7 +183,7 @@ export default class ActionButton extends Component {
 
   _renderActions() {
     const { children, verticalOrientation } = this.props;
-    
+
     if (!this.state.active) return null;
 
     const actionButtons = !Array.isArray(children) ? [children] : children;
@@ -274,6 +283,7 @@ ActionButton.propTypes = {
   size: PropTypes.number,
   autoInactive: PropTypes.bool,
   onPress: PropTypes.func,
+  onPressForPrimary: PropTypes.func,
   backdrop: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.object

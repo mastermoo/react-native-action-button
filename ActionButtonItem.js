@@ -101,7 +101,9 @@ export default class ActionButtonItem extends Component {
           background={touchableBackground}
           activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
           onPress={this.props.onPress}>
-            <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text>
+            <View style={styles.viewTextWrapper}>
+              <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text>
+            <View>
         </TextTouchable>
       </View>
     );
@@ -119,6 +121,9 @@ const styles = StyleSheet.create({
     borderColor: '#eee',
     backgroundColor: 'white',
     height: TEXT_HEIGHT
+  },
+  viewTextWrapper: {
+    flex: 1
   },
   text: {
     flex: 1,

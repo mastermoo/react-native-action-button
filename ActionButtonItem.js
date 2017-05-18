@@ -103,7 +103,7 @@ export default class ActionButtonItem extends Component {
           onPress={this.props.onPress}>
             <View style={styles.viewTextWrapper}>
               <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text>
-            <View>
+            </View>
         </TextTouchable>
       </View>
     );

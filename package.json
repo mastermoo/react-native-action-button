@@ -1,28 +1,94 @@
 {
-  "name": "react-native-action-button",
-  "version": "2.6.9",
+  "_args": [
+    [
+      {
+        "raw": "react-native-action-button",
+        "scope": null,
+        "escapedName": "react-native-action-button",
+        "name": "react-native-action-button",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/khiemdang/Desktop/hb-blockchain-interface"
+    ]
+  ],
+  "_from": "react-native-action-button@latest",
+  "_id": "react-native-action-button@2.6.9",
+  "_inCache": true,
+  "_location": "/react-native-action-button",
+  "_nodeVersion": "6.8.1",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/react-native-action-button-2.6.9.tgz_1492521121525_0.4809960809070617"
+  },
+  "_npmUser": {
+    "name": "mastermo",
+    "email": "yousef.kamawall@gmail.com"
+  },
+  "_npmVersion": "3.10.8",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-action-button",
+    "scope": null,
+    "escapedName": "react-native-action-button",
+    "name": "react-native-action-button",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-action-button/-/react-native-action-button-2.6.9.tgz",
+  "_shasum": "f9609d65ac40aac0ae1c2bd05dc7a8811395d62b",
+  "_shrinkwrap": null,
+  "_spec": "react-native-action-button",
+  "_where": "/Users/khiemdang/Desktop/hb-blockchain-interface",
+  "author": {
+    "name": "Yousef Kamawall"
+  },
+  "bugs": {
+    "url": "https://github.com/mastermoo/react-native-action-button/issues"
+  },
+  "dependencies": {},
   "description": "customizable multi-action-button component for react-native",
-  "main": "ActionButton.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "f9609d65ac40aac0ae1c2bd05dc7a8811395d62b",
+    "tarball": "https://registry.npmjs.org/react-native-action-button/-/react-native-action-button-2.6.9.tgz"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mastermoo/react-native-action-button.git"
-  },
+  "gitHead": "4438fea5eef07391245ec5d37376d359ed034861",
+  "homepage": "https://github.com/mastermoo/react-native-action-button",
   "keywords": [
     "react-native",
     "action-button",
     "float-button",
     "multi-action-button"
   ],
+  "license": "MIT",
+  "main": "ActionButton.js",
+  "maintainers": [
+    {
+      "name": "mastermo",
+      "email": "yousef.kamawall@gmail.com"
+    }
+  ],
+  "name": "react-native-action-button",
+  "optionalDependencies": {},
   "peerDependencies": {
     "react-native": ">=0.11"
   },
-  "author": "Yousef Kamawall",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mastermoo/react-native-action-button/issues"
+  "readme": "# react-native-action-button\ncustomizable multi-action-button component for react-native\n\n![react-native-action-button demo](http://i.giphy.com/26BkMir9IcAhqe4EM.gif)\n![react-native-action-button demo](http://i.giphy.com/xTcnTeW9BBXh8wMhLq.gif)\n![react-native-action-button demo](http://i.giphy.com/l0K7psuhDQGLeT3d6.gif)\n![react-native-action-button demo](http://i.giphy.com/xTcnSOtuet39cM46s0.gif)\n\n### Known Issues\n- Doesn't Work While Android Debugging. See issue [#79](https://github.com/mastermoo/react-native-action-button/issues/79).\n\n### Installation\n```bash\nnpm i react-native-action-button --save\n```\n\n### Usage\n\nFirst, require it from your app's JavaScript files with:\n```bash\nimport ActionButton from 'react-native-action-button';\n```\n\n##### ActionButton\n`ActionButton` component is the main component which wraps everything and provides a couple of props (see Config below).\n\n##### ActionButton.Item\n`ActionButton.Item` specifies an Action Button. You have to include at least 1 `ActionButton.Item`.\n\n\n### Example\n_The following Basic example can be found in `example/Basic`._\n\n```js\nimport React, { Component } from 'react';\nimport { StyleSheet, View } from 'react-native';\nimport ActionButton from 'react-native-action-button';\nimport Icon from 'react-native-vector-icons/Ionicons';\n\n\nclass App extends Component {\n\n  render() {\n    return (\n      <View style={{flex:1, backgroundColor: '#f3f3f3'}}>\n        {/* Rest of the app comes ABOVE the action button component !*/}\n        <ActionButton buttonColor=\"rgba(231,76,60,1)\">\n          <ActionButton.Item buttonColor='#9b59b6' title=\"New Task\" onPress={() => console.log(\"notes tapped!\")}>\n            <Icon name=\"md-create\" style={styles.actionButtonIcon} />\n          </ActionButton.Item>\n          <ActionButton.Item buttonColor='#3498db' title=\"Notifications\" onPress={() => {}}>\n            <Icon name=\"md-notifications-off\" style={styles.actionButtonIcon} />\n          </ActionButton.Item>\n          <ActionButton.Item buttonColor='#1abc9c' title=\"All Tasks\" onPress={() => {}}>\n            <Icon name=\"md-done-all\" style={styles.actionButtonIcon} />\n          </ActionButton.Item>\n        </ActionButton>\n      </View>\n    );\n  }\n\n}\n\nconst styles = StyleSheet.create({\n  actionButtonIcon: {\n    fontSize: 20,\n    height: 22,\n    color: 'white',\n  },\n});\n```\n\nThis will create a floating Button in the bottom right corner with 3 action buttons.\nAlso this example uses `react-native-vector-icons` for the button Icons.\n\n### FAB Example\n```js\n<ActionButton\n  buttonColor=\"rgba(231,76,60,1)\"\n  onPress={() => { console.log(\"hi\")}}\n/>\n```\n\n### Show/hide the FAB on scroll\nTake a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94a685b06eb3900f) for showing and hiding the floating action button depending on the scroll direction.\n\n### Configuration\n\n##### ActionButton:\n| Property      | Type          | Default             | Description |\n| ------------- |:-------------:|:------------:       | ----------- |\n| resetToken    | any           | null                | use this to reset the internal component state (expand/collapse) in a re-render cycle. Synchronize the component state.\n| active        | boolean       | false               | action buttons visible or not\n| autoInactive  | boolean       | true                | Auto hide ActionButtons when ActionButton.Item is pressed.\n| hideShadow    | boolean       | false               | use this to hide the default elevation and boxShadow\n| position      | string        | \"right\" / \"center\"  | one of: `left` `center` and `right`\n| bgColor       | string        | \"transparent\"       | background color when ActionButtons are visible\n| buttonColor   | string        | \"rgba(0,0,0,1)\"     | background color of the +Button **(must be rgba value!)**\n| spacing       | number        | 20                  | spacing between the `ActionButton.Item`s\n| offsetX       | number        | 30                  | offset from the left/right side of the screen\n| offsetY       | number        | 30                  | offset from the bottom/top of the screen\n| btnOutRange   | string        | props.buttonColor   | button background color to animate to\n| outRangeScale | number        | 1                   | changes size of button during animation\n| onPress       | function      | null                | fires, when ActionButton is tapped\n| onLongPress   | function      | null                | fires, when ActionButton is long pressed\n| icon          | Component     | +                   | Custom component for ActionButton Icon\n| backdrop      | Component     | false               | Custom component for use as Backdrop (i.e. [BlurView](https://github.com/react-native-fellowship/react-native-blur#blur-view), [VibrancyView](https://github.com/react-native-fellowship/react-native-blur#vibrancy-view))\n| degrees       | number        | 135                 | degrees to rotate icon\n| buttonText    | string        | +                   | use this to set a different text on the button\n| buttonTextStyle | style         | null                | use this to set the textstyle of the button's text\n| onReset       | function      | null                | use this to set the callback that will be called after the button reset's it's items\n| verticalOrientation | string  | \"up\"                | direction action buttons should expand.  One of: `up` or `down`\n| backgroundTappable | boolean  | false               | make background tappable in active state of ActionButton\n| useNativeFeedback | boolean   | true                | whether to use TouchableNativeFeedback on Android\n| activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity\n\n##### ActionButton.Item:\n| Property      | Type          | Default             | Description |\n| ------------- |:-------------:|:------------:       | ----------- |\n| title         | string        | undefined           | the title shown next to the button. When `undefined` the title is not hidden\n| onPress       | func          | null                | **required** function, triggers when a button is tapped\n| buttonColor   | string        | same as + button    | background color of the Button\n| titleColor    | string        | \"#444\"              | color of title, *removed* in v2.5. use `textStyle` instead\n| titleBgColor  | string        | \"white\"             | background color of title, *removed* in v2.5. use `textStyle` instead\n| textContainerStyle  | style   | null                | use this to set the textstyle of the button's item text container\n| textStyle     | style         | null                | use this to set the textstyle of the button's item text\n| spaceBetween  | number        | 15                  | use this to set the space between the Button and the text container\n| useNativeFeedback | boolean   | true                | whether to use TouchableNativeFeedback on Android\n| activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mastermoo/react-native-action-button.git"
   },
-  "homepage": "https://github.com/mastermoo/react-native-action-button"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "2.6.9"
 }

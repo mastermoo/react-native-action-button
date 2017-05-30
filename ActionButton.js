@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { StyleSheet, Text, View, Animated, TouchableOpacity, Platform } from 'react-native';
 import ActionButtonItem from './ActionButtonItem';
 import { shadowStyle, alignItemsMap, getTouchableComponent, isAndroid, touchableBackground, DEFAULT_ACTIVE_OPACITY } from './shared';
+import { width, height, totalSize } from 'react-native-dimension';
 
 export default class ActionButton extends Component {
   constructor(props) {
@@ -180,12 +181,16 @@ export default class ActionButton extends Component {
     const actionButtons = !Array.isArray(children) ? [children] : children;
 
     const actionStyle = {
-      flex: 1,
+      borderRadius:60,
       alignSelf: 'stretch',
       // backgroundColor: 'purple',
       justifyContent: verticalOrientation === 'up' ? 'flex-end' : 'flex-start',
       paddingTop: this.props.verticalOrientation === 'down' ? this.props.spacing : 0,
       zIndex: this.props.zIndex,
+      backgroundColor:'white',
+      width:width(15),
+      height:height(38),
+      marginBottom:width(2),
     };
 
     return (
@@ -300,9 +305,9 @@ ActionButton.defaultProps = {
   backdrop: false,
   degrees: 45,
   position: 'right',
-  offsetX: 30,
+  offsetX: width(3),
   offsetY: 30,
-  size: 56,
+  size: width(10),
   verticalOrientation: 'up',
   backgroundTappable: false,
   useNativeFeedback: true,
@@ -312,8 +317,8 @@ ActionButton.defaultProps = {
 const styles = StyleSheet.create({
   overlay: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
+    bottom: width(6),
+    left:width(39),
     right: 0,
     top: 0,
     backgroundColor: 'transparent',

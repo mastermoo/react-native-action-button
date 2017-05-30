@@ -114,15 +114,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     paddingVertical: (isAndroid ? 2 : 3),
     paddingHorizontal: 8,
-    borderRadius: 3,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#eee',
-    backgroundColor: 'white',
-    height: TEXT_HEIGHT
+    height: TEXT_HEIGHT,
+    width:80,
   },
   text: {
     flex: 1,
-    fontSize: 12,
+    fontSize: 13,
     color: '#444',
   }
 });

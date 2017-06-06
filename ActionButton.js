@@ -120,9 +120,11 @@ export default class ActionButton extends Component {
         inputRange: [0, 1],
         outputRange: [this.props.buttonColor, (this.props.btnOutRange || this.props.buttonColor)]
       }),
+      borderColor:'white',
       width: this.props.size,
       height: this.props.size,
       borderRadius: this.props.size / 2,
+      borderWidth: this.props.size / 14,
     };
 
     const buttonStyle = {
@@ -317,15 +319,16 @@ ActionButton.defaultProps = {
 const styles = StyleSheet.create({
   overlay: {
     position: 'absolute',
-    bottom: width(6),
-    left:width(39),
+    bottom: width(10),
+    left:width(40),
     right: 0,
     top: 0,
     backgroundColor: 'transparent',
   },
   btnText: {
-    marginTop: -4,
-    fontSize: 24,
+    marginBottom:15,
+    marginRight:9,
+    fontSize: width(12),
     backgroundColor: 'transparent',
   },
 });

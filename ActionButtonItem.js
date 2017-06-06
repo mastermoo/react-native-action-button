@@ -41,7 +41,7 @@ export default class ActionButtonItem extends Component {
       // backgroundColor: this.props.buttonColor,
       opacity: this.props.anim,
       transform: [
-        {
+        { 
           translateY: this.props.anim.interpolate({
             inputRange: [0, 1],
             outputRange: [verticalOrientation === 'down' ? -40 : 40, 0]

@@ -41,7 +41,7 @@ export default class ActionButtonItem extends Component {
       // backgroundColor: this.props.buttonColor,
       opacity: this.props.anim,
       transform: [
-        {
+        { 
           translateY: this.props.anim.interpolate({
             inputRange: [0, 1],
             outputRange: [verticalOrientation === 'down' ? -40 : 40, 0]
@@ -114,15 +114,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     paddingVertical: (isAndroid ? 2 : 3),
     paddingHorizontal: 8,
-    borderRadius: 3,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#eee',
-    backgroundColor: 'white',
-    height: TEXT_HEIGHT
+    height: TEXT_HEIGHT,
+    width:80,
   },
   text: {
     flex: 1,
-    fontSize: 12,
+    fontSize: 13,
     color: '#444',
   }
 });

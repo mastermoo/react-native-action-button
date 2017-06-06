@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { StyleSheet, Text, View, Animated, TouchableOpacity, Platform } from 'react-native';
 import ActionButtonItem from './ActionButtonItem';
 import { shadowStyle, alignItemsMap, getTouchableComponent, isAndroid, touchableBackground, DEFAULT_ACTIVE_OPACITY } from './shared';
+import { width, height, totalSize } from 'react-native-dimension';
 
 export default class ActionButton extends Component {
   constructor(props) {
@@ -119,9 +120,11 @@ export default class ActionButton extends Component {
         inputRange: [0, 1],
         outputRange: [this.props.buttonColor, (this.props.btnOutRange || this.props.buttonColor)]
       }),
+      borderColor:'white',
       width: this.props.size,
       height: this.props.size,
       borderRadius: this.props.size / 2,
+      borderWidth: this.props.size / 14,
     };
 
     const buttonStyle = {
@@ -180,12 +183,16 @@ export default class ActionButton extends Component {
     const actionButtons = !Array.isArray(children) ? [children] : children;
 
     const actionStyle = {
-      flex: 1,
+      borderRadius:60,
       alignSelf: 'stretch',
       // backgroundColor: 'purple',
       justifyContent: verticalOrientation === 'up' ? 'flex-end' : 'flex-start',
       paddingTop: this.props.verticalOrientation === 'down' ? this.props.spacing : 0,
       zIndex: this.props.zIndex,
+      backgroundColor:'white',
+      width:width(15),
+      height:height(38),
+      marginBottom:width(2),
     };
 
     return (
@@ -300,9 +307,9 @@ ActionButton.defaultProps = {
   backdrop: false,
   degrees: 45,
   position: 'right',
-  offsetX: 30,
+  offsetX: width(3),
   offsetY: 30,
-  size: 56,
+  size: width(10),
   verticalOrientation: 'up',
   backgroundTappable: false,
   useNativeFeedback: true,
@@ -312,15 +319,16 @@ ActionButton.defaultProps = {
 const styles = StyleSheet.create({
   overlay: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
+    bottom: width(10),
+    left:width(40),
     right: 0,
     top: 0,
     backgroundColor: 'transparent',
   },
   btnText: {
-    marginTop: -4,
-    fontSize: 24,
+    marginBottom:15,
+    marginRight:9,
+    fontSize: width(12),
     backgroundColor: 'transparent',
   },
 });

@@ -127,3 +127,4 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | spaceBetween  | number        | 15                  | use this to set the space between the Button and the text container
 | useNativeFeedback | boolean   | true                | whether to use TouchableNativeFeedback on Android
 | activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity
+| hideLabelShadow | boolean     | same as hideShadow  | use this to hide the button's label default elevation and boxShadow

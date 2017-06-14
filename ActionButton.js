@@ -133,11 +133,15 @@ export default class ActionButton extends Component {
     };
 
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
+    const parentStyle = Platform.OS === 'android' && this.props.fixNativeFeedbackRadius?
+      { right: this.props.offsetX, zIndex: this.props.zIndex, borderRadius: this.props.size / 2, width: this.props.size }
+      :
+      { paddingHorizontal: this.props.offsetX, zIndex: this.props.zIndex }
 
     return (
-      <View style={{ paddingHorizontal: this.props.offsetX, zIndex: this.props.zIndex }}>
+      <View style={parentStyle}>
         <Touchable
-          background={touchableBackground}
+          background={touchableBackground(this.props.nativeFeedbackRippleColor, this.props.fixNativeFeedbackRadius)}
           activeOpacity={this.props.activeOpacity}
           onLongPress={this.props.onLongPress}
           onPress={() => {
@@ -286,8 +290,11 @@ ActionButton.propTypes = {
   degrees: PropTypes.number,
   verticalOrientation: PropTypes.oneOf(['up', 'down']),
   backgroundTappable: PropTypes.bool,
-  useNativeFeedback: PropTypes.bool,
   activeOpacity: PropTypes.number,
+
+  useNativeFeedback: PropTypes.bool,
+  fixNativeFeedbackRadius: PropTypes.bool,
+  nativeFeedbackRippleColor: PropTypes.string,
 };
 
 ActionButton.defaultProps = {
@@ -312,6 +319,8 @@ ActionButton.defaultProps = {
   backgroundTappable: false,
   useNativeFeedback: true,
   activeOpacity: DEFAULT_ACTIVE_OPACITY,
+  fixNativeFeedbackRadius: false,
+  nativeFeedbackRippleColor: 'rgba(255,255,255,0.75)',
 };
 
 const styles = StyleSheet.create({

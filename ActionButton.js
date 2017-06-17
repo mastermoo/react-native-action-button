@@ -177,7 +177,7 @@ export default class ActionButton extends Component {
   }
 
   _renderActions() {
-    const { children, verticalOrientation, grid } = this.props;
+    const { children, verticalOrientation, grid, inverted } = this.props;
 
     if (!this.state.active) return null;
 
@@ -194,11 +194,12 @@ export default class ActionButton extends Component {
 
     return (
       <View style={actionStyle} pointerEvents={'box-none'}>
-        <View style={grid && styles.grid}>
+        <View style={[grid && styles.grid, inverted && styles.inverted]}>
           {actionButtons.map((ActionButton, idx) => (
             <ActionButtonItem
               key={idx}
               anim={this.anim}
+              inverted={inverted}
               {...this.props}
               {...ActionButton.props}
               parentSize={this.props.size}
@@ -211,8 +212,8 @@ export default class ActionButton extends Component {
               }}
             />
           ))}
-        </View>
       </View>
+    </View>
     );
   }
 
@@ -263,6 +264,7 @@ ActionButton.propTypes = {
   active: PropTypes.bool,
 
   grid: PropTypes.bool,
+  inverted: PropTypes.bool,
   position: PropTypes.string,
   elevation: PropTypes.number,
   zIndex: PropTypes.number,
@@ -316,6 +318,7 @@ ActionButton.defaultProps = {
   degrees: 45,
   position: 'right',
   grid: false,
+  inverted: false,
   offsetX: 30,
   offsetY: 30,
   size: 56,
@@ -345,5 +348,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+  },
+  inverted: {
+    transform: [{ scaleY: -1 }]
   }
 });

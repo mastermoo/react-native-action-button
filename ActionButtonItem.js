@@ -24,6 +24,7 @@ export default class ActionButtonItem extends Component {
   static get propTypes() {
     return {
       active: PropTypes.bool,
+      inverted: PropTypes.bool,
       useNativeFeedback: PropTypes.bool,
       fixNativeFeedbackRadius: PropTypes.bool,
       nativeFeedbackRippleColor: PropTypes.string,
@@ -32,10 +33,9 @@ export default class ActionButtonItem extends Component {
   }
 
   render() {
-    const { size, position, verticalOrientation, hideShadow, spacing } = this.props;
+    const { size, position, verticalOrientation, hideShadow, spacing, inverted } = this.props;
 
     if (!this.props.active) return null;
-
     const animatedViewStyle = {
       marginBottom: -SHADOW_SPACE,
       alignItems: alignItemsMap[position],
@@ -48,6 +48,9 @@ export default class ActionButtonItem extends Component {
             inputRange: [0, 1],
             outputRange: [verticalOrientation === 'down' ? -40 : 40, 0]
           }),
+        },
+        {
+          scaleY: inverted === true ? -1 : 1
         }
       ],
     };

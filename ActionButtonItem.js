@@ -77,7 +77,7 @@ export default class ActionButtonItem extends Component {
             activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
             onPress={this.props.onPress}>
             <View
-              style={[buttonStyle, !hideShadow && shadowStyle, this.props.style]}
+              style={[buttonStyle, !hideShadow && shadowStyle, !hideShadow && this.props.shadowStyle]}
             >
               {this.props.children}
             </View>

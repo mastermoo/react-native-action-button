@@ -148,7 +148,7 @@ export default class ActionButton extends Component {
             this.props.onPress()
             if (this.props.children) this.animateButton()
           }}>
-          <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle, this.props.shadowStyle]}>
+          <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle, !this.props.hideShadow && this.props.shadowStyle]}>
             <Animated.View style={[buttonStyle, animatedViewStyle]}>
               {this._renderButtonIcon()}
             </Animated.View>

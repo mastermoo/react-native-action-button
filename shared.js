@@ -27,8 +27,13 @@ export function getTouchableComponent(useNativeFeedback) {
     return TouchableOpacity;
 }
 
-export const touchableBackground = isAndroid
-  ? Platform['Version'] >= 21
-    ? TouchableNativeFeedback.Ripple('rgba(255,255,255,0.75)', false)
-    : TouchableNativeFeedback.SelectableBackground()
-  : undefined;
+export function touchableBackground(color, fixRadius) {
+  if (isAndroid) {
+    if (Platform['Version'] >= 21) {
+      return TouchableNativeFeedback.Ripple(color || 'rgba(255,255,255,0.75)', fixRadius)
+    } else {
+      TouchableNativeFeedback.SelectableBackground()
+    }
+  }
+  return undefined;
+}

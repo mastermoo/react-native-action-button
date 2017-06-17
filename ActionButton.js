@@ -76,7 +76,7 @@ export default class ActionButton extends Component {
 
   render() {
     return (
-      <View pointerEvents="box-none" style={this.getOverlayStyles()}>
+      <View pointerEvents="box-none" style={[this.getOverlayStyles(), this.props.style]}>
         <Animated.View pointerEvents="none" style={[this.getOverlayStyles(), {
           backgroundColor: this.props.bgColor,
           opacity: this.anim.interpolate({
@@ -133,18 +133,22 @@ export default class ActionButton extends Component {
     };
 
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
+    const parentStyle = Platform.OS === 'android' && this.props.fixNativeFeedbackRadius?
+      { right: this.props.offsetX, zIndex: this.props.zIndex, borderRadius: this.props.size / 2, width: this.props.size }
+      :
+      { paddingHorizontal: this.props.offsetX, zIndex: this.props.zIndex }
 
     return (
-      <View style={{ paddingHorizontal: this.props.offsetX, zIndex: this.props.zIndex }}>
+      <View style={parentStyle}>
         <Touchable
-          background={touchableBackground}
+          background={touchableBackground(this.props.nativeFeedbackRippleColor, this.props.fixNativeFeedbackRadius)}
           activeOpacity={this.props.activeOpacity}
           onLongPress={this.props.onLongPress}
           onPress={() => {
             this.props.onPress()
             if (this.props.children) this.animateButton()
           }}>
-          <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle]}>
+          <Animated.View style={[wrapperStyle, !this.props.hideShadow && shadowStyle, !this.props.hideShadow && this.props.shadowStyle]}>
             <Animated.View style={[buttonStyle, animatedViewStyle]}>
               {this._renderButtonIcon()}
             </Animated.View>
@@ -261,6 +265,11 @@ ActionButton.propTypes = {
   zIndex: PropTypes.number,
 
   hideShadow: PropTypes.bool,
+  shadowStyle: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.array,
+    React.PropTypes.number,
+  ]),
 
   bgColor: PropTypes.string,
   bgOpacity: PropTypes.number,
@@ -281,8 +290,11 @@ ActionButton.propTypes = {
   degrees: PropTypes.number,
   verticalOrientation: PropTypes.oneOf(['up', 'down']),
   backgroundTappable: PropTypes.bool,
-  useNativeFeedback: PropTypes.bool,
   activeOpacity: PropTypes.number,
+
+  useNativeFeedback: PropTypes.bool,
+  fixNativeFeedbackRadius: PropTypes.bool,
+  nativeFeedbackRippleColor: PropTypes.string,
 };
 
 ActionButton.defaultProps = {
@@ -307,6 +319,8 @@ ActionButton.defaultProps = {
   backgroundTappable: false,
   useNativeFeedback: true,
   activeOpacity: DEFAULT_ACTIVE_OPACITY,
+  fixNativeFeedbackRadius: false,
+  nativeFeedbackRippleColor: 'rgba(255,255,255,0.75)',
 };
 
 const styles = StyleSheet.create({

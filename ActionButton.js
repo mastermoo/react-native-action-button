@@ -177,8 +177,8 @@ export default class ActionButton extends Component {
   }
 
   _renderActions() {
-    const { children, verticalOrientation } = this.props;
-    
+    const { children, verticalOrientation, grid, inverted } = this.props;
+
     if (!this.state.active) return null;
 
     const actionButtons = !Array.isArray(children) ? [children] : children;
@@ -194,23 +194,26 @@ export default class ActionButton extends Component {
 
     return (
       <View style={actionStyle} pointerEvents={'box-none'}>
-        {actionButtons.map((ActionButton, idx) => (
-          <ActionButtonItem
-            key={idx}
-            anim={this.anim}
-            {...this.props}
-            {...ActionButton.props}
-            parentSize={this.props.size}
-            btnColor={this.props.btnOutRange}
-            onPress={() => {
-              if (this.props.autoInactive){
-                this.timeout = setTimeout(this.reset.bind(this), 200);
-              }
-              ActionButton.props.onPress();
-            }}
-          />
-        ))}
+        <View style={[grid && styles.grid, inverted && styles.inverted]}>
+          {actionButtons.map((ActionButton, idx) => (
+            <ActionButtonItem
+              key={idx}
+              anim={this.anim}
+              inverted={inverted}
+              {...this.props}
+              {...ActionButton.props}
+              parentSize={this.props.size}
+              btnColor={this.props.btnOutRange}
+              onPress={() => {
+                if (this.props.autoInactive){
+                  this.timeout = setTimeout(this.reset.bind(this), 200);
+                }
+                ActionButton.props.onPress();
+              }}
+            />
+          ))}
       </View>
+    </View>
     );
   }
 
@@ -260,6 +263,8 @@ ActionButton.propTypes = {
   resetToken: PropTypes.any,
   active: PropTypes.bool,
 
+  grid: PropTypes.bool,
+  inverted: PropTypes.bool,
   position: PropTypes.string,
   elevation: PropTypes.number,
   zIndex: PropTypes.number,
@@ -312,6 +317,8 @@ ActionButton.defaultProps = {
   backdrop: false,
   degrees: 45,
   position: 'right',
+  grid: false,
+  inverted: false,
   offsetX: 30,
   offsetY: 30,
   size: 56,
@@ -337,4 +344,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     backgroundColor: 'transparent',
   },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  inverted: {
+    transform: [{ scaleY: -1 }]
+  }
 });

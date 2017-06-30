@@ -116,6 +116,7 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | useNativeFeedback | boolean   | true                | Android: Whether to use a TouchableNativeFeedback
 | fixNativeFeedbackRadius | boolean   | false         | Android: Activate this to fix TouchableNativeFeedback Ripple UI problems
 | nativeFeedbackRippleColor | string   | 'rgba(255,255,255,0.75)'         | Android: Pass a color to the Ripple Effect of a TouchableNativeFeedback
+| expandOverlayColor | string | undefined             | the color of the overlay when the action button is expanded
 
 
 ##### ActionButton.Item:

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   StyleSheet,
   Text,
@@ -334,10 +335,10 @@ ActionButton.propTypes = {
   zIndex: PropTypes.number,
 
   hideShadow: PropTypes.bool,
-  shadowStyle: React.PropTypes.oneOfType([
-    React.PropTypes.object,
-    React.PropTypes.array,
-    React.PropTypes.number
+  shadowStyle: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+    PropTypes.number
   ]),
 
   bgColor: PropTypes.string,

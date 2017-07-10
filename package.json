@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/mastermoo/react-native-action-button/issues"
   },
-  "homepage": "https://github.com/mastermoo/react-native-action-button"
+  "homepage": "https://github.com/mastermoo/react-native-action-button",
+  "dependencies": {
+    "prop-types": "^15.5.10"
+  }
 }

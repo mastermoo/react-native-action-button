@@ -7,7 +7,7 @@ export interface ActionButtonItemProps {
   fixNativeFeedbackRadius?: boolean,
   nativeFeedbackRippleColor?: string,
   activeOpacity?: number
-};
+}
 
 export interface ActionButtonProps {
   resetToken?: any,

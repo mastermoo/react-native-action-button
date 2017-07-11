@@ -80,6 +80,7 @@ export default class ActionButton extends Component {
     return [
       styles.overlay,
       {
+        backgroundColor: this.state.active ? this.props.expandOverlayColor : 'transparent',
         elevation: this.props.elevation,
         zIndex: this.props.zIndex,
         justifyContent: this.props.verticalOrientation === "up"

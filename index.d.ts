@@ -45,8 +45,8 @@ export interface ActionButtonProps {
 
 declare class ActionButton extends React.Component<ActionButtonProps, any>  {}
 
-declare namespace ActionButton {    
-    class Item extends React.Component<ActionButtonItemProps> {}
+declare namespace ActionButton {
+  class Item extends React.Component<ActionButtonItemProps> {}
 }
 
 export default ActionButton;

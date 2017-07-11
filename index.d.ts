@@ -41,7 +41,7 @@ export interface ActionButtonProps {
   useNativeFeedback?: boolean,
   fixNativeFeedbackRadius?: boolean,
   nativeFeedbackRippleColor?: string
-};
+}
 
 export default class ActionButton extends React.Component<ActionButtonItemProps, any> {
   public static Item: React.ComponentClass<ActionButtonItemProps>

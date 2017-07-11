@@ -43,6 +43,10 @@ export interface ActionButtonProps {
   nativeFeedbackRippleColor?: string
 }
 
-export default class ActionButton extends React.Component<ActionButtonProps, any> {
-  public static Item: React.ComponentClass<ActionButtonItemProps>
+declare class ActionButton extends React.Component<ActionButtonProps, any>  {}
+
+declare namespace ActionButton {    
+    class Item extends React.Component<ActionButtonItemProps> {}
 }
+
+export default ActionButton;

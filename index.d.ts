@@ -10,6 +10,8 @@ export interface ActionButtonItemProps {
 }
 
 export interface ActionButtonProps {
+  icon?: React.ReactElement<any>
+
   resetToken?: any,
   active?: boolean,
 

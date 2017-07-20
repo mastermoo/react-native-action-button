@@ -51,7 +51,10 @@ export default class ActionButtonItem extends Component {
 
   render() {
     const {
+      borderRadius,
       size,
+      width,
+      height,
       position,
       verticalOrientation,
       hideShadow,
@@ -79,9 +82,9 @@ export default class ActionButtonItem extends Component {
     const buttonStyle = {
       justifyContent: "center",
       alignItems: "center",
-      width: size,
-      height: size,
-      borderRadius: size / 2,
+      width: width || size,
+      height: height || size,
+      borderRadius: borderRadius || size / 2,
       backgroundColor: this.props.buttonColor || this.props.btnColor
     };
 
@@ -96,11 +99,11 @@ export default class ActionButtonItem extends Component {
           height: size,
           marginBottom: spacing,
           right: this.props.offsetX,
-          borderRadius: this.props.size / 2
+          borderRadius: this.props.borderRadius || this.props.size / 2
         }
       : {
           paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing
+          height: (this.props.height || size) + SHADOW_SPACE + spacing
         };
     return (
       <Animated.View
@@ -110,9 +113,9 @@ export default class ActionButtonItem extends Component {
         <View
           style={[
             {
-              width: this.props.size,
-              height: this.props.size,
-              borderRadius: size / 2
+              width: width || this.props.size,
+              height: height || this.props.size,
+              borderRadius: borderRadius || size / 2
             },
             !hideShadow && shadowStyle,
             !hideShadow && this.props.shadowStyle
@@ -146,9 +149,11 @@ export default class ActionButtonItem extends Component {
       parentSize,
       size,
       position,
-      spaceBetween
+      spaceBetween,
+      width,
+      height,
     } = this.props;
-    const offsetTop = Math.max(size / 2 - TEXT_HEIGHT / 2, 0);
+    const offsetTop = Math.max((height || size) / 2 - TEXT_HEIGHT / 2, 0);
     const positionStyles = { top: offsetTop };
     const hideShadow = hideLabelShadow === undefined
       ? this.props.hideShadow
@@ -156,9 +161,9 @@ export default class ActionButtonItem extends Component {
 
     if (position !== "center") {
       positionStyles[position] =
-        offsetX + (parentSize - size) / 2 + size + spaceBetween;
+        offsetX + (parentSize - (width || size)) / 2 + (width || size) + spaceBetween;
     } else {
-      positionStyles.right = WIDTH / 2 + size / 2 + spaceBetween;
+      positionStyles.right = WIDTH / 2 + (width || size) / 2 + spaceBetween;
     }
 
     const textStyles = [

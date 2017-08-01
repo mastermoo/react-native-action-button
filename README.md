@@ -13,6 +13,15 @@ customizable multi-action-button component for react-native
 ```bash
 npm i react-native-action-button --save
 ```
+Link `react-native-vector-icons` native dependencies to your project with:
+```bash
+react-native link react-native-vector-icons
+```
+or just:
+```bash
+react-native link
+```
+to link all libraries with native dependencies in your project.
 
 ### Usage
 

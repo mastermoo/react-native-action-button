@@ -189,7 +189,12 @@ export default class ActionButton extends Component {
       : { paddingHorizontal: this.props.offsetX, zIndex: this.props.zIndex };
 
     return (
-      <View style={parentStyle}>
+      <View style={[
+        parentStyle,
+        !this.props.hideShadow && shadowStyle,
+        !this.props.hideShadow && this.props.shadowStyle
+      ]}
+      >
         <Touchable
           background={touchableBackground(
             this.props.nativeFeedbackRippleColor,
@@ -203,11 +208,7 @@ export default class ActionButton extends Component {
           }}
         >
           <Animated.View
-            style={[
-              wrapperStyle,
-              !this.props.hideShadow && shadowStyle,
-              !this.props.hideShadow && this.props.shadowStyle
-            ]}
+            style={wrapperStyle}
           >
             <Animated.View style={[buttonStyle, animatedViewStyle]}>
               {this._renderButtonIcon()}

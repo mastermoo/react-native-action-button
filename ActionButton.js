@@ -201,6 +201,8 @@ export default class ActionButton extends Component {
             this.props.onPress();
             if (this.props.children) this.animateButton();
           }}
+          onPressIn={this.props.onPressIn}
+          onPressOut={this.props.onPressOut}
         >
           <Animated.View
             style={[
@@ -353,6 +355,8 @@ ActionButton.propTypes = {
   size: PropTypes.number,
   autoInactive: PropTypes.bool,
   onPress: PropTypes.func,
+  onPressIn: PropTypes.func,
+  onPressOut: PropTypes.func,
   backdrop: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   degrees: PropTypes.number,
   verticalOrientation: PropTypes.oneOf(["up", "down"]),
@@ -376,6 +380,8 @@ ActionButton.defaultProps = {
   outRangeScale: 1,
   autoInactive: true,
   onPress: () => {},
+  onPressIn: () => {},
+  onPressOn: () => {},
   backdrop: false,
   degrees: 45,
   position: "right",

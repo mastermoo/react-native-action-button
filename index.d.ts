@@ -39,7 +39,7 @@ export interface ActionButtonProperties extends ViewProperties {
   nativeFeedbackRippleColor?: string
 }
 
-export interface ActionButtonItemProps extends ActionButtonProperties {
+export interface ActionButtonItemProperties extends ViewProperties {
   title?: string
   onPress?:	() => void
   buttonColor?:	string
@@ -54,7 +54,7 @@ export interface ActionButtonItemProps extends ActionButtonProperties {
   nativeFeedbackRippleColor?: string
 }
 
-export class ActionButtonItem extends React.Component <ActionButtonItemProps> {}
+export class ActionButtonItem extends React.Component <ActionButtonItemProperties> {}
 export default class ActionButton extends React.Component <ActionButtonProperties> {
   static Item: typeof ActionButtonItem
 }

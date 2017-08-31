@@ -185,7 +185,7 @@ export default class ActionButton extends Component {
           borderRadius: this.props.size / 2,
           width: this.props.size
         }
-      : { paddingHorizontal: this.props.offsetX, zIndex: this.props.zIndex };
+      : { marginHorizontal: this.props.offsetX, zIndex: this.props.zIndex };
 
     return (
       <View style={[

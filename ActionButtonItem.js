@@ -107,15 +107,11 @@ export default class ActionButtonItem extends Component {
         style={[animatedViewStyle, parentStyle]}
       >
         <View
-          style={[
-            {
-              width: this.props.size,
-              height: this.props.size,
-              borderRadius: size / 2
-            },
-            !hideShadow && shadowStyle,
-            !hideShadow && this.props.shadowStyle
-          ]}
+          style={{
+            width: this.props.size,
+            height: this.props.size,
+            borderRadius: size / 2
+          }}
         >
           <Touchable
             background={touchableBackground(
@@ -125,7 +121,10 @@ export default class ActionButtonItem extends Component {
             activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
             onPress={this.props.onPress}
           >
-            <View style={[buttonStyle]}>
+            <View style={[
+              buttonStyle,
+              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null
+            ]}>
               {this.props.children}
             </View>
           </Touchable>

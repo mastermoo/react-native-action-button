@@ -8,7 +8,6 @@ import {
   TouchableNativeFeedback,
   TouchableWithoutFeedback,
   Dimensions,
-  Platform
 } from "react-native";
 import {
   shadowStyle,
@@ -90,7 +89,7 @@ export default class ActionButtonItem extends Component {
 
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
 
-    const parentStyle = Platform.OS === "android" &&
+    const parentStyle = isAndroid &&
       this.props.fixNativeFeedbackRadius
       ? {
           height: size,

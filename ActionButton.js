@@ -6,7 +6,6 @@ import {
   View,
   Animated,
   TouchableOpacity,
-  Platform
 } from "react-native";
 import ActionButtonItem from "./ActionButtonItem";
 import {
@@ -178,7 +177,7 @@ export default class ActionButton extends Component {
     };
 
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
-    const parentStyle = Platform.OS === "android" &&
+    const parentStyle = isAndroid &&
       this.props.fixNativeFeedbackRadius
       ? {
           right: this.props.offsetX,

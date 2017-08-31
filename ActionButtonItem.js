@@ -167,6 +167,19 @@ export default class ActionButtonItem extends Component {
       textContainerStyle
     ];
 
+    const title = (
+      React.isValidElement(this.props.title) ?
+        this.props.title
+      : (
+        <Text
+          allowFontScaling={false}
+          style={[styles.text, this.props.textStyle]}
+        >
+          {this.props.title}
+        </Text>
+      )
+    )
+
     return (
       <TextTouchable
         background={touchableBackground(
@@ -177,12 +190,7 @@ export default class ActionButtonItem extends Component {
         onPress={this.props.onPress}
       >
         <View style={textStyles}>
-          <Text
-            allowFontScaling={false}
-            style={[styles.text, this.props.textStyle]}
-          >
-            {this.props.title}
-          </Text>
+          {title}
         </View>
       </TextTouchable>
     );

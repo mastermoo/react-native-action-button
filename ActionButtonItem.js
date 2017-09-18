@@ -54,25 +54,30 @@ export default class ActionButtonItem extends Component {
       position,
       verticalOrientation,
       hideShadow,
-      spacing
+      spacing,
+      active,
+      anim,
+      buttonColor,
+      btnColor,
+      useNativeFeedback,
+      fixNativeFeedback,
+      nativeFeedbackRippleColor,
+      offsetX,
     } = this.props;
 
-    if (!this.props.active) return null;
+    if (!active) return null;
 
     const animatedViewStyle = {
       marginBottom: -SHADOW_SPACE,
       alignItems: alignItemsMap[position],
 
-      // backgroundColor: this.props.buttonColor,
-      opacity: this.props.anim,
-      transform: [
-        {
-          translateY: this.props.anim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [verticalOrientation === "down" ? -40 : 40, 0]
-          })
-        }
-      ]
+      opacity: anim,
+      transform: [{
+        translateY: anim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [verticalOrientation === "down" ? -40 : 40, 0]
+        }),
+      }],
     };
 
     const buttonStyle = {
@@ -81,49 +86,37 @@ export default class ActionButtonItem extends Component {
       width: size,
       height: size,
       borderRadius: size / 2,
-      backgroundColor: this.props.buttonColor || this.props.btnColor
+      backgroundColor: buttonColor || btnColor
     };
 
-    if (position !== "center")
-      buttonStyle[position] = (this.props.parentSize - size) / 2;
+    const Touchable = getTouchableComponent(useNativeFeedback);
 
-    const Touchable = getTouchableComponent(this.props.useNativeFeedback);
-
-    const parentStyle = isAndroid &&
-      this.props.fixNativeFeedbackRadius
+    const parentStyle = isAndroid && fixNativeFeedbackRadius
       ? {
-          height: size,
-          marginBottom: spacing,
-          right: this.props.offsetX,
-          borderRadius: this.props.size / 2
-        }
-      : {
-          paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing
-        };
+        height: size,
+        marginBottom: spacing,
+        right: offsetX,
+        borderRadius: size / 2
+      } : {
+        paddingHorizontal: offsetX,
+        height: size + SHADOW_SPACE + spacing,
+        marginRight: position !== 'center' ? (parentSize - size) / 2 : 0,
+      };
+
     return (
       <Animated.View
         pointerEvents="box-none"
         style={[animatedViewStyle, parentStyle]}
       >
-        <View
-          style={{
-            width: this.props.size,
-            height: this.props.size,
-            borderRadius: size / 2
-          }}
-        >
+        <View>
           <Touchable
-            background={touchableBackground(
-              this.props.nativeFeedbackRippleColor,
-              this.props.fixNativeFeedbackRadius
-            )}
+            background={touchableBackground(nativeFeedbackRippleColor, fixNativeFeedbackRadius)}
             activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
             onPress={this.props.onPress}
           >
             <View style={[
               buttonStyle,
-              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null
+              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null,
             ]}>
               {this.props.children}
             </View>

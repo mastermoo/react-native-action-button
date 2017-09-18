@@ -6,15 +6,18 @@ import {
 
 export const DEFAULT_ACTIVE_OPACITY = 0.85;
 
-export const shadowStyle = {
+export const isAndroid = Platform.OS === "android";
+
+export const shadowStyle = isAndroid ? {
+  elevation: 5,
+} : {
   shadowOpacity: 0.35,
   shadowOffset: {
     width: 0,
-    height: 5
+    height: 5,
   },
-  shadowColor: "#000",
+  shadowColor: '#000',
   shadowRadius: 3,
-  elevation: 5
 };
 
 export const alignItemsMap = {
@@ -22,8 +25,6 @@ export const alignItemsMap = {
   left: "flex-start",
   right: "flex-end"
 };
-
-export const isAndroid = Platform.OS === "android";
 
 export function getTouchableComponent(useNativeFeedback) {
   if (useNativeFeedback === true && isAndroid === true) {

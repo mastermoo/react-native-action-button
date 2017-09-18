@@ -61,8 +61,10 @@ export default class ActionButtonItem extends Component {
       btnColor,
       useNativeFeedback,
       fixNativeFeedback,
+      fixNativeFeedbackRadius,
       nativeFeedbackRippleColor,
       offsetX,
+      parentSize,
     } = this.props;
 
     if (!active) return null;
@@ -86,7 +88,7 @@ export default class ActionButtonItem extends Component {
       width: size,
       height: size,
       borderRadius: size / 2,
-      backgroundColor: buttonColor || btnColor
+      backgroundColor: buttonColor || btnColor,
     };
 
     const Touchable = getTouchableComponent(useNativeFeedback);
@@ -114,10 +116,12 @@ export default class ActionButtonItem extends Component {
             activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
             onPress={this.props.onPress}
           >
-            <View style={[
-              buttonStyle,
-              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null,
-            ]}>
+            <View
+              style={[
+                buttonStyle,
+                !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null,
+              ]}
+            >
               {this.props.children}
             </View>
           </Touchable>
@@ -137,7 +141,7 @@ export default class ActionButtonItem extends Component {
       parentSize,
       size,
       position,
-      spaceBetween
+      spaceBetween,
     } = this.props;
     const offsetTop = Math.max(size / 2 - TEXT_HEIGHT / 2, 0);
     const positionStyles = { top: offsetTop };
@@ -146,8 +150,7 @@ export default class ActionButtonItem extends Component {
       : hideLabelShadow;
 
     if (position !== "center") {
-      positionStyles[position] =
-        offsetX + (parentSize - size) / 2 + size + spaceBetween;
+      positionStyles[position] = offsetX + (parentSize - size) / 2 + size + spaceBetween;
     } else {
       positionStyles.right = WIDTH / 2 + size / 2 + spaceBetween;
     }
@@ -155,14 +158,11 @@ export default class ActionButtonItem extends Component {
     const textStyles = [
       styles.textContainer,
       positionStyles,
-      !hideShadow && shadowStyle,
-      textContainerStyle
+      textContainerStyle,
     ];
 
     const title = (
-      React.isValidElement(this.props.title) ?
-        this.props.title
-      : (
+      React.isValidElement(this.props.title) ? this.props.title : (
         <Text
           allowFontScaling={false}
           style={[styles.text, this.props.textStyle]}

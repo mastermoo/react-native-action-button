@@ -188,11 +188,13 @@ export default class ActionButton extends Component {
       : { marginHorizontal: this.props.offsetX, zIndex: this.props.zIndex };
 
     return (
-      <View style={[
-        parentStyle,
-        !this.props.hideShadow && shadowStyle,
-        !this.props.hideShadow && this.props.shadowStyle
-      ]}
+      <View
+        testID={this.props.testID}
+        style={[
+          parentStyle,
+          !this.props.hideShadow && shadowStyle,
+          !this.props.hideShadow && this.props.shadowStyle
+        ]}
       >
         <Touchable
           background={touchableBackground(
@@ -365,7 +367,9 @@ ActionButton.propTypes = {
 
   useNativeFeedback: PropTypes.bool,
   fixNativeFeedbackRadius: PropTypes.bool,
-  nativeFeedbackRippleColor: PropTypes.string
+  nativeFeedbackRippleColor: PropTypes.string,
+
+  testID: PropTypes.string
 };
 
 ActionButton.defaultProps = {

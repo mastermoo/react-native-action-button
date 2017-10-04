@@ -44,7 +44,8 @@ export default class ActionButtonItem extends Component {
       useNativeFeedback: PropTypes.bool,
       fixNativeFeedbackRadius: PropTypes.bool,
       nativeFeedbackRippleColor: PropTypes.string,
-      activeOpacity: PropTypes.number
+      activeOpacity: PropTypes.number,
+      testID: PropTypes.string
     };
   }
 
@@ -107,6 +108,7 @@ export default class ActionButtonItem extends Component {
         style={[animatedViewStyle, parentStyle]}
       >
         <View
+          testID={this.props.testID}
           style={{
             width: this.props.size,
             height: this.props.size,

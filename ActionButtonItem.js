@@ -106,13 +106,7 @@ export default class ActionButtonItem extends Component {
         pointerEvents="box-none"
         style={[animatedViewStyle, parentStyle]}
       >
-        <View
-          style={{
-            width: this.props.size,
-            height: this.props.size,
-            borderRadius: size / 2
-          }}
-        >
+        <View>
           <Touchable
             background={touchableBackground(
               this.props.nativeFeedbackRippleColor,

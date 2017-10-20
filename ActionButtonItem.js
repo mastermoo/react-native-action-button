@@ -54,25 +54,32 @@ export default class ActionButtonItem extends Component {
       position,
       verticalOrientation,
       hideShadow,
-      spacing
+      spacing,
+      active,
+      anim,
+      buttonColor,
+      btnColor,
+      useNativeFeedback,
+      fixNativeFeedback,
+      fixNativeFeedbackRadius,
+      nativeFeedbackRippleColor,
+      offsetX,
+      parentSize,
     } = this.props;
 
-    if (!this.props.active) return null;
+    if (!active) return null;
 
     const animatedViewStyle = {
       marginBottom: -SHADOW_SPACE,
       alignItems: alignItemsMap[position],
 
-      // backgroundColor: this.props.buttonColor,
-      opacity: this.props.anim,
-      transform: [
-        {
-          translateY: this.props.anim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [verticalOrientation === "down" ? -40 : 40, 0]
-          })
-        }
-      ]
+      opacity: anim,
+      transform: [{
+        translateY: anim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [verticalOrientation === "down" ? -40 : 40, 0]
+        }),
+      }],
     };
 
     const buttonStyle = {
@@ -81,26 +88,23 @@ export default class ActionButtonItem extends Component {
       width: size,
       height: size,
       borderRadius: size / 2,
-      backgroundColor: this.props.buttonColor || this.props.btnColor
+      backgroundColor: buttonColor || btnColor,
     };
 
-    if (position !== "center")
-      buttonStyle[position] = (this.props.parentSize - size) / 2;
+    const Touchable = getTouchableComponent(useNativeFeedback);
 
-    const Touchable = getTouchableComponent(this.props.useNativeFeedback);
-
-    const parentStyle = isAndroid &&
-      this.props.fixNativeFeedbackRadius
+    const parentStyle = isAndroid && fixNativeFeedbackRadius
       ? {
-          height: size,
-          marginBottom: spacing,
-          right: this.props.offsetX,
-          borderRadius: this.props.size / 2
-        }
-      : {
-          paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing
-        };
+        height: size,
+        marginBottom: spacing,
+        right: offsetX,
+        borderRadius: size / 2
+      } : {
+        paddingHorizontal: offsetX,
+        height: size + SHADOW_SPACE + spacing,
+        marginRight: position !== 'center' ? (parentSize - size) / 2 : 0,
+      };
+
     return (
       <Animated.View
         pointerEvents="box-none"
@@ -108,17 +112,16 @@ export default class ActionButtonItem extends Component {
       >
         <View>
           <Touchable
-            background={touchableBackground(
-              this.props.nativeFeedbackRippleColor,
-              this.props.fixNativeFeedbackRadius
-            )}
+            background={touchableBackground(nativeFeedbackRippleColor, fixNativeFeedbackRadius)}
             activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
             onPress={this.props.onPress}
           >
-            <View style={[
-              buttonStyle,
-              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null
-            ]}>
+            <View
+              style={[
+                buttonStyle,
+                !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null,
+              ]}
+            >
               {this.props.children}
             </View>
           </Touchable>
@@ -138,7 +141,7 @@ export default class ActionButtonItem extends Component {
       parentSize,
       size,
       position,
-      spaceBetween
+      spaceBetween,
     } = this.props;
     const offsetTop = Math.max(size / 2 - TEXT_HEIGHT / 2, 0);
     const positionStyles = { top: offsetTop };
@@ -147,8 +150,7 @@ export default class ActionButtonItem extends Component {
       : hideLabelShadow;
 
     if (position !== "center") {
-      positionStyles[position] =
-        offsetX + (parentSize - size) / 2 + size + spaceBetween;
+      positionStyles[position] = offsetX + (parentSize - size) / 2 + size + spaceBetween;
     } else {
       positionStyles.right = WIDTH / 2 + size / 2 + spaceBetween;
     }
@@ -156,14 +158,11 @@ export default class ActionButtonItem extends Component {
     const textStyles = [
       styles.textContainer,
       positionStyles,
-      !hideShadow && shadowStyle,
-      textContainerStyle
+      textContainerStyle,
     ];
 
     const title = (
-      React.isValidElement(this.props.title) ?
-        this.props.title
-      : (
+      React.isValidElement(this.props.title) ? this.props.title : (
         <Text
           allowFontScaling={false}
           style={[styles.text, this.props.textStyle]}

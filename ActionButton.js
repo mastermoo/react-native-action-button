@@ -177,23 +177,19 @@ export default class ActionButton extends Component {
     };
 
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
-    const parentStyle = isAndroid &&
-      this.props.fixNativeFeedbackRadius
+    const parentStyle = isAndroid && this.props.fixNativeFeedbackRadius
       ? {
-          right: this.props.offsetX,
-          zIndex: this.props.zIndex,
-          borderRadius: this.props.size / 2,
-          width: this.props.size
-        }
-      : { marginHorizontal: this.props.offsetX, zIndex: this.props.zIndex };
+        right: this.props.offsetX,
+        zIndex: this.props.zIndex,
+        borderRadius: this.props.size / 2,
+        width: this.props.size
+      } : {
+        marginHorizontal: this.props.offsetX,
+        zIndex: this.props.zIndex,
+      };
 
     return (
-      <View style={[
-        parentStyle,
-        !this.props.hideShadow && shadowStyle,
-        !this.props.hideShadow && this.props.shadowStyle
-      ]}
-      >
+      <View style={parentStyle}>
         <Touchable
           background={touchableBackground(
             this.props.nativeFeedbackRippleColor,
@@ -208,9 +204,7 @@ export default class ActionButton extends Component {
           onPressIn={this.props.onPressIn}
           onPressOut={this.props.onPressOut}
         >
-          <Animated.View
-            style={wrapperStyle}
-          >
+          <Animated.View style={[wrapperStyle, !this.props.hideShadow ? shadowStyle : null]}>
             <Animated.View style={[buttonStyle, animatedViewStyle]}>
               {this._renderButtonIcon()}
             </Animated.View>

@@ -247,7 +247,7 @@ export default class ActionButton extends Component {
 
   _renderActions() {
     const { children, verticalOrientation } = this.props;
-
+    
     if (!this.state.active) return null;
 
     const actionButtons = !Array.isArray(children) ? [children] : children;
@@ -319,7 +319,7 @@ export default class ActionButton extends Component {
     } else {
       this.anim.setValue(0);
     }
-
+    
     setTimeout(
       () => this.setState({ active: false, resetToken: this.state.resetToken }),
       250

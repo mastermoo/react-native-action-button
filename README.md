@@ -13,6 +13,15 @@ customizable multi-action-button component for react-native
 ```bash
 npm i react-native-action-button --save
 ```
+Link `react-native-vector-icons` native dependencies to your project with:
+```bash
+react-native link react-native-vector-icons
+```
+or just:
+```bash
+react-native link
+```
+to link all libraries with native dependencies in your project.
 
 ### Usage
 
@@ -102,6 +111,8 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | btnOutRange   | string        | props.buttonColor   | button background color to animate to
 | outRangeScale | number        | 1                   | changes size of button during animation
 | onPress       | function      | null                | fires, when ActionButton is tapped
+| onPressIn     | function      | null                | fires, before ActionButton is released
+| onPressOut    | function      | null                | fires, after ActionButton is released
 | onLongPress   | function      | null                | fires, when ActionButton is long pressed
 | icon          | Component     | +                   | Custom component for ActionButton Icon
 | backdrop      | Component     | false               | Custom component for use as Backdrop (i.e. [BlurView](https://github.com/react-native-fellowship/react-native-blur#blur-view), [VibrancyView](https://github.com/react-native-fellowship/react-native-blur#vibrancy-view))
@@ -111,8 +122,12 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | onReset       | function      | null                | use this to set the callback that will be called after the button reset's it's items
 | verticalOrientation | string  | "up"                | direction action buttons should expand.  One of: `up` or `down`
 | backgroundTappable | boolean  | false               | make background tappable in active state of ActionButton
-| useNativeFeedback | boolean   | true                | whether to use TouchableNativeFeedback on Android
 | activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity
+| shadowStyle   | style         | null                | The custom shadow style you want to pass in the action button
+| useNativeFeedback | boolean   | true                | Android: Whether to use a TouchableNativeFeedback
+| fixNativeFeedbackRadius | boolean   | false         | Android: Activate this to fix TouchableNativeFeedback Ripple UI problems
+| nativeFeedbackRippleColor | string   | 'rgba(255,255,255,0.75)'         | Android: Pass a color to the Ripple Effect of a TouchableNativeFeedback
+
 
 ##### ActionButton.Item:
 | Property      | Type          | Default             | Description |
@@ -125,5 +140,9 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | textContainerStyle  | style   | null                | use this to set the textstyle of the button's item text container
 | textStyle     | style         | null                | use this to set the textstyle of the button's item text
 | spaceBetween  | number        | 15                  | use this to set the space between the Button and the text container
-| useNativeFeedback | boolean   | true                | whether to use TouchableNativeFeedback on Android
 | activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity
+| hideLabelShadow | boolean     | same as hideShadow  | use this to hide the button's label default elevation and boxShadow
+| shadowStyle   | style         | null                | The custom shadow style you want to pass in the action button item
+| useNativeFeedback | boolean   | true                | Android: Whether to use a TouchableNativeFeedback
+| fixNativeFeedbackRadius | boolean   | false         | Android: Activate this to fix TouchableNativeFeedback Ripple UI problems
+| nativeFeedbackRippleColor | string   | 'rgba(255,255,255,0.75)'         | Android: Pass a color to the Ripple Effect of a TouchableNativeFeedback

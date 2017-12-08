@@ -139,6 +139,7 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | titleBgColor  | string        | "white"             | background color of title, *removed* in v2.5. use `textStyle` instead
 | textContainerStyle  | style   | null                | use this to set the textstyle of the button's item text container
 | textStyle     | style         | null                | use this to set the textstyle of the button's item text
+| size          | number        | parentSize          | use this to change the size of the Button
 | spaceBetween  | number        | 15                  | use this to set the space between the Button and the text container
 | activeOpacity | number        | 0.85                | activeOpacity props of TouchableOpacity
 | hideLabelShadow | boolean     | same as hideShadow  | use this to hide the button's label default elevation and boxShadow

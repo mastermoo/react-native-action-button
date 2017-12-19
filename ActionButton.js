@@ -195,6 +195,7 @@ export default class ActionButton extends Component {
       ]}
       >
         <Touchable
+          testID={this.props.testID}
           background={touchableBackground(
             this.props.nativeFeedbackRippleColor,
             this.props.fixNativeFeedbackRadius
@@ -365,7 +366,9 @@ ActionButton.propTypes = {
 
   useNativeFeedback: PropTypes.bool,
   fixNativeFeedbackRadius: PropTypes.bool,
-  nativeFeedbackRippleColor: PropTypes.string
+  nativeFeedbackRippleColor: PropTypes.string,
+
+  testID: PropTypes.string
 };
 
 ActionButton.defaultProps = {
@@ -393,7 +396,8 @@ ActionButton.defaultProps = {
   useNativeFeedback: true,
   activeOpacity: DEFAULT_ACTIVE_OPACITY,
   fixNativeFeedbackRadius: false,
-  nativeFeedbackRippleColor: "rgba(255,255,255,0.75)"
+  nativeFeedbackRippleColor: "rgba(255,255,255,0.75)",
+  testID: undefined
 };
 
 const styles = StyleSheet.create({

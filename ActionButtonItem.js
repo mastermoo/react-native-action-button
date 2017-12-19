@@ -8,7 +8,6 @@ import {
   TouchableNativeFeedback,
   TouchableWithoutFeedback,
   Dimensions,
-  Platform,
 } from "react-native";
 import {
   shadowStyle,
@@ -86,36 +85,29 @@ export default class ActionButtonItem extends Component {
     };
 
     if (position !== "center")
-      buttonStyle[position] = (this.props.parentSize - size) / 2;
+      animatedViewStyle[position] = (this.props.parentSize - size) / 2;
 
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
 
-    const parentStyle = isAndroid &&
-      this.props.fixNativeFeedbackRadius
-      ? {
-          paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing,
-          borderRadius: this.props.size / 2
+    const parentStyle = {
+          marginHorizontal: this.props.offsetX,
+          marginBottom: spacing + SHADOW_SPACE,
+          borderRadius: this.props.size / 2,
         }
-      : {
-          paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing
-        };
+
     return (
       <Animated.View
         pointerEvents="box-none"
-        style={[animatedViewStyle, parentStyle]}
+        style={[animatedViewStyle]}
       >
-        <View
-          style={[{
-            width: this.props.size,
-            height: this.props.size,
-            borderRadius: size / 2
-          },
-          !hideShadow && Platform.OS === "android" ? {...shadowStyle, ...this.props.shadowStyle} : null
-        ]}
-        >
+         <View
+          style={[
+            parentStyle,
+            !hideShadow && isAndroid ? {...shadowStyle, ...this.props.shadowStyle} : null
+          ]}
+        > 
           <Touchable
+            testID={this.props.testID}
             background={touchableBackground(
               this.props.nativeFeedbackRippleColor,
               this.props.fixNativeFeedbackRadius
@@ -125,7 +117,7 @@ export default class ActionButtonItem extends Component {
           >
             <View style={[
               buttonStyle,
-              !hideShadow && Platform.OS === "ios" ? {...shadowStyle, ...this.props.shadowStyle} : null
+              !hideShadow && !isAndroid ? {...shadowStyle, ...this.props.shadowStyle} : null
             ]}>
               {this.props.children}
             </View>

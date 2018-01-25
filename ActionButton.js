@@ -224,7 +224,10 @@ export default class ActionButton extends Component {
   _renderButtonIcon() {
     const { icon, renderIcon, btnOutRangeTxt, buttonTextStyle, buttonText } = this.props;
     if (renderIcon) return renderIcon(this.state.active);
-    if (icon) return icon;
+    if (icon) {
+      console.warn('react-native-action-button: The `icon` prop is deprecated! Use `renderIcon` instead.');
+      return icon;
+    }
 
     const textColor = buttonTextStyle.color || "rgba(255,255,255,1)";
 

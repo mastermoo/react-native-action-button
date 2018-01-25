@@ -369,6 +369,7 @@ ActionButton.propTypes = {
   verticalOrientation: PropTypes.oneOf(["up", "down"]),
   backgroundTappable: PropTypes.bool,
   activeOpacity: PropTypes.number,
+  icon: PropTypes.func,
 
   useNativeFeedback: PropTypes.bool,
   fixNativeFeedbackRadius: PropTypes.bool,
@@ -403,7 +404,8 @@ ActionButton.defaultProps = {
   activeOpacity: DEFAULT_ACTIVE_OPACITY,
   fixNativeFeedbackRadius: false,
   nativeFeedbackRippleColor: "rgba(255,255,255,0.75)",
-  testID: undefined
+  testID: undefined,
+  icon: undefined
 };
 
 const styles = StyleSheet.create({

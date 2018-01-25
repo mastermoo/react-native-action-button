@@ -33,6 +33,7 @@ export interface ActionButtonProperties extends ViewProperties {
   verticalOrientation?: 'up' | 'down',
   backgroundTappable?: boolean,
   activeOpacity?: number,
+  icon?: any,
 
   useNativeFeedback?: boolean,
   fixNativeFeedbackRadius?: boolean,
@@ -41,16 +42,16 @@ export interface ActionButtonProperties extends ViewProperties {
 
 export interface ActionButtonItemProperties extends ViewProperties {
   title?: string
-  onPress?:	() => void
-  buttonColor?:	string
+  onPress?: () => void
+  buttonColor?: string
   textContainerStyle?: ViewStyle
   textStyle?: TextStyle
   spaceBetween?: number
-  activeOpacity?:	number
-  hideLabelShadow?:	boolean
-  shadowStyle?:	ViewStyle
-  useNativeFeedback?:	boolean
-  fixNativeFeedbackRadius?:	boolean
+  activeOpacity?: number
+  hideLabelShadow?: boolean
+  shadowStyle?: ViewStyle
+  useNativeFeedback?: boolean
+  fixNativeFeedbackRadius?: boolean
   nativeFeedbackRippleColor?: string
 }
 

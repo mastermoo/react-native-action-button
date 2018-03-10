@@ -135,6 +135,9 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | Property      | Type          | Default             | Description |
 | ------------- |:-------------:|:------------:       | ----------- |
 | size          | number        | parentSize          | use this to change the size of the Button
+| width         | number        | parentSize          | use this to change the height of the Button
+| height        | number        | parentSize          | use this to change the width of the Button
+| borderRadius  | number        | parentSize          | use this to change the border radius of the Button
 | title         | string        | undefined           | the title shown next to the button. When `undefined` the title is not hidden
 | onPress       | func          | null                | **required** function, triggers when a button is tapped
 | buttonColor   | string        | same as + button    | background color of the Button

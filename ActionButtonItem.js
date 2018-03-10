@@ -54,7 +54,9 @@ export default class ActionButtonItem extends Component {
       position,
       verticalOrientation,
       hideShadow,
-      spacing
+      spacing,
+      width,
+      height
     } = this.props;
 
     if (!this.props.active) return null;
@@ -78,9 +80,9 @@ export default class ActionButtonItem extends Component {
     const buttonStyle = {
       justifyContent: "center",
       alignItems: "center",
-      width: size,
-      height: size,
-      borderRadius: size / 2,
+      width: width || size,
+      height: width || size,
+      borderRadius: borderRadius || size ? size / 2 : 0,
       backgroundColor: this.props.buttonColor || this.props.btnColor
     };
 

@@ -56,7 +56,8 @@ export default class ActionButtonItem extends Component {
       hideShadow,
       spacing,
       width,
-      height
+      height,
+      borderRadius
     } = this.props;
 
     if (!this.props.active) return null;

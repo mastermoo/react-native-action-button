@@ -108,6 +108,7 @@ export default class ActionButtonItem extends Component {
       >
         <View>
           <Touchable
+            rejectResponderTermination
             testID={this.props.testID}
             background={touchableBackground(
               this.props.nativeFeedbackRippleColor,
@@ -176,6 +177,7 @@ export default class ActionButtonItem extends Component {
 
     return (
       <TextTouchable
+        rejectResponderTermination
         background={touchableBackground(
           this.props.nativeFeedbackRippleColor,
           this.props.fixNativeFeedbackRadius

@@ -372,6 +372,7 @@ ActionButton.propTypes = {
   ]),
 
   renderIcon: PropTypes.func,
+  renderActiveIcon: PropTypes.func,
   
   bgColor: PropTypes.string,
   bgOpacity: PropTypes.number,

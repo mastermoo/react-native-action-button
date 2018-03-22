@@ -241,7 +241,7 @@ export default class ActionButton extends Component {
         return (
           <View>
             <Animated.View style={iconStyle}>{renderIcon(this.state.active)}</Animated.View>
-            <Animated.View style={activeIconStyle}>{renderActiveIcon(this.state.active)}</Animated.View>
+            <Animated.View style={activeIconStyle}>{renderActiveIcon()}</Animated.View>
           </View>
         );
       }

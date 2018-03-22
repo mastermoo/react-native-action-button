@@ -106,6 +106,7 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | position      | string        | "right" / "center"  | one of: `left` `center` and `right`
 | bgColor       | string        | "transparent"       | background color when ActionButtons are visible
 | buttonColor   | string        | "rgba(0,0,0,1)"     | background color of the +Button **(must be rgba value!)**
+| activeColor   | string        | "rgba(0,0,0,1)"     | background color of the +Button will crossfade to this color when active **(must be rgba value!)**
 | spacing       | number        | 20                  | spacing between the `ActionButton.Item`s
 | offsetX       | number        | 30                  | offset from the left/right side of the screen
 | offsetY       | number        | 30                  | offset from the bottom/top of the screen
@@ -116,6 +117,7 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | onPressOut    | function      | null                | fires, after ActionButton is released
 | onLongPress   | function      | null                | fires, when ActionButton is long pressed
 | renderIcon    | function      | null                | Function to render the component for ActionButton Icon. It is passed a boolean, `active`, which is true if the FAB has been expanded, and false if it is collapsed, allowing you to show a different icon when the ActionButton Items are expanded.
+| renderActiveIcon| function    | null                | Function to render the component for ActionButton Icon when the button is active. If defined, the icon will crossfade into the active icon
 | icon          | Component     | +                   | **Deprecated, use `renderIcon`** Custom component for ActionButton Icon
 | backdrop      | Component     | false               | Custom component for use as Backdrop (i.e. [BlurView](https://github.com/react-native-fellowship/react-native-blur#blur-view), [VibrancyView](https://github.com/react-native-fellowship/react-native-blur#vibrancy-view))
 | degrees       | number        | 135                 | degrees to rotate icon

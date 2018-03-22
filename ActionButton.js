@@ -160,7 +160,7 @@ export default class ActionButton extends Component {
         inputRange: [0, 1],
         outputRange: [
           this.props.buttonColor,
-          this.props.btnOutRange || this.props.buttonColor
+          this.props.activeColor || this.props.btnOutRange || this.props.buttonColor
         ]
       }),
       width: this.props.size,
@@ -222,8 +222,31 @@ export default class ActionButton extends Component {
   }
 
   _renderButtonIcon() {
-    const { icon, renderIcon, btnOutRangeTxt, buttonTextStyle, buttonText } = this.props;
-    if (renderIcon) return renderIcon(this.state.active);
+    const { icon, renderIcon, btnOutRangeTxt, buttonTextStyle, buttonText, renderActiveIcon } = this.props;
+    if (renderIcon) {
+      if (renderActiveIcon) {
+        const iconStyle = {
+          opacity: this.anim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [1, 0]
+          })
+        };
+        const activeIconStyle = {
+          opacity: this.anim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 1]
+          }),
+          position: "absolute"
+        };
+        return (
+          <View>
+            <Animated.View style={iconStyle}>{renderIcon(this.state.active)}</Animated.View>
+            <Animated.View style={activeIconStyle}>{renderActiveIcon()}</Animated.View>
+          </View>
+        );
+      }
+      return renderIcon(this.state.active);
+    }
     if (icon) {
       console.warn('react-native-action-button: The `icon` prop is deprecated! Use `renderIcon` instead.');
       return icon;
@@ -349,10 +372,12 @@ ActionButton.propTypes = {
   ]),
 
   renderIcon: PropTypes.func,
+  renderActiveIcon: PropTypes.func,
   
   bgColor: PropTypes.string,
   bgOpacity: PropTypes.number,
   buttonColor: PropTypes.string,
+  activeColor: PropTypes.string,
   buttonTextStyle: Text.propTypes.style,
   buttonText: PropTypes.string,
 

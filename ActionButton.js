@@ -5,7 +5,7 @@ import {
   Text,
   View,
   Animated,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import ActionButtonItem from "./ActionButtonItem";
 import {

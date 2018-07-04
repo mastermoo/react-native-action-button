@@ -254,7 +254,9 @@ export default class ActionButton extends Component {
 
     if (!this.state.active) return null;
 
-    const actionButtons = !Array.isArray(children) ? [children] : children;
+    let actionButtons = !Array.isArray(children) ? [children] : children;
+
+    actionButtons = actionButtons.filter( actionButton => (typeof actionButton == 'object') )
 
     const actionStyle = {
       flex: 1,
@@ -349,7 +351,7 @@ ActionButton.propTypes = {
   ]),
 
   renderIcon: PropTypes.func,
-  
+
   bgColor: PropTypes.string,
   bgOpacity: PropTypes.number,
   buttonColor: PropTypes.string,

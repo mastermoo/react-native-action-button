@@ -30,7 +30,12 @@ export default class ActionButton extends Component {
     this.timeout = null;
   }
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+
   componentWillUnmount() {
+    this.mounted = false;
     clearTimeout(this.timeout);
   }
 
@@ -326,10 +331,11 @@ export default class ActionButton extends Component {
       this.anim.setValue(0);
     }
 
-    setTimeout(
-      () => this.setState({ active: false, resetToken: this.state.resetToken }),
-      250
-    );
+    setTimeout(() => {
+      if (this.mounted) {
+        this.setState({ active: false, resetToken: this.state.resetToken });  
+      }
+    }, 250);
   }
 }
 

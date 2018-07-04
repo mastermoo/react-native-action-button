@@ -40,6 +40,7 @@ export interface ActionButtonProperties extends ViewProperties {
 }
 
 export interface ActionButtonItemProperties extends ViewProperties {
+  size?: number,
   title?: string
   onPress?:	() => void
   buttonColor?:	string

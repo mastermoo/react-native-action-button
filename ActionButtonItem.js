@@ -85,28 +85,27 @@ export default class ActionButtonItem extends Component {
     };
 
     if (position !== "center")
-      buttonStyle[position] = (this.props.parentSize - size) / 2;
+      animatedViewStyle[position] = (this.props.parentSize - size) / 2;
 
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
 
-    const parentStyle = isAndroid &&
-      this.props.fixNativeFeedbackRadius
-      ? {
-          height: size,
-          marginBottom: spacing,
-          right: this.props.offsetX,
-          borderRadius: this.props.size / 2
+    const parentStyle = {
+          marginHorizontal: this.props.offsetX,
+          marginBottom: spacing + SHADOW_SPACE,
+          borderRadius: this.props.size / 2,
         }
-      : {
-          paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing
-        };
+
     return (
       <Animated.View
         pointerEvents="box-none"
-        style={[animatedViewStyle, parentStyle]}
+        style={[animatedViewStyle]}
       >
-        <View>
+         <View
+          style={[
+            parentStyle,
+            !hideShadow && isAndroid ? {...shadowStyle, ...this.props.shadowStyle} : null
+          ]}
+        > 
           <Touchable
             testID={this.props.testID}
             background={touchableBackground(
@@ -118,7 +117,7 @@ export default class ActionButtonItem extends Component {
           >
             <View style={[
               buttonStyle,
-              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null
+              !hideShadow && !isAndroid ? {...shadowStyle, ...this.props.shadowStyle} : null
             ]}>
               {this.props.children}
             </View>
@@ -177,8 +176,7 @@ export default class ActionButtonItem extends Component {
     return (
       <TextTouchable
         background={touchableBackground(
-          this.props.nativeFeedbackRippleColor,
-          this.props.fixNativeFeedbackRadius
+          this.props.nativeFeedbackRippleColor
         )}
         activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
         onPress={this.props.onPress}

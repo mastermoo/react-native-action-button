@@ -109,6 +109,7 @@ export default class ActionButtonItem extends Component {
         <View>
           <Touchable
             testID={this.props.testID}
+            accessibilityLabel={this.props.accessibilityLabel}
             background={touchableBackground(
               this.props.nativeFeedbackRippleColor,
               this.props.fixNativeFeedbackRadius

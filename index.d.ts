@@ -21,6 +21,7 @@ export interface ActionButtonProperties extends ViewProperties {
   buttonColor?: string,
   buttonTextStyle?: TextStyle,
   buttonText?: string,
+  buttonBorderRadius?: number,
 
   offsetX?: number,
   offsetY?: number,

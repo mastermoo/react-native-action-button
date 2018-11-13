@@ -75,7 +75,6 @@ export default class ActionButton extends Component {
 
   getOffsetXY() {
     return {
-      // paddingHorizontal: this.props.offsetX,
       paddingVertical: this.props.offsetY
     };
   }
@@ -86,9 +85,8 @@ export default class ActionButton extends Component {
       {
         elevation: this.props.elevation,
         zIndex: this.props.zIndex,
-        justifyContent: this.props.verticalOrientation === "up"
-          ? "flex-end"
-          : "flex-start"
+        justifyContent:
+          this.props.verticalOrientation === "up" ? "flex-end" : "flex-start"
       }
     ];
   }
@@ -182,22 +180,23 @@ export default class ActionButton extends Component {
     };
 
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
-    const parentStyle = isAndroid &&
-      this.props.fixNativeFeedbackRadius
-      ? {
-          marginHorizontal: this.props.offsetX,
-          zIndex: this.props.zIndex,
-          borderRadius: this.props.size / 2,
-          width: this.props.size
-        }
-      : { marginHorizontal: this.props.offsetX, zIndex: this.props.zIndex };
+    const parentStyle =
+      isAndroid && this.props.fixNativeFeedbackRadius
+        ? {
+            marginHorizontal: this.props.offsetX,
+            zIndex: this.props.zIndex,
+            borderRadius: this.props.size / 2,
+            width: this.props.size
+          }
+        : { marginHorizontal: this.props.offsetX, zIndex: this.props.zIndex };
 
     return (
-      <View style={[
-        parentStyle,
-        !this.props.hideShadow && shadowStyle,
-        !this.props.hideShadow && this.props.shadowStyle
-      ]}
+      <View
+        style={[
+          parentStyle,
+          !this.props.hideShadow && shadowStyle,
+          !this.props.hideShadow && this.props.shadowStyle
+        ]}
       >
         <Touchable
           testID={this.props.testID}
@@ -214,9 +213,7 @@ export default class ActionButton extends Component {
           onPressIn={this.props.onPressIn}
           onPressOut={this.props.onPressOut}
         >
-          <Animated.View
-            style={wrapperStyle}
-          >
+          <Animated.View style={wrapperStyle}>
             <Animated.View style={[buttonStyle, animatedViewStyle]}>
               {this._renderButtonIcon()}
             </Animated.View>
@@ -227,10 +224,18 @@ export default class ActionButton extends Component {
   }
 
   _renderButtonIcon() {
-    const { icon, renderIcon, btnOutRangeTxt, buttonTextStyle, buttonText } = this.props;
+    const {
+      icon,
+      renderIcon,
+      btnOutRangeTxt,
+      buttonTextStyle,
+      buttonText
+    } = this.props;
     if (renderIcon) return renderIcon(this.state.active);
     if (icon) {
-      console.warn('react-native-action-button: The `icon` prop is deprecated! Use `renderIcon` instead.');
+      console.warn(
+        "react-native-action-button: The `icon` prop is deprecated! Use `renderIcon` instead."
+      );
       return icon;
     }
 
@@ -261,16 +266,16 @@ export default class ActionButton extends Component {
 
     let actionButtons = !Array.isArray(children) ? [children] : children;
 
-    actionButtons = actionButtons.filter( actionButton => (typeof actionButton == 'object') )
+    actionButtons = actionButtons.filter(
+      actionButton => typeof actionButton == "object"
+    );
 
     const actionStyle = {
       flex: 1,
       alignSelf: "stretch",
-      // backgroundColor: 'purple',
       justifyContent: verticalOrientation === "up" ? "flex-end" : "flex-start",
-      paddingTop: this.props.verticalOrientation === "down"
-        ? this.props.spacing
-        : 0,
+      paddingTop:
+        this.props.verticalOrientation === "down" ? this.props.spacing : 0,
       zIndex: this.props.zIndex
     };
 
@@ -333,7 +338,7 @@ export default class ActionButton extends Component {
 
     setTimeout(() => {
       if (this.mounted) {
-        this.setState({ active: false, resetToken: this.state.resetToken });  
+        this.setState({ active: false, resetToken: this.state.resetToken });
       }
     }, 250);
   }

@@ -191,7 +191,6 @@ export default class ActionButton extends Component {
           width: this.props.size
         }
       : { marginHorizontal: this.props.offsetX, zIndex: this.props.zIndex };
-
     return (
       <View style={[
         parentStyle,
@@ -208,13 +207,16 @@ export default class ActionButton extends Component {
             this.props.fixNativeFeedbackRadius
           )}
           activeOpacity={this.props.activeOpacity}
-          onLongPress={this.props.onLongPress}
-          onPress={() => {
-            this.props.onPress();
-            if (this.props.children) this.animateButton();
-          }}
+          onLongPress={() => {
+            if (this.props.onLongPress && typeof this.props.onLongPress == 'function' ) this.props.onLongPress()
+            if (this.props.children) this.animateButton()
+            }
+          }
+          onPress={this.props.onPress}
           onPressIn={this.props.onPressIn}
           onPressOut={this.props.onPressOut}
+          delayLongPress={this.props.delayLongPress}
+          disabled={this.props.disabled}
         >
           <Animated.View
             style={wrapperStyle}

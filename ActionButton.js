@@ -203,6 +203,7 @@ export default class ActionButton extends Component {
           testID={this.props.testID}
           accessible={this.props.accessible}
           accessibilityLabel={this.props.accessibilityLabel}
+          accessibilityRole={this.props.accessibilityRole}
           background={touchableBackground(
             this.props.nativeFeedbackRippleColor,
             this.props.fixNativeFeedbackRadius
@@ -386,6 +387,7 @@ ActionButton.propTypes = {
 
   testID: PropTypes.string,
   accessibilityLabel: PropTypes.string,
+  accessibilityRole: PropTypes.string,
   accessible: PropTypes.bool
 };
 
@@ -417,6 +419,7 @@ ActionButton.defaultProps = {
   nativeFeedbackRippleColor: "rgba(255,255,255,0.75)",
   testID: undefined,
   accessibilityLabel: undefined,
+  accessibilityRole: "button",
   accessible: undefined
 };
 

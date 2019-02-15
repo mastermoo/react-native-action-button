@@ -6,6 +6,10 @@ import {
   View,
   Animated,
   TouchableOpacity,
+  findNodeHandle,
+  UIManager,
+  Platform,
+  AccessibilityInfo,
 } from "react-native";
 import ActionButtonItem from "./ActionButtonItem";
 import {
@@ -14,17 +18,51 @@ import {
   getTouchableComponent,
   isAndroid,
   touchableBackground,
-  DEFAULT_ACTIVE_OPACITY
+  DEFAULT_ACTIVE_OPACITY,
 } from "./shared";
+
+//////////////////////
+// HELPER FUNCTIONS
+//////////////////////
+
+const focusOnView = (ref) => {
+  if (!ref) {
+    console.warn('ref is null');
+    return;
+  }
+  const reactTag = findNodeHandle(ref);
+
+  Platform.OS === 'android' ? UIManager.sendAccessibilityEvent(
+      reactTag,
+      8
+  ) : AccessibilityInfo.setAccessibilityFocus(reactTag)
+};
+
+const filterActionButtons = (children) => {
+  const actionButtons = !Array.isArray(children) ? [children] : children;
+  return actionButtons.filter(actionButton => (typeof actionButton === 'object'));
+};
 
 export default class ActionButton extends Component {
   constructor(props) {
     super(props);
 
+    const {
+      children,
+    } = props;
+
     this.state = {
       resetToken: props.resetToken,
-      active: props.active
+      active: props.active,
     };
+
+    const actionButtons = filterActionButtons(children);
+
+    this.refIndexes = [];
+    actionButtons.forEach((button, idx) => {
+      this[`actionButton${idx}Ref`] = React.createRef();
+      this.refIndexes.push(idx);
+    });
 
     this.anim = new Animated.Value(props.active ? 1 : 0);
     this.timeout = null;
@@ -34,25 +72,32 @@ export default class ActionButton extends Component {
     this.mounted = true;
   }
 
-  componentWillUnmount() {
-    this.mounted = false;
-    clearTimeout(this.timeout);
-  }
-
   componentWillReceiveProps(nextProps) {
-    if (nextProps.resetToken !== this.state.resetToken) {
-      if (nextProps.active === false && this.state.active === true) {
-        if (this.props.onReset) this.props.onReset();
+    const {
+      resetToken,
+      active,
+    } = this.state;
+
+    const {
+      onReset,
+    } = this.props;
+
+    if (nextProps.resetToken !== resetToken) {
+      if (nextProps.active === false && active === true) {
+        if (onReset) {
+          onReset();
+        }
         Animated.spring(this.anim, { toValue: 0 }).start();
-        setTimeout(
-          () =>
-            this.setState({ active: false, resetToken: nextProps.resetToken }),
-          250
-        );
+        setTimeout(() => {
+          this.setState({
+            active: false,
+            resetToken: nextProps.resetToken,
+          });
+        }, 250);
         return;
       }
 
-      if (nextProps.active === true && this.state.active === false) {
+      if (nextProps.active === true && active === false) {
         Animated.spring(this.anim, { toValue: 1 }).start();
         this.setState({ active: true, resetToken: nextProps.resetToken });
         return;
@@ -60,9 +105,30 @@ export default class ActionButton extends Component {
 
       this.setState({
         resetToken: nextProps.resetToken,
-        active: nextProps.active
+        active: nextProps.active,
       });
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      active,
+    } = this.state;
+
+    if (prevState.active !== active && active) {
+      setTimeout(() => {
+        this.focusOnTopActionButton();
+      }, 500);
+  
+      setTimeout(() => {
+        this.announceActionButtons();
+      }, 2000);
+    }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    clearTimeout(this.timeout);
   }
 
   //////////////////////
@@ -91,6 +157,42 @@ export default class ActionButton extends Component {
           : "flex-start"
       }
     ];
+  }
+
+  //////////////////////
+  // ACCESSIBILITY METHODS
+  //////////////////////
+
+  announceActionButtons() {
+    const {
+      children,
+    } = this.props;
+
+    actionButtons = filterActionButtons(children);
+
+    const actionButtonsAccessibilityAnnouncement = actionButtons.reduce((acc, actionButton) => {
+      return `${acc} ${actionButton.props.accessibilityLabel}, `;
+    }, 'Available actions from top to bottom: ');
+
+    AccessibilityInfo.announceForAccessibility(actionButtonsAccessibilityAnnouncement);
+  }
+
+  focusOnTopActionButton() {
+    const {
+      active,
+    } = this.state;
+
+    const actionButtonRefs = this.refIndexes.reduce((acc, refIdx) => {
+      const buttonRef = this[`actionButton${refIdx}Ref`].current;
+      if (!!buttonRef) {
+        acc = [...acc, buttonRef];
+      }
+      return acc;
+    }, []);
+  
+    if (active && actionButtonRefs.length) {
+      focusOnView(actionButtonRefs[0]);
+    }
   }
 
   //////////////////////
@@ -141,6 +243,7 @@ export default class ActionButton extends Component {
       </View>
     );
   }
+
 
   _renderMainButton() {
     const animatedViewStyle = {
@@ -261,9 +364,7 @@ export default class ActionButton extends Component {
 
     if (!this.state.active) return null;
 
-    let actionButtons = !Array.isArray(children) ? [children] : children;
-
-    actionButtons = actionButtons.filter( actionButton => (typeof actionButton == 'object') )
+    actionButtons = filterActionButtons(children);
 
     const actionStyle = {
       flex: 1,
@@ -284,6 +385,7 @@ export default class ActionButton extends Component {
             anim={this.anim}
             {...this.props}
             {...ActionButton.props}
+            buttonRef={this[`actionButton${idx}Ref`]}
             parentSize={this.props.size}
             btnColor={this.props.btnOutRange}
             onPress={() => {

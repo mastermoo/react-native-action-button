@@ -29,6 +29,7 @@ const TextTouchable = isAndroid
 export default class ActionButtonItem extends Component {
   static get defaultProps() {
     return {
+      buttonRef: null,
       active: true,
       spaceBetween: 15,
       useNativeFeedback: true,
@@ -40,94 +41,13 @@ export default class ActionButtonItem extends Component {
 
   static get propTypes() {
     return {
+      buttonRef: PropTypes.any,
       active: PropTypes.bool,
       useNativeFeedback: PropTypes.bool,
       fixNativeFeedbackRadius: PropTypes.bool,
       nativeFeedbackRippleColor: PropTypes.string,
       activeOpacity: PropTypes.number
     };
-  }
-
-  render() {
-    const {
-      size,
-      position,
-      verticalOrientation,
-      hideShadow,
-      spacing
-    } = this.props;
-
-    if (!this.props.active) return null;
-
-    const animatedViewStyle = {
-      marginBottom: -SHADOW_SPACE,
-      alignItems: alignItemsMap[position],
-
-      // backgroundColor: this.props.buttonColor,
-      opacity: this.props.anim,
-      transform: [
-        {
-          translateY: this.props.anim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [verticalOrientation === "down" ? -40 : 40, 0]
-          })
-        }
-      ]
-    };
-
-    const buttonStyle = {
-      justifyContent: "center",
-      alignItems: "center",
-      width: size,
-      height: size,
-      borderRadius: size / 2,
-      backgroundColor: this.props.buttonColor || this.props.btnColor
-    };
-
-    if (position !== "center")
-      buttonStyle[position] = (this.props.parentSize - size) / 2;
-
-    const Touchable = getTouchableComponent(this.props.useNativeFeedback);
-
-    const parentStyle = isAndroid &&
-      this.props.fixNativeFeedbackRadius
-      ? {
-          height: size,
-          marginBottom: spacing,
-          right: this.props.offsetX,
-          borderRadius: this.props.size / 2
-        }
-      : {
-          paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing
-        };
-    return (
-      <Animated.View
-        pointerEvents="box-none"
-        style={[animatedViewStyle, parentStyle]}
-      >
-        <View>
-          <Touchable
-            testID={this.props.testID}
-            accessibilityLabel={this.props.accessibilityLabel}
-            background={touchableBackground(
-              this.props.nativeFeedbackRippleColor,
-              this.props.fixNativeFeedbackRadius
-            )}
-            activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
-            onPress={this.props.onPress}
-          >
-            <View style={[
-              buttonStyle,
-              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null
-            ]}>
-              {this.props.children}
-            </View>
-          </Touchable>
-        </View>
-        {this._renderTitle()}
-      </Animated.View>
-    );
   }
 
   _renderTitle() {
@@ -188,6 +108,91 @@ export default class ActionButtonItem extends Component {
           {title}
         </View>
       </TextTouchable>
+    );
+  }
+
+  render() {
+    const {
+      buttonRef,
+      size,
+      position,
+      verticalOrientation,
+      hideShadow,
+      spacing
+    } = this.props;
+
+    if (!this.props.active) return null;
+
+    const animatedViewStyle = {
+      marginBottom: -SHADOW_SPACE,
+      alignItems: alignItemsMap[position],
+
+      // backgroundColor: this.props.buttonColor,
+      opacity: this.props.anim,
+      transform: [
+        {
+          translateY: this.props.anim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [verticalOrientation === "down" ? -40 : 40, 0]
+          })
+        }
+      ]
+    };
+
+    const buttonStyle = {
+      justifyContent: "center",
+      alignItems: "center",
+      width: size,
+      height: size,
+      borderRadius: size / 2,
+      backgroundColor: this.props.buttonColor || this.props.btnColor
+    };
+
+    if (position !== "center")
+      buttonStyle[position] = (this.props.parentSize - size) / 2;
+
+    const Touchable = getTouchableComponent(this.props.useNativeFeedback);
+
+    const parentStyle = isAndroid &&
+      this.props.fixNativeFeedbackRadius
+      ? {
+          height: size,
+          marginBottom: spacing,
+          right: this.props.offsetX,
+          borderRadius: this.props.size / 2
+        }
+      : {
+          paddingHorizontal: this.props.offsetX,
+          height: size + SHADOW_SPACE + spacing
+        };
+    
+    return (
+      <Animated.View
+        pointerEvents="box-none"
+        style={[animatedViewStyle, parentStyle]}
+      >
+        <View>
+          <Touchable
+            ref={buttonRef}
+            testID={this.props.testID}
+            accessibilityLabel={this.props.accessibilityLabel}
+            background={touchableBackground(
+              this.props.nativeFeedbackRippleColor,
+              this.props.fixNativeFeedbackRadius
+            )}
+            activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
+            onPress={this.props.onPress}
+          >
+            <View style={[
+              buttonStyle,
+              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null
+            ]}>
+              {this.props.children}
+            </View>
+          </Touchable>
+        </View>
+        {this._renderTitle()}
+      </Animated.View>
     );
   }
 }

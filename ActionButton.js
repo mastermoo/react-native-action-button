@@ -122,7 +122,7 @@ export default class ActionButton extends Component {
   
       setTimeout(() => {
         this.announceActionButtons();
-      }, 2000);
+      }, 3000);
     }
   }
 
@@ -166,15 +166,18 @@ export default class ActionButton extends Component {
   announceActionButtons() {
     const {
       children,
+      announceActionsLabel,
     } = this.props;
 
-    actionButtons = filterActionButtons(children);
+    const actionButtons = filterActionButtons(children);
 
     const actionButtonsAccessibilityAnnouncement = actionButtons.reduce((acc, actionButton) => {
       return `${acc} ${actionButton.props.accessibilityLabel}, `;
-    }, 'Available actions from top to bottom: ');
+    }, announceActionsLabel);
 
-    AccessibilityInfo.announceForAccessibility(actionButtonsAccessibilityAnnouncement);
+    if (actionButtons.length && Platform.OS === 'ios') {
+      AccessibilityInfo.announceForAccessibility(actionButtonsAccessibilityAnnouncement);
+    }
   }
 
   focusOnTopActionButton() {
@@ -364,7 +367,7 @@ export default class ActionButton extends Component {
 
     if (!this.state.active) return null;
 
-    actionButtons = filterActionButtons(children);
+    const actionButtons = filterActionButtons(children);
 
     const actionStyle = {
       flex: 1,
@@ -488,6 +491,7 @@ ActionButton.propTypes = {
 
   testID: PropTypes.string,
   accessibilityLabel: PropTypes.string,
+  announceActionsLabel: PropTypes.string,
   accessible: PropTypes.bool
 };
 
@@ -519,6 +523,7 @@ ActionButton.defaultProps = {
   nativeFeedbackRippleColor: "rgba(255,255,255,0.75)",
   testID: undefined,
   accessibilityLabel: undefined,
+  announceActionsLabel: 'Available actions from top to bottom: ',
   accessible: undefined
 };
 

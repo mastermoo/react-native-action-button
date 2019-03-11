@@ -121,6 +121,7 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | degrees       | number        | 135                 | degrees to rotate icon
 | buttonText    | string        | +                   | use this to set a different text on the button
 | buttonTextStyle | style         | null                | use this to set the textstyle of the button's text
+| buttonBorderRadius | number        | size / 2                   | use this to set the borderRadius of the button
 | onReset       | function      | null                | use this to set the callback that will be called after the button reset's it's items
 | verticalOrientation | string  | "up"                | direction action buttons should expand.  One of: `up` or `down`
 | backgroundTappable | boolean  | false               | make background tappable in active state of ActionButton

@@ -2,6 +2,12 @@
   "name": "@frogeducation/react-native-action-button",
   "version": "2.8.5",
   "description": "customizable multi-action-button component for react-native",
+  "files": [
+    "ActionButton.js",
+    "ActionButtonItem.js",
+    "index.d.ts",
+    "shared.js"
+  ],
   "main": "ActionButton.js",
   "scripts": {
     "test": "echo \"no test specified\"",

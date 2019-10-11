@@ -39,7 +39,7 @@ export default class ActionButton extends Component {
     clearTimeout(this.timeout);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.resetToken !== this.state.resetToken) {
       if (nextProps.active === false && this.state.active === true) {
         if (this.props.onReset) this.props.onReset();

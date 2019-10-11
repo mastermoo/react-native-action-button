@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - lts/*
+  - 10.16.3
+
+jobs:
+  include:
+    - stage: release
+      node_js: lts/*
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release

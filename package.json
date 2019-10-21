@@ -26,7 +26,7 @@
   "peerDependencies": {
     "react-native": ">=0.11"
   },
-  "author": "Yousef Kamawall",
+  "author": "Frog Education",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/frogeducation/react-native-action-button/issues"

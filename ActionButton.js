@@ -170,13 +170,13 @@ export default class ActionButton extends Component {
       }),
       width: this.props.size,
       height: this.props.size,
-      borderRadius: this.props.size / 2
+      borderRadius: this.props.buttonBorderRadius ? this.props.buttonBorderRadius : this.props.size / 2
     };
 
     const buttonStyle = {
       width: this.props.size,
       height: this.props.size,
-      borderRadius: this.props.size / 2,
+      borderRadius: this.props.buttonBorderRadius ? this.props.buttonBorderRadius : this.props.size / 2,
       alignItems: "center",
       justifyContent: "center"
     };
@@ -187,7 +187,7 @@ export default class ActionButton extends Component {
       ? {
           right: this.props.offsetX,
           zIndex: this.props.zIndex,
-          borderRadius: this.props.size / 2,
+          borderRadius: this.props.buttonBorderRadius ? this.props.buttonBorderRadius : this.props.size / 2,
           width: this.props.size
         }
       : { marginHorizontal: this.props.offsetX, zIndex: this.props.zIndex };

@@ -62,8 +62,6 @@ export default class ActionButtonItem extends Component {
     const animatedViewStyle = {
       marginBottom: -SHADOW_SPACE,
       alignItems: alignItemsMap[position],
-
-      // backgroundColor: this.props.buttonColor,
       opacity: this.props.anim,
       transform: [
         {
@@ -85,28 +83,26 @@ export default class ActionButtonItem extends Component {
     };
 
     if (position !== "center")
-      buttonStyle[position] = (this.props.parentSize - size) / 2;
+      animatedViewStyle[position] = (this.props.parentSize - size) / 2;
 
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
 
-    const parentStyle = isAndroid &&
-      this.props.fixNativeFeedbackRadius
-      ? {
-          height: size,
-          marginBottom: spacing,
-          right: this.props.offsetX,
-          borderRadius: this.props.size / 2
-        }
-      : {
-          paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing
-        };
+    const parentStyle = {
+      marginHorizontal: this.props.offsetX,
+      marginBottom: spacing + SHADOW_SPACE,
+      borderRadius: this.props.size / 2
+    };
+
     return (
-      <Animated.View
-        pointerEvents="box-none"
-        style={[animatedViewStyle, parentStyle]}
-      >
-        <View>
+      <Animated.View pointerEvents="box-none" style={[animatedViewStyle]}>
+        <View
+          style={[
+            parentStyle,
+            !hideShadow && isAndroid
+              ? { ...shadowStyle, ...this.props.shadowStyle }
+              : null
+          ]}
+        >
           <Touchable
             testID={this.props.testID}
             accessibilityLabel={this.props.accessibilityLabel}
@@ -117,10 +113,14 @@ export default class ActionButtonItem extends Component {
             activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
             onPress={this.props.onPress}
           >
-            <View style={[
-              buttonStyle,
-              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null
-            ]}>
+            <View
+              style={[
+                buttonStyle,
+                !hideShadow && !isAndroid
+                  ? { ...shadowStyle, ...this.props.shadowStyle }
+                  : null
+              ]}
+            >
               {this.props.children}
             </View>
           </Touchable>
@@ -144,9 +144,8 @@ export default class ActionButtonItem extends Component {
     } = this.props;
     const offsetTop = Math.max(size / 2 - TEXT_HEIGHT / 2, 0);
     const positionStyles = { top: offsetTop };
-    const hideShadow = hideLabelShadow === undefined
-      ? this.props.hideShadow
-      : hideLabelShadow;
+    const hideShadow =
+      hideLabelShadow === undefined ? this.props.hideShadow : hideLabelShadow;
 
     if (position !== "center") {
       positionStyles[position] =
@@ -162,31 +161,24 @@ export default class ActionButtonItem extends Component {
       textContainerStyle
     ];
 
-    const title = (
-      React.isValidElement(this.props.title) ?
-        this.props.title
-      : (
-        <Text
-          allowFontScaling={false}
-          style={[styles.text, this.props.textStyle]}
-        >
-          {this.props.title}
-        </Text>
-      )
-    )
+    const title = React.isValidElement(this.props.title) ? (
+      this.props.title
+    ) : (
+      <Text
+        allowFontScaling={false}
+        style={[styles.text, this.props.textStyle]}
+      >
+        {this.props.title}
+      </Text>
+    );
 
     return (
       <TextTouchable
-        background={touchableBackground(
-          this.props.nativeFeedbackRippleColor,
-          this.props.fixNativeFeedbackRadius
-        )}
+        background={touchableBackground(this.props.nativeFeedbackRippleColor)}
         activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
         onPress={this.props.onPress}
       >
-        <View style={textStyles}>
-          {title}
-        </View>
+        <View style={textStyles}>{title}</View>
       </TextTouchable>
     );
   }

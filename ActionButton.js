@@ -200,6 +200,7 @@ export default class ActionButton extends Component {
       ]}
       >
         <Touchable
+          rejectResponderTermination
           testID={this.props.testID}
           accessible={this.props.accessible}
           accessibilityLabel={this.props.accessibilityLabel}
@@ -301,6 +302,7 @@ export default class ActionButton extends Component {
   _renderTappableBackground() {
     return (
       <TouchableOpacity
+        rejectResponderTermination
         activeOpacity={1}
         style={this.getOverlayStyles()}
         onPress={this.reset.bind(this)}

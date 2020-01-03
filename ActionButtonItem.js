@@ -34,7 +34,8 @@ export default class ActionButtonItem extends Component {
       useNativeFeedback: true,
       activeOpacity: DEFAULT_ACTIVE_OPACITY,
       fixNativeFeedbackRadius: false,
-      nativeFeedbackRippleColor: "rgba(255,255,255,0.75)"
+      nativeFeedbackRippleColor: "rgba(255,255,255,0.75)",
+      numberOfLines: 1,
     };
   }
 
@@ -44,7 +45,8 @@ export default class ActionButtonItem extends Component {
       useNativeFeedback: PropTypes.bool,
       fixNativeFeedbackRadius: PropTypes.bool,
       nativeFeedbackRippleColor: PropTypes.string,
-      activeOpacity: PropTypes.number
+      activeOpacity: PropTypes.number,
+      numberOfLines: PropTypes.number,
     };
   }
 
@@ -140,7 +142,8 @@ export default class ActionButtonItem extends Component {
       parentSize,
       size,
       position,
-      spaceBetween
+      spaceBetween,
+      numberOfLines,
     } = this.props;
     const offsetTop = Math.max(size / 2 - TEXT_HEIGHT / 2, 0);
     const positionStyles = { top: offsetTop };
@@ -169,6 +172,7 @@ export default class ActionButtonItem extends Component {
         <Text
           allowFontScaling={false}
           style={[styles.text, this.props.textStyle]}
+          numberOfLines={numberOfLines}
         >
           {this.props.title}
         </Text>

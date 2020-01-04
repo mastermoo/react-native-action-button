@@ -209,10 +209,13 @@ export default class ActionButton extends Component {
             this.props.fixNativeFeedbackRadius
           )}
           activeOpacity={this.props.activeOpacity}
-          onLongPress={this.props.onLongPress}
+          onLongPress={() => {
+            this.props.onLongPress();
+            if (this.props.children && !this.props.openOnPress) this.animateButton();
+          }}
           onPress={() => {
             this.props.onPress();
-            if (this.props.children) this.animateButton();
+            if (this.props.children && (this.state.active || this.props.openOnPress)) this.animateButton();
           }}
           onPressIn={this.props.onPressIn}
           onPressOut={this.props.onPressOut}
@@ -337,7 +340,7 @@ export default class ActionButton extends Component {
 
     setTimeout(() => {
       if (this.mounted) {
-        this.setState({ active: false, resetToken: this.state.resetToken });  
+        this.setState({ active: false, resetToken: this.state.resetToken });
       }
     }, 250);
   }
@@ -376,6 +379,8 @@ ActionButton.propTypes = {
   onPress: PropTypes.func,
   onPressIn: PropTypes.func,
   onPressOut: PropTypes.func,
+  onLongPress: PropTypes.func,
+  openOnPress: PropTypes.bool,
   backdrop: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   degrees: PropTypes.number,
   verticalOrientation: PropTypes.oneOf(["up", "down"]),
@@ -405,6 +410,8 @@ ActionButton.defaultProps = {
   onPress: () => {},
   onPressIn: () => {},
   onPressOn: () => {},
+  onLongPress: () => {},
+  openOnPress: true,
   backdrop: false,
   degrees: 45,
   position: "right",

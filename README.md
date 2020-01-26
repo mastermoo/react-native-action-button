@@ -116,8 +116,8 @@ Take a look at [this gist](https://gist.github.com/mmazzarolo/cfd467436f9d110e94
 | onPressOut    | function      | null                | fires, after ActionButton is released
 | onLongPress   | function      | null                | fires, when ActionButton is long pressed
 | renderIcon    | function      | null                | Function to render the component for ActionButton Icon. It is passed a boolean, `active`, which is true if the FAB has been expanded, and false if it is collapsed, allowing you to show a different icon when the ActionButton Items are expanded.
-| icon          | Component     | +                   | **Deprecated, use `renderIcon`** Custom component for ActionButton Icon
-| backdrop      | Component     | false               | Custom component for use as Backdrop (i.e. [BlurView](https://github.com/react-native-fellowship/react-native-blur#blur-view), [VibrancyView](https://github.com/react-native-fellowship/react-native-blur#vibrancy-view))
+| icon          | Element     | +                   | **Deprecated, use `renderIcon`** Custom element for ActionButton icon
+| backdrop      | Element     | false               | Custom element to use as backdrop (i.e. [BlurView](https://github.com/react-native-fellowship/react-native-blur#blur-view), [VibrancyView](https://github.com/react-native-fellowship/react-native-blur#vibrancy-view))
 | degrees       | number        | 135                 | degrees to rotate icon
 | buttonText    | string        | +                   | use this to set a different text on the button
 | buttonTextStyle | style         | null                | use this to set the textstyle of the button's text

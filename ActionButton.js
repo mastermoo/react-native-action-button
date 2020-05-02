@@ -241,7 +241,7 @@ const ActionButton = props => {
       <TouchableOpacity
         activeOpacity={1}
         style={getOverlayStyles()}
-        onPress={reset}
+        onPress={props.onBackdropPress || reset}
       />
     );
   };
@@ -358,7 +358,8 @@ ActionButton.propTypes = {
 
   testID: PropTypes.string,
   accessibilityLabel: PropTypes.string,
-  accessible: PropTypes.bool
+  accessible: PropTypes.bool,
+  onBackdropPress: PropTypes.func,
 };
 
 ActionButton.defaultProps = {

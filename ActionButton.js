@@ -60,7 +60,7 @@ const ActionButton = props => {
   const getOffsetXY = () => {
     return {
       // paddingHorizontal: props.offsetX,
-      paddingVertical: props.offsetY
+      paddingBottom: props.offsetY
     };
   };
 

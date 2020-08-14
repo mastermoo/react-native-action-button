@@ -35,13 +35,13 @@ const ActionButton = props => {
 
   useEffect(() => {
     if (props.active) {
-      Animated.spring(anim.current, { toValue: 1 }).start();
+      Animated.spring(anim.current, { toValue: 1,useNativeDriver:false }).start();
       setActive(true);
       setResetToken(props.resetToken);
     } else {
       props.onReset && props.onReset();
 
-      Animated.spring(anim.current, { toValue: 0 }).start();
+      Animated.spring(anim.current, { toValue: 0,useNativeDriver:false }).start();
       timeout.current = setTimeout(() => {
         setActive(false);
         setResetToken(props.resetToken);
@@ -148,8 +148,8 @@ const ActionButton = props => {
           onPressIn={props.onPressIn}
           onPressOut={props.onPressOut}
         >
-          <Animated.View style={wrapperStyle} useNativeDriver={true}>
-            <Animated.View useNativeDriver={true} style={[buttonStyle, animatedViewStyle]}>
+          <Animated.View style={wrapperStyle} >
+            <Animated.View  style={[buttonStyle, animatedViewStyle]}>
               {_renderButtonIcon()}
             </Animated.View>
           </Animated.View>
@@ -178,7 +178,7 @@ const ActionButton = props => {
 
     return (
       <Animated.Text
-       useNativeDriver={true}
+
         style={[
           styles.btnText,
           buttonTextStyle,
@@ -255,7 +255,7 @@ const ActionButton = props => {
     if (active) return reset(animate);
 
     if (animate) {
-      Animated.spring(anim.current, { toValue: 1 }).start();
+      Animated.spring(anim.current, { toValue: 1,useNativeDriver:false }).start();
     } else {
       anim.current.setValue(1);
     }
@@ -267,7 +267,7 @@ const ActionButton = props => {
     if (props.onReset) props.onReset();
 
     if (animate) {
-      Animated.spring(anim.current, { toValue: 0 }).start();
+      Animated.spring(anim.current, { toValue: 0,useNativeDriver:false }).start();
     } else {
       anim.current.setValue(0);
     }
@@ -282,7 +282,7 @@ const ActionButton = props => {
   return (
     <View pointerEvents="box-none" style={[getOverlayStyles(), props.style]}>
       <Animated.View
-useNativeDriver={true}
+
         pointerEvents="none"
         style={[
           getOverlayStyles(),

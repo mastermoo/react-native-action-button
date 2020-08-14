@@ -105,6 +105,7 @@ export default class ActionButtonItem extends Component {
         };
     return (
       <Animated.View
+      useNativeDriver={true}
         pointerEvents="box-none"
         style={[animatedViewStyle, parentStyle]}
       >

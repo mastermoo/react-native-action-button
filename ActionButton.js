@@ -148,8 +148,8 @@ const ActionButton = props => {
           onPressIn={props.onPressIn}
           onPressOut={props.onPressOut}
         >
-          <Animated.View style={wrapperStyle}>
-            <Animated.View style={[buttonStyle, animatedViewStyle]}>
+          <Animated.View style={wrapperStyle} useNativeDriver={true}>
+            <Animated.View useNativeDriver={true} style={[buttonStyle, animatedViewStyle]}>
               {_renderButtonIcon()}
             </Animated.View>
           </Animated.View>
@@ -178,6 +178,7 @@ const ActionButton = props => {
 
     return (
       <Animated.Text
+       useNativeDriver={true}
         style={[
           styles.btnText,
           buttonTextStyle,
@@ -281,6 +282,7 @@ const ActionButton = props => {
   return (
     <View pointerEvents="box-none" style={[getOverlayStyles(), props.style]}>
       <Animated.View
+useNativeDriver={true}
         pointerEvents="none"
         style={[
           getOverlayStyles(),

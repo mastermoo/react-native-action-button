@@ -278,44 +278,49 @@ const ActionButton = props => {
     }, 250);
   };
 
-  return (
-    <View pointerEvents="box-none" style={[getOverlayStyles(), props.style]}>
-      <Animated.View
-        pointerEvents="none"
-        style={[
-          getOverlayStyles(),
-          {
-            backgroundColor: props.bgColor,
-            opacity: anim.current.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, props.bgOpacity]
-            })
-          }
-        ]}
-      >
-        {props.backdrop}
-      </Animated.View>
-      <View
-        pointerEvents="box-none"
-        style={[getOverlayStyles(), getOrientation(), getOffsetXY()]}
-      >
-        {active && !props.backgroundTappable && _renderTappableBackground()}
+  if (this.props.visible) {
+    return (
+      <View pointerEvents="box-none" style={[getOverlayStyles(), props.style]}>
+        <Animated.View
+          pointerEvents="none"
+          style={[
+            getOverlayStyles(),
+            {
+              backgroundColor: props.bgColor,
+              opacity: anim.current.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, props.bgOpacity]
+              })
+            }
+          ]}
+        >
+          {props.backdrop}
+        </Animated.View>
+        <View
+          pointerEvents="box-none"
+          style={[getOverlayStyles(), getOrientation(), getOffsetXY()]}
+        >
+          {active && !props.backgroundTappable && _renderTappableBackground()}
 
-        {props.verticalOrientation === "up" &&
-          props.children &&
-          _renderActions()}
-        {_renderMainButton()}
-        {props.verticalOrientation === "down" &&
-          props.children &&
-          _renderActions()}
+          {props.verticalOrientation === "up" &&
+            props.children &&
+            _renderActions()}
+          {_renderMainButton()}
+          {props.verticalOrientation === "down" &&
+            props.children &&
+            _renderActions()}
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return (null);
+  }
 };
 
 ActionButton.Item = ActionButtonItem;
 
 ActionButton.propTypes = {
+  visible: PropTypes.bool,
   resetToken: PropTypes.any,
   active: PropTypes.bool,
 
@@ -362,6 +367,7 @@ ActionButton.propTypes = {
 };
 
 ActionButton.defaultProps = {
+  visible: true,
   resetToken: null,
   active: false,
   bgColor: "transparent",

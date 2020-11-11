@@ -36,6 +36,7 @@ export interface ActionButtonProperties extends ViewProperties {
   activeOpacity?: number,
 
   useNativeFeedback?: boolean,
+  useNativeDriver?: boolean,
   fixNativeFeedbackRadius?: boolean,
   nativeFeedbackRippleColor?: string
 }

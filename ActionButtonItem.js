@@ -15,7 +15,7 @@ import {
   getTouchableComponent,
   isAndroid,
   touchableBackground,
-  DEFAULT_ACTIVE_OPACITY
+  DEFAULT_ACTIVE_OPACITY,
 } from "./shared";
 
 const { width: WIDTH } = Dimensions.get("window");
@@ -35,7 +35,6 @@ export default class ActionButtonItem extends Component {
       activeOpacity: DEFAULT_ACTIVE_OPACITY,
       fixNativeFeedbackRadius: false,
       nativeFeedbackRippleColor: "rgba(255,255,255,0.75)",
-      numberOfLines: 1,
     };
   }
 
@@ -46,18 +45,12 @@ export default class ActionButtonItem extends Component {
       fixNativeFeedbackRadius: PropTypes.bool,
       nativeFeedbackRippleColor: PropTypes.string,
       activeOpacity: PropTypes.number,
-      numberOfLines: PropTypes.number,
     };
   }
 
   render() {
-    const {
-      size,
-      position,
-      verticalOrientation,
-      hideShadow,
-      spacing
-    } = this.props;
+    const { size, position, verticalOrientation, hideShadow, spacing } =
+      this.props;
 
     if (!this.props.active) return null;
 
@@ -71,10 +64,10 @@ export default class ActionButtonItem extends Component {
         {
           translateY: this.props.anim.interpolate({
             inputRange: [0, 1],
-            outputRange: [verticalOrientation === "down" ? -40 : 40, 0]
-          })
-        }
-      ]
+            outputRange: [verticalOrientation === "down" ? -40 : 40, 0],
+          }),
+        },
+      ],
     };
 
     const buttonStyle = {
@@ -83,7 +76,7 @@ export default class ActionButtonItem extends Component {
       width: size,
       height: size,
       borderRadius: size / 2,
-      backgroundColor: this.props.buttonColor || this.props.btnColor
+      backgroundColor: this.props.buttonColor || this.props.btnColor,
     };
 
     if (position !== "center")
@@ -91,18 +84,18 @@ export default class ActionButtonItem extends Component {
 
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
 
-    const parentStyle = isAndroid &&
-      this.props.fixNativeFeedbackRadius
-      ? {
-          height: size,
-          marginBottom: spacing,
-          right: this.props.offsetX,
-          borderRadius: this.props.size / 2
-        }
-      : {
-          paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing
-        };
+    const parentStyle =
+      isAndroid && this.props.fixNativeFeedbackRadius
+        ? {
+            height: size,
+            marginBottom: spacing,
+            right: this.props.offsetX,
+            borderRadius: this.props.size / 2,
+          }
+        : {
+            paddingHorizontal: this.props.offsetX,
+            height: size + SHADOW_SPACE + spacing,
+          };
     return (
       <Animated.View
         pointerEvents="box-none"
@@ -110,7 +103,6 @@ export default class ActionButtonItem extends Component {
       >
         <View>
           <Touchable
-            rejectResponderTermination
             testID={this.props.testID}
             accessibilityLabel={this.props.accessibilityLabel}
             background={touchableBackground(
@@ -120,10 +112,14 @@ export default class ActionButtonItem extends Component {
             activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
             onPress={this.props.onPress}
           >
-            <View style={[
-              buttonStyle,
-              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null
-            ]}>
+            <View
+              style={[
+                buttonStyle,
+                !hideShadow
+                  ? { ...shadowStyle, ...this.props.shadowStyle }
+                  : null,
+              ]}
+            >
               {this.props.children}
             </View>
           </Touchable>
@@ -144,45 +140,41 @@ export default class ActionButtonItem extends Component {
       size,
       position,
       spaceBetween,
-      numberOfLines,
+      labelStartMarginFrom = "right",
     } = this.props;
     const offsetTop = Math.max(size / 2 - TEXT_HEIGHT / 2, 0);
     const positionStyles = { top: offsetTop };
-    const hideShadow = hideLabelShadow === undefined
-      ? this.props.hideShadow
-      : hideLabelShadow;
+    const hideShadow =
+      hideLabelShadow === undefined ? this.props.hideShadow : hideLabelShadow;
 
     if (position !== "center") {
       positionStyles[position] =
         offsetX + (parentSize - size) / 2 + size + spaceBetween;
     } else {
-      positionStyles.right = WIDTH / 2 + size / 2 + spaceBetween;
+      positionStyles[labelStartMarginFrom] =
+        WIDTH / 2 + size / 2 + spaceBetween;
     }
 
     const textStyles = [
       styles.textContainer,
       positionStyles,
       !hideShadow && shadowStyle,
-      textContainerStyle
+      textContainerStyle,
     ];
 
-    const title = (
-      React.isValidElement(this.props.title) ?
-        this.props.title
-      : (
-        <Text
-          allowFontScaling={false}
-          style={[styles.text, this.props.textStyle]}
-          numberOfLines={numberOfLines}
-        >
-          {this.props.title}
-        </Text>
-      )
-    )
+    const title = React.isValidElement(this.props.title) ? (
+      this.props.title
+    ) : (
+      <Text
+        allowFontScaling={false}
+        style={[styles.text, this.props.textStyle]}
+      >
+        {this.props.title}
+      </Text>
+    );
 
     return (
       <TextTouchable
-        rejectResponderTermination
         background={touchableBackground(
           this.props.nativeFeedbackRippleColor,
           this.props.fixNativeFeedbackRadius
@@ -190,9 +182,7 @@ export default class ActionButtonItem extends Component {
         activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
         onPress={this.props.onPress}
       >
-        <View style={textStyles}>
-          {title}
-        </View>
+        <View style={textStyles}>{title}</View>
       </TextTouchable>
     );
   }
@@ -207,11 +197,11 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: "#eee",
     backgroundColor: "white",
-    height: TEXT_HEIGHT
+    height: TEXT_HEIGHT,
   },
   text: {
     flex: 1,
     fontSize: 12,
-    color: "#444"
-  }
+    color: "#444",
+  },
 });

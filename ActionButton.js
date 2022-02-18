@@ -202,7 +202,7 @@ const ActionButton = props => {
     let actionButtons = !Array.isArray(children) ? [children] : children;
 
     actionButtons = actionButtons.filter(
-      actionButton => typeof actionButton == "object"
+      actionButton => actionButton && typeof actionButton == "object"
     );
 
     const actionStyle = {

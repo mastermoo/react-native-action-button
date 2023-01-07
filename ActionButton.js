@@ -5,7 +5,7 @@ import {
   Text,
   View,
   Animated,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import ActionButtonItem from "./ActionButtonItem";
 import {
@@ -14,10 +14,10 @@ import {
   getTouchableComponent,
   isAndroid,
   touchableBackground,
-  DEFAULT_ACTIVE_OPACITY
+  DEFAULT_ACTIVE_OPACITY,
 } from "./shared";
 
-const ActionButton = props => {
+const ActionButton = (props) => {
   const [, setResetToken] = useState(props.resetToken);
   const [active, setActive] = useState(props.active);
   const anim = useRef(new Animated.Value(props.active ? 1 : 0));
@@ -60,7 +60,7 @@ const ActionButton = props => {
   const getOffsetXY = () => {
     return {
       // paddingHorizontal: props.offsetX,
-      paddingVertical: props.offsetY
+      paddingVertical: props.offsetY,
     };
   };
 
@@ -71,8 +71,8 @@ const ActionButton = props => {
         elevation: props.elevation,
         zIndex: props.zIndex,
         justifyContent:
-          props.verticalOrientation === "up" ? "flex-end" : "flex-start"
-      }
+          props.verticalOrientation === "up" ? "flex-end" : "flex-start",
+      },
     ];
   };
 
@@ -82,26 +82,29 @@ const ActionButton = props => {
         {
           scale: anim.current.interpolate({
             inputRange: [0, 1],
-            outputRange: [1, props.outRangeScale]
-          })
+            outputRange: [1, props.outRangeScale],
+          }),
         },
         {
           rotate: anim.current.interpolate({
             inputRange: [0, 1],
-            outputRange: ["0deg", props.degrees + "deg"]
-          })
-        }
-      ]
+            outputRange: ["0deg", props.degrees + "deg"],
+          }),
+        },
+      ],
     };
 
     const wrapperStyle = {
       backgroundColor: anim.current.interpolate({
         inputRange: [0, 1],
-        outputRange: [props.buttonColor, props.btnOutRange || props.buttonColor]
+        outputRange: [
+          props.buttonColor,
+          props.btnOutRange || props.buttonColor,
+        ],
       }),
       width: props.size,
       height: props.size,
-      borderRadius: props.size / 2
+      borderRadius: props.size / 2,
     };
 
     const buttonStyle = {
@@ -109,7 +112,7 @@ const ActionButton = props => {
       height: props.size,
       borderRadius: props.size / 2,
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const Touchable = getTouchableComponent(props.useNativeFeedback);
@@ -119,7 +122,7 @@ const ActionButton = props => {
             right: props.offsetX,
             zIndex: props.zIndex,
             borderRadius: props.size / 2,
-            width: props.size
+            width: props.size,
           }
         : { marginHorizontal: props.offsetX, zIndex: props.zIndex };
 
@@ -128,7 +131,7 @@ const ActionButton = props => {
         style={[
           parentStyle,
           !props.hideShadow && shadowStyle,
-          !props.hideShadow && props.shadowStyle
+          !props.hideShadow && props.shadowStyle,
         ]}
       >
         <Touchable
@@ -159,13 +162,8 @@ const ActionButton = props => {
   };
 
   const _renderButtonIcon = () => {
-    const {
-      icon,
-      renderIcon,
-      btnOutRangeTxt,
-      buttonTextStyle,
-      buttonText
-    } = props;
+    const { icon, renderIcon, btnOutRangeTxt, buttonTextStyle, buttonText } =
+      props;
     if (renderIcon) return renderIcon(active);
     if (icon) {
       console.warn(
@@ -184,9 +182,9 @@ const ActionButton = props => {
           {
             color: anim.current.interpolate({
               inputRange: [0, 1],
-              outputRange: [textColor, btnOutRangeTxt || textColor]
-            })
-          }
+              outputRange: [textColor, btnOutRangeTxt || textColor],
+            }),
+          },
         ]}
       >
         {buttonText}
@@ -202,7 +200,7 @@ const ActionButton = props => {
     let actionButtons = !Array.isArray(children) ? [children] : children;
 
     actionButtons = actionButtons.filter(
-      actionButton => typeof actionButton == "object"
+      (actionButton) => typeof actionButton == "object"
     );
 
     const actionStyle = {
@@ -211,7 +209,7 @@ const ActionButton = props => {
       // backgroundColor: 'purple',
       justifyContent: verticalOrientation === "up" ? "flex-end" : "flex-start",
       paddingTop: props.verticalOrientation === "down" ? props.spacing : 0,
-      zIndex: props.zIndex
+      zIndex: props.zIndex,
     };
 
     return (
@@ -288,9 +286,9 @@ const ActionButton = props => {
             backgroundColor: props.bgColor,
             opacity: anim.current.interpolate({
               inputRange: [0, 1],
-              outputRange: [0, props.bgOpacity]
-            })
-          }
+              outputRange: [0, props.bgOpacity],
+            }),
+          },
         ]}
       >
         {props.backdrop}
@@ -327,7 +325,7 @@ ActionButton.propTypes = {
   shadowStyle: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array,
-    PropTypes.number
+    PropTypes.number,
   ]),
 
   renderIcon: PropTypes.func,
@@ -335,7 +333,7 @@ ActionButton.propTypes = {
   bgColor: PropTypes.string,
   bgOpacity: PropTypes.number,
   buttonColor: PropTypes.string,
-  buttonTextStyle: Text.propTypes.style,
+  buttonTextStyle: PropTypes.string,
   buttonText: PropTypes.string,
 
   offsetX: PropTypes.number,
@@ -358,7 +356,7 @@ ActionButton.propTypes = {
 
   testID: PropTypes.string,
   accessibilityLabel: PropTypes.string,
-  accessible: PropTypes.bool
+  accessible: PropTypes.bool,
 };
 
 ActionButton.defaultProps = {
@@ -389,7 +387,7 @@ ActionButton.defaultProps = {
   nativeFeedbackRippleColor: "rgba(255,255,255,0.75)",
   testID: undefined,
   accessibilityLabel: undefined,
-  accessible: undefined
+  accessible: undefined,
 };
 
 const styles = StyleSheet.create({
@@ -399,12 +397,12 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
   },
   btnText: {
     marginTop: -4,
     fontSize: 24,
-    backgroundColor: "transparent"
-  }
+    backgroundColor: "transparent",
+  },
 });
 export default ActionButton;
